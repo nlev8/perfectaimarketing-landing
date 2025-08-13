@@ -1009,21 +1009,14 @@
         <div class="container">
             <div class="nav-content">
                 <a href="#" class="logo">
-                    <div class="logo-icon">
-                        <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <circle cx="12" cy="12" r="6"></circle>
-                            <circle cx="12" cy="12" r="2"></circle>
-                        </svg>
-                    </div>
-                    <span class="logo-text">Perfect AIm</span>
+                    <img src="logo.png" alt="Perfect AIm" style="height: 40px; width: auto;">
                 </a>
                 <div class="nav-links">
                     <a href="#solutions">Solutions</a>
                     <a href="#services">Services</a>
                     <a href="#results">Results</a>
                     <a href="#pricing">Pricing</a>
-                    <a href="#" class="btn-nav">Get Free Consultation</a>
+                    <a href="#consultation-form" class="btn-nav">Get Free Consultation</a>
                 </div>
             </div>
         </div>
@@ -1045,24 +1038,18 @@
             </h1>
             
             <p class="hero-description">
-                We build intelligent workflow automation systems that eliminate repetitive tasks, 
+                Welcome to Perfect AIm. We build intelligent workflow automation systems that eliminate repetitive tasks, 
                 accelerate response times, and scale your operations without expanding your team.
             </p>
             
             <div class="cta-buttons">
-                <a href="#" class="btn-primary">
+                <button class="btn-primary" onclick="document.getElementById('consultation-form').scrollIntoView({behavior: 'smooth'})">
                     Start Your Automation Journey
                     <svg class="icon" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                         <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
-                </a>
-                <a href="#" class="btn-secondary">
-                    <svg class="icon" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
-                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                    Watch Demo
-                </a>
+                </button>
             </div>
             
             <div class="trust-badges">
@@ -1139,10 +1126,6 @@
                 <div class="stat-item">
                     <div class="stat-number">500+</div>
                     <div class="stat-label">Workflows Deployed</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Happy Clients</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">2M+</div>
@@ -1298,7 +1281,7 @@
                         </svg>
                     </div>
                     <h3 class="card-title">Sales Automation</h3>
-                    <p class="card-description">Accelerate your sales cycle with automated lead management</p>
+                    <p class="card-description">Accelerate your sales cycle with automated lead generation and management</p>
                     <ul class="service-features">
                         <li>Lead scoring & routing</li>
                         <li>Follow-up sequences</li>
@@ -1516,7 +1499,7 @@
                             Team training included
                         </li>
                     </ul>
-                    <a href="#" class="pricing-cta">Get Started</a>
+                    <a href="#consultation-form" class="pricing-cta">Get Started</a>
                 </div>
                 
                 <div class="pricing-card featured">
@@ -1566,7 +1549,7 @@
                             Real-time analytics dashboard
                         </li>
                     </ul>
-                    <a href="#" class="pricing-cta">Get Started</a>
+                    <a href="#consultation-form" class="pricing-cta">Get Started</a>
                 </div>
                 
                 <div class="pricing-card">
@@ -1616,72 +1599,89 @@
                             99.9% uptime SLA guarantee
                         </li>
                     </ul>
-                    <a href="#" class="pricing-cta">Schedule Demo</a>
+                    <a href="#consultation-form" class="pricing-cta">Schedule Demo</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
+    <!-- CTA Section with Form -->
+    <section class="cta-section" id="consultation-form">
         <div class="cta-content">
             <h2 class="cta-title">Ready to Transform Your Business?</h2>
             <p class="cta-description">
-                Join forward-thinking companies automating their way to success
+                Get your free automation audit and see exactly how much time and money you can save
             </p>
-            <div>
-                <a href="#" class="btn-white">Get Free Consultation</a>
-                <a href="#" class="btn-outline-white">Call: 321-324-3440</a>
-            </div>
+            
+            <!-- Netlify Form -->
+            <form name="consultation" method="POST" data-netlify="true" style="max-width: 500px; margin: 2rem auto;">
+                <input type="hidden" name="form-name" value="consultation">
+                
+                <div style="display: grid; gap: 1rem; margin-bottom: 1rem;">
+                    <input 
+                        type="text" 
+                        name="name" 
+                        placeholder="Your Name" 
+                        required
+                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.95); color: #333;"
+                    >
+                    
+                    <input 
+                        type="email" 
+                        name="email" 
+                        placeholder="Business Email" 
+                        required
+                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.95); color: #333;"
+                    >
+                    
+                    <input 
+                        type="tel" 
+                        name="phone" 
+                        placeholder="Phone Number" 
+                        required
+                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.95); color: #333;"
+                    >
+                    
+                    <select 
+                        name="company-size" 
+                        required
+                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.95); color: #333; cursor: pointer;"
+                    >
+                        <option value="">Company Size</option>
+                        <option value="1-10">1-10 employees</option>
+                        <option value="11-50">11-50 employees</option>
+                        <option value="51-200">51-200 employees</option>
+                        <option value="200+">200+ employees</option>
+                    </select>
+                    
+                    <textarea 
+                        name="biggest-challenge" 
+                        placeholder="What's your biggest operational challenge right now?" 
+                        rows="3"
+                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.95); color: #333; resize: vertical; font-family: inherit;"
+                    ></textarea>
+                </div>
+                
+                <button type="submit" class="btn-white" style="width: 100%; font-size: 1.1rem; padding: 1rem 2rem;">
+                    Get My Free Automation Audit →
+                </button>
+                
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.8);">
+                    🔒 Your information is secure and never shared
+                </p>
+            </form>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <div class="footer-brand">
-                        <div class="logo-icon">
-                            <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <circle cx="12" cy="12" r="6"></circle>
-                                <circle cx="12" cy="12" r="2"></circle>
-                            </svg>
-                        </div>
-                        <span class="logo-text">Perfect AIm</span>
-                    </div>
-                    <p class="footer-description">
-                        AI-powered automation solutions that transform how businesses operate.
-                    </p>
-                </div>
-                <div>
-                    <h4>Solutions</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Sales Automation</a></li>
-                        <li><a href="#">Marketing Automation</a></li>
-                        <li><a href="#">Operations</a></li>
-                        <li><a href="#">Customer Service</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Company</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Case Studies</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Blog</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Resources</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Support</a></li>
-                        <li><a href="#">API Reference</a></li>
-                        <li><a href="#">Partners</a></li>
-                    </ul>
-                </div>
+            <div style="text-align: center; padding: 2rem 0;">
+                <img src="logo.png" alt="Perfect AIm" style="height: 32px; width: auto; margin-bottom: 1rem;">
+                <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 1.5rem;">
+                    AI-powered automation solutions that transform how businesses operate.
+                </p>
+                <a href="#" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-weight: 500; transition: color 0.3s;">Contact</a>
             </div>
             <div class="footer-bottom">
                 © 2024 Perfect AIm Marketing LLC. All rights reserved.
