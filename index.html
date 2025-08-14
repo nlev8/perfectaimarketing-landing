@@ -200,6 +200,71 @@
             box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
         }
 
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: rgba(2, 6, 23, 0.98);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            padding: 80px 30px 30px;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu .btn-nav-mobile {
+            display: block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--pink) 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            border: none;
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -958,12 +1023,24 @@
                 display: none;
             }
 
+            .mobile-menu-btn {
+                display: block !important;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
             h1 {
                 font-size: 2.5rem;
             }
 
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stat-item {
+                text-align: center;
             }
 
             .cards-grid {
@@ -994,11 +1071,6 @@
             .pricing-card.featured {
                 transform: scale(1);
             }
-        @media (max-width: 768px) {
-            .stat-item {
-                text-align: center;
-    }
-}    
         }
     </style>
 </head>
@@ -1025,7 +1097,26 @@
                     <a href="#pricing">Pricing</a>
                     <a href="#consultation-form" class="btn-nav">Get Free Consultation</a>
                 </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <svg width="30" height="30" viewBox="0 0 30 30" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="7" x2="25" y2="7"></line>
+                        <line x1="5" y1="15" x2="25" y2="15"></line>
+                        <line x1="5" y1="23" x2="25" y2="23"></line>
+                    </svg>
+                </button>
             </div>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu" id="mobileMenu">
+            <button class="mobile-menu-close" onclick="closeMobileMenu()">&times;</button>
+            <a href="#solutions" onclick="closeMobileMenu()">Solutions</a>
+            <a href="#services" onclick="closeMobileMenu()">Services</a>
+            <a href="#results" onclick="closeMobileMenu()">Results</a>
+            <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+            <a href="#consultation-form" class="btn-nav-mobile" onclick="closeMobileMenu()">Get Free Consultation</a>
         </div>
     </nav>
 
@@ -1126,7 +1217,7 @@
         </div>
     </section>
 
-    <!-- Social Proof Bar - CORRECTED -->
+    <!-- Social Proof Bar with 4 Stats -->
     <section class="social-proof">
         <div class="container">
             <div class="stats-grid">
@@ -1141,6 +1232,10 @@
                 <div class="stat-item">
                     <div class="stat-number">99.9%</div>
                     <div class="stat-label">Uptime SLA</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">&lt;48hr</div>
+                    <div class="stat-label">Implementation</div>
                 </div>
             </div>
         </div>
@@ -1222,7 +1317,7 @@
         </div>
     </section>
 
-    <!-- Solution Section -->
+    <!-- Solution Section with 4th Card -->
     <section class="section" id="solutions" style="background: rgba(255, 255, 255, 0.02);">
         <div class="container">
             <div class="section-header">
@@ -1262,6 +1357,17 @@
                     </div>
                     <h3 class="card-title">AI-Powered Intelligence</h3>
                     <p class="card-description">Smart decision-making and routing based on your business rules</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #10B981 0%, #34D399 100%);">
+                        <svg class="icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">24/7 Monitoring & Support</h3>
+                    <p class="card-description">Continuous optimization and dedicated support to ensure peak performance</p>
                 </div>
             </div>
         </div>
@@ -1440,7 +1546,7 @@
         </div>
     </section>
 
-    <!-- Pricing Section -->
+    <!-- Pricing Section with Updated Prices -->
     <section class="section" id="pricing">
         <div class="container">
             <div class="section-header">
@@ -1450,8 +1556,6 @@
                     Done-for-you implementation that delivers ROI from day one
                 </p>
             </div>
-            
-            <!-- Value Comparison -->
             
             <div class="pricing-grid">
                 <div class="pricing-card">
@@ -1495,7 +1599,6 @@
                         </li>
                     </ul>
                     <a href="#consultation-form" class="pricing-cta" style="background: var(--primary); color: white;">Get Started</a>
-
                 </div>
                 
                 <div class="pricing-card featured">
@@ -1678,7 +1781,7 @@
                 <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 1.5rem;">
                     AI-powered automation solutions that transform how businesses operate.
                 </p>
-                <a href="href="tel:321-324-3440" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-weight: 500; transition: color 0.3s;">Contact</a>
+                <a href="tel:321-324-3440" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-weight: 500; transition: color 0.3s;">Contact</a>
             </div>
             <div class="footer-bottom">
                 © 2025 Perfect AIm LLC. All rights reserved.
@@ -1775,6 +1878,17 @@
                 nav.classList.remove('scrolled');
             }
         });
+        
+        // Mobile Menu Toggle
+        function openMobileMenu() {
+            document.getElementById('mobileMenu').classList.add('active');
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.remove('active');
+        }
+
+        document.getElementById('mobileMenuBtn').addEventListener('click', openMobileMenu);
         
         // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
