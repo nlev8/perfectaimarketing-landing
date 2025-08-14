@@ -1777,7 +1777,41 @@
                         style="padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.95); color: #333; resize: vertical; font-family: inherit;"
                     ></textarea>
                 </div>
-                
+                <!-- Add this consent section right above your submit button -->
+<div class="consent-section" style="margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
+    <p style="font-weight: bold; margin-bottom: 10px;">Communication Preferences:</p>
+    
+    <!-- Required consent for appointment reminders -->
+    <label style="display: flex; align-items: flex-start; margin-bottom: 10px; cursor: pointer;">
+        <input type="checkbox" 
+               id="consent-appointments" 
+               name="consent_appointments" 
+               checked 
+               required 
+               style="margin-right: 10px; margin-top: 3px;">
+        <span style="font-size: 14px;">
+            <strong>(Required)</strong> Appointment reminders and important updates about your scheduled services
+        </span>
+    </label>
+    
+    <!-- Optional marketing consent -->
+    <label style="display: flex; align-items: flex-start; margin-bottom: 10px; cursor: pointer;">
+        <input type="checkbox" 
+               id="consent-promotional" 
+               name="consent_promotional" 
+               style="margin-right: 10px; margin-top: 3px;">
+        <span style="font-size: 14px;">
+            Promotional offers, marketing tips, and special announcements from Perfect AIm
+        </span>
+    </label>
+    
+    <p style="font-size: 12px; color: #666; margin-top: 10px;">
+        By providing your phone number, you agree to receive messages at the number provided. 
+        Message and data rates may apply. Reply STOP to unsubscribe from SMS messages. 
+        <a href="/privacy-policy" target="_blank" style="color: #0066cc;">Privacy Policy</a> | 
+        <a href="/terms" target="_blank" style="color: #0066cc;">Terms of Service</a>
+    </p>
+</div>
                 <button type="submit" style="width: 100%; font-size: 1.1rem; padding: 1rem 2rem; background: #34D399; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: block; margin: 0 auto;" onmouseover="this.style.background='#10B981'" onmouseout="this.style.background='#34D399'" onmousedown="this.style.background='#059669'">
                     Get My Free Automation Audit →
                 </button>
