@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfect AIm - AI Workflow Automation Solutions</title>
+    <!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <style>
         * {
             margin: 0;
@@ -1772,7 +1777,58 @@
                         style="padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.95); color: #333; resize: vertical; font-family: inherit;"
                     ></textarea>
                 </div>
-                
+                <!-- Updated Consent Section with Fixed Links and Black Text -->
+<div class="consent-section" style="background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 8px; padding: 20px; margin: 25px 0;">
+    
+    <!-- Title with black text -->
+    <p style="font-size: 16px; font-weight: bold; color: #333; margin-bottom: 15px;">
+        Communication Preferences
+    </p>
+    
+    <!-- Required Appointment Consent -->
+    <label style="display: flex; align-items: flex-start; margin-bottom: 15px; cursor: pointer;">
+        <input type="checkbox" 
+               id="consent-appointments" 
+               name="consent_appointments" 
+               checked 
+               required 
+               style="margin-right: 10px; margin-top: 3px;">
+        <span style="font-size: 14px; color: #333; line-height: 1.5;">
+            <strong style="color: #333;">(Required)</strong> I consent to receive appointment reminders and important updates about my scheduled services via email, SMS, and phone.
+        </span>
+    </label>
+    
+    <!-- Optional Marketing Consent -->
+    <label style="display: flex; align-items: flex-start; margin-bottom: 15px; cursor: pointer;">
+        <input type="checkbox" 
+               id="consent-promotional" 
+               name="consent_promotional" 
+               style="margin-right: 10px; margin-top: 3px;">
+        <span style="font-size: 14px; color: #333; line-height: 1.5;">
+            <strong style="color: #666;">(Optional)</strong> I'd like to receive promotional offers, marketing tips, and special announcements from Perfect AIm Marketing. You can unsubscribe at any time.
+        </span>
+    </label>
+    
+    <!-- Privacy Notice with WORKING LINKS -->
+    <p style="font-size: 12px; color: #666; margin-top: 15px; padding-top: 15px; border-top: 1px solid #dee2e6; line-height: 1.6;">
+        By providing your phone number, you agree to receive text messages at the number provided. 
+        Standard message and data rates may apply. Reply STOP to any SMS to unsubscribe. 
+        We respect your privacy and will never share your information with third parties.
+        <br><br>
+        <a href="https://perfectaimarketing.com/Privacy-Policy" 
+           target="_blank" 
+           style="color: #0066cc; text-decoration: underline;">
+           Privacy Policy
+        </a> 
+        | 
+        <a href="https://perfectaimarketing.com/terms-and-conditions" 
+           target="_blank" 
+           style="color: #0066cc; text-decoration: underline;">
+           Terms & Conditions
+        </a>
+    </p>
+</div>
+
                 <button type="submit" style="width: 100%; font-size: 1.1rem; padding: 1rem 2rem; background: #34D399; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: block; margin: 0 auto;" onmouseover="this.style.background='#10B981'" onmouseout="this.style.background='#34D399'" onmousedown="this.style.background='#059669'">
                     Get My Free Automation Audit →
                 </button>
@@ -1795,12 +1851,12 @@
                 
                 <!-- Contact Links -->
                 <div style="display: flex; gap: 2rem; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 2rem;">
-                    <a href="mailto:admin@perfectaim.ai" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-weight: 500; transition: color 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+                    <a href="mailto:admin@perfectaimarketing.com" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-weight: 500; transition: color 0.3s; display: inline-flex; align-items: center; gap: 8px;">
                         <svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: currentColor;">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                             <polyline points="22,6 12,13 2,6"></polyline>
                         </svg>
-                        admin@perfectaim.ai
+                        admin@perfectaimarketing.com
                     </a>
                     <a href="tel:+13213243440" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-weight: 500; transition: color 0.3s; display: inline-flex; align-items: center; gap: 8px;">
                         <svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: currentColor;">
