@@ -1999,5 +1999,95 @@
             });
         });
     </script>
+    <!-- Google Sheets Integration Script -->
+<script>
+// Google Apps Script Web App URL
+const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbz7h7nuig1CuYsmokg8VyCCjAbSvztsE_1vbftoSL9v2gl6Q1XNmhWCtQI7ZaRiUIU0/exec';
+
+// Intercept Netlify form submission and also send to Google Sheets
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[name="consultation"]');
+    
+    if (form) {
+        form.addEventListener('submit', async function(e) {
+            // Don't prevent default - let Netlify handle the form too
+            // We'll send to Google Sheets in parallel
+            
+            // Get form values
+            const fullName = form.querySelector('[name="name"]').value;
+            const nameParts = fullName.trim().split(' ');
+            const firstName = nameParts[0] || '';
+            const lastName = nameParts.slice(1).join(' ') || '';
+            
+            // Prepare data for Google Sheets
+            const sheetsData = {
+                email: form.querySelector('[name="email"]').value,
+                phone: form.querySelector('[name="phone"]').value,
+                first_name: firstName,
+                last_name: lastName,
+                company_name: '', // Not in your form, leaving blank
+                consent_appts: form.querySelector('[name="consent_appointments"]').checked ? 'TRUE' : 'FALSE',
+                consent_marketing: form.querySelector('[name="consent_promotional"]').checked ? 'TRUE' : 'FALSE',
+                form_source: 'Landing Page - Consultation Form',
+                status: 'New Lead',
+                ip_address: 'Not captured', // Can't get real IP from client-side
+                company_size: form.querySelector('[name="company-size"]').value,
+                biggest_challenge: form.querySelector('[name="biggest-challenge"]').value
+            };
+            
+            // Send to Google Sheets (fire and forget - don't wait for response)
+            fetch(SHEETS_WEBHOOK_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sheetsData)
+            }).then(() => {
+                console.log('✅ Data sent to Google Sheets');
+            }).catch(error => {
+                console.error('Error sending to Google Sheets:', error);
+                // Don't show error to user - Netlify form still works
+            });
+            
+            // Track conversion if Google Ads/Analytics is present
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'form_submit', {
+                    'event_category': 'engagement',
+                    'event_label': 'consultation_form'
+                });
+            }
+            
+            // Let the form submit normally to Netlify
+            // The form action will redirect to /thank-you.html as configured
+        });
+        
+        console.log('✅ Google Sheets integration active');
+    }
+});
+
+// Optional: Track form abandonment
+let formStarted = false;
+document.addEventListener('DOMContentLoaded', function() {
+    const formInputs = document.querySelectorAll('form[name="consultation"] input, form[name="consultation"] textarea, form[name="consultation"] select');
+    
+    formInputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            if (!formStarted) {
+                formStarted = true;
+                console.log('📝 Form interaction started');
+                
+                // Track form start if analytics is present
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'form_start', {
+                        'event_category': 'engagement',
+                        'event_label': 'consultation_form'
+                    });
+                }
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
