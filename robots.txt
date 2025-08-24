@@ -1,0 +1,14 @@
+# robots.txt
+User-agent: *
+Allow: /llm.txt
+Allow: /
+
+# Sitemap location (update this with your actual sitemap URL if you have one)
+# Sitemap: https://perfectaimarketing.com/sitemap.xml
+
+# Allow all crawlers to access the site
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+
+# Crawl-delay: 1
