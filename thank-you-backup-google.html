@@ -382,24 +382,23 @@
             
             <!-- Google Calendar button container -->
             <div class="google-calendar-container">
-                <!-- This div will contain the Google Calendar button -->
-                <div id="google-calendar-button"></div>
-            </div>
-            
-            <!-- Google Calendar Appointment Scheduling script -->
-            <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
-            <script>
-            window.addEventListener('load', function() {
-                if (window.calendar && window.calendar.schedulingButton) {
+                <!-- Google Calendar Appointment Scheduling begin -->
+                <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+                <script>
+                (function() {
+                  var target = document.currentScript;
+                  window.addEventListener('load', function() {
                     calendar.schedulingButton.load({
-                        url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0Ba78KESaJaFI2l_2pCVeXVZJD_WUT4GbTluRSz9Ec66d2r64QI_ZVhhEUZB9I6_yOcwZsnAiQ?gv=true',
-                        color: '#039BE5',
-                        label: "Schedule Now",
-                        target: document.getElementById('google-calendar-button'),
+                      url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0Ba78KESaJaFI2l_2pCVeXVZJD_WUT4GbTluRSz9Ec66d2r64QI_ZVhhEUZB9I6_yOcwZsnAiQ?gv=true',
+                      color: '#039BE5',
+                      label: "Schedule Your Free Consultation",
+                      target,
                     });
-                }
-            });
-            </script>
+                  });
+                })();
+                </script>
+                <!-- end Google Calendar Appointment Scheduling -->
+            </div>
         </div>
 
         <!-- Social Links -->
