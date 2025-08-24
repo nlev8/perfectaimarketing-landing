@@ -385,13 +385,16 @@
         <!-- Google Calendar Booking Section -->
         <div class="calendar-section">
             <h2>Want to Schedule Right Now?</h2>
-            <p>Skip the wait and book your consultation directly</p>
             
-            <!-- Google Calendar button container -->
-            <div class="google-calendar-container">
-                <div id="google-calendar-button">
-                    <span class="calendar-loading">Loading scheduling options...</span>
-                </div>
+            <!-- Simple button that links to Google Calendar -->
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://calendar.app.google/QDanmN7CQLEnZZ7WA" 
+                   target="_blank" 
+                   style="display: inline-block; background: linear-gradient(135deg, #039BE5, #0277BD); color: white; padding: 16px 40px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 18px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(3, 155, 229, 0.3);"
+                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(3, 155, 229, 0.4)';"
+                   onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(3, 155, 229, 0.3)';">
+                    Schedule Now →
+                </a>
             </div>
         </div>
 
@@ -417,37 +420,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Google Calendar Appointment Scheduling script -->
-    <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
-    <script>
-    // Wait for the Google Calendar script to load
-    function initializeCalendarButton() {
-        if (typeof calendar !== 'undefined' && calendar.schedulingButton) {
-            // Clear the loading message
-            const buttonContainer = document.getElementById('google-calendar-button');
-            buttonContainer.innerHTML = '';
-            
-            // Initialize the calendar button
-            calendar.schedulingButton.load({
-                url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0Ba78KESaJaFI2l_2pCVeXVZJD_WUT4GbTluRSz9Ec66d2r64QI_ZVhhEUZB9I6_yOcwZsnAiQ?gv=true',
-                color: '#039BE5',
-                label: 'Schedule Now',
-                target: buttonContainer,
-            });
-        } else {
-            // Retry after a short delay
-            setTimeout(initializeCalendarButton, 100);
-        }
-    }
-    
-    // Start initialization when page loads
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeCalendarButton);
-    } else {
-        // DOM is already loaded
-        initializeCalendarButton();
-    }
-    </script>
 </body>
 </html>
