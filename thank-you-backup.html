@@ -30,6 +30,24 @@
             overflow: hidden;
         }
 
+        /* Style the Google Calendar button */
+        .google-calendar-container button {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            color: white !important;
+            padding: 14px 30px !important;
+            border-radius: 8px !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            border: none !important;
+            transition: all 0.3s ease !important;
+            box-shadow: none !important;
+        }
+
+        .google-calendar-container button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4) !important;
+        }
+
         /* Animated background particles */
         .particles {
             position: absolute;
@@ -380,26 +398,23 @@
             <h2>Want to Schedule Right Now?</h2>
             <p>Skip the wait and book your consultation directly</p>
             
-            <!-- Google Calendar button container -->
-            <div class="google-calendar-container">
-                <!-- Google Calendar Appointment Scheduling begin -->
-                <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
-                <script>
-                (function() {
-                  var target = document.currentScript;
-                  window.addEventListener('load', function() {
-                    calendar.schedulingButton.load({
-                      url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0Ba78KESaJaFI2l_2pCVeXVZJD_WUT4GbTluRSz9Ec66d2r64QI_ZVhhEUZB9I6_yOcwZsnAiQ?gv=true',
-                      color: '#039BE5',
-                      label: "Schedule Your Free Consultation",
-                      target,
-                    });
-                  });
-                })();
-                </script>
-                <!-- end Google Calendar Appointment Scheduling -->
-            </div>
-        </div>
+            <!-- Google Calendar Appointment Scheduling begin -->
+<link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
+<script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+<script>
+(function() {
+  var target = document.currentScript;
+  window.addEventListener('load', function() {
+    calendar.schedulingButton.load({
+      url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0Ba78KESaJaFI2l_2pCVeXVZJD_WUT4GbTluRSz9Ec66d2r64QI_ZVhhEUZB9I6_yOcwZsnAiQ?gv=true',
+      color: '#039BE5',
+      label: "Schedule Now",
+      target,
+    });
+  });
+})();
+</script>
+<!-- end Google Calendar Appointment Scheduling -->>
 
         <!-- Social Links -->
         <div class="social-links">
