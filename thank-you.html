@@ -30,6 +30,24 @@
             overflow: hidden;
         }
 
+        /* Style the Google Calendar button */
+        .google-calendar-container button {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            color: white !important;
+            padding: 14px 30px !important;
+            border-radius: 8px !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            border: none !important;
+            transition: all 0.3s ease !important;
+            box-shadow: none !important;
+        }
+
+        .google-calendar-container button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4) !important;
+        }
+
         /* Animated background particles */
         .particles {
             position: absolute;
@@ -382,25 +400,28 @@
             
             <!-- Google Calendar button container -->
             <div class="google-calendar-container">
-                <!-- This div will contain the Google Calendar button -->
+                <!-- This div will be the target for the button -->
                 <div id="google-calendar-button"></div>
             </div>
-            
-            <!-- Google Calendar Appointment Scheduling script -->
-            <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
-            <script>
-            window.addEventListener('load', function() {
-                if (window.calendar && window.calendar.schedulingButton) {
-                    calendar.schedulingButton.load({
-                        url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0Ba78KESaJaFI2l_2pCVeXVZJD_WUT4GbTluRSz9Ec66d2r64QI_ZVhhEUZB9I6_yOcwZsnAiQ?gv=true',
-                        color: '#039BE5',
-                        label: "Schedule Now",
-                        target: document.getElementById('google-calendar-button'),
-                    });
-                }
-            });
-            </script>
         </div>
+        
+        <!-- Google Calendar Appointment Scheduling script (moved outside the container) -->
+        <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+        <script>
+        (function() {
+          window.addEventListener('load', function() {
+            var targetElement = document.getElementById('google-calendar-button');
+            if (targetElement && window.calendar && window.calendar.schedulingButton) {
+              calendar.schedulingButton.load({
+                url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0Ba78KESaJaFI2l_2pCVeXVZJD_WUT4GbTluRSz9Ec66d2r64QI_ZVhhEUZB9I6_yOcwZsnAiQ?gv=true',
+                color: '#039BE5',
+                label: "Schedule Now",
+                target: targetElement,
+              });
+            }
+          });
+        })();
+        </script>
 
         <!-- Social Links -->
         <div class="social-links">
