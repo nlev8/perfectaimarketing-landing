@@ -30,25 +30,6 @@
             overflow: hidden;
         }
 
-        /* Style the Google Calendar button */
-        .google-calendar-container button {
-            background: linear-gradient(135deg, #667eea, #764ba2) !important;
-            color: white !important;
-            padding: 14px 30px !important;
-            border-radius: 8px !important;
-            font-size: 16px !important;
-            font-weight: 600 !important;
-            border: none !important;
-            transition: all 0.3s ease !important;
-            box-shadow: none !important;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif !important;
-        }
-
-        .google-calendar-container button:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4) !important;
-        }
-
         /* Animated background particles */
         .particles {
             position: absolute;
@@ -279,7 +260,13 @@
             display: flex;
             justify-content: center;
             margin: 30px 0;
-            min-height: 50px;
+            min-height: 48px;
+        }
+
+        /* Loading state for calendar button */
+        .calendar-loading {
+            color: #666;
+            font-style: italic;
         }
 
         /* Social links */
@@ -401,8 +388,10 @@
             <p>Skip the wait and book your consultation directly</p>
             
             <!-- Google Calendar button container -->
-            <div class="google-calendar-container" id="calendar-button-container">
-                <!-- Button will be inserted here by the script -->
+            <div class="google-calendar-container">
+                <div id="google-calendar-button">
+                    <span class="calendar-loading">Loading scheduling options...</span>
+                </div>
             </div>
         </div>
 
@@ -429,27 +418,36 @@
         </div>
     </div>
 
-    <!-- Google Calendar Appointment Scheduling Script -->
+    <!-- Google Calendar Appointment Scheduling script -->
     <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
     <script>
-    window.addEventListener('load', function() {
-        // Wait a moment for the script to load
-        setTimeout(function() {
-            if (typeof calendar !== 'undefined' && calendar.schedulingButton) {
-                var container = document.getElementById('calendar-button-container');
-                if (container) {
-                    calendar.schedulingButton.load({
-                        url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0Ba78KESaJaFI2l_2pCVeXVZJD_WUT4GbTluRSz9Ec66d2r64QI_ZVhhEUZB9I6_yOcwZsnAiQ?gv=true',
-                        color: '#039BE5',
-                        label: 'Schedule Now',
-                        target: container
-                    });
-                }
-            } else {
-                console.error('Google Calendar scheduling button script not loaded');
-            }
-        }, 1000); // Wait 1 second for the script to fully load
-    });
+    // Wait for the Google Calendar script to load
+    function initializeCalendarButton() {
+        if (typeof calendar !== 'undefined' && calendar.schedulingButton) {
+            // Clear the loading message
+            const buttonContainer = document.getElementById('google-calendar-button');
+            buttonContainer.innerHTML = '';
+            
+            // Initialize the calendar button
+            calendar.schedulingButton.load({
+                url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0Ba78KESaJaFI2l_2pCVeXVZJD_WUT4GbTluRSz9Ec66d2r64QI_ZVhhEUZB9I6_yOcwZsnAiQ?gv=true',
+                color: '#039BE5',
+                label: 'Schedule Now',
+                target: buttonContainer,
+            });
+        } else {
+            // Retry after a short delay
+            setTimeout(initializeCalendarButton, 100);
+        }
+    }
+    
+    // Start initialization when page loads
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeCalendarButton);
+    } else {
+        // DOM is already loaded
+        initializeCalendarButton();
+    }
     </script>
 </body>
 </html>
