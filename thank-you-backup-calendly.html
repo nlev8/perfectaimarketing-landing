@@ -9,8 +9,6 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <!-- Google Calendar Appointment Scheduling CSS -->
-    <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -234,32 +232,15 @@
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
-        /* Calendar section */
-        .calendar-section {
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 1px solid #e0e0e0;
-            animation: fadeIn 0.6s ease-out 1s both;
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
         }
 
-        .calendar-section h2 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .calendar-section p {
-            color: #666;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        /* Center the Google Calendar button */
-        .google-calendar-container {
-            display: flex;
-            justify-content: center;
-            margin: 30px 0;
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
         }
 
         /* Social links */
@@ -373,32 +354,18 @@
         <!-- Action Buttons -->
         <div class="action-buttons">
             <a href="/" class="btn btn-primary">Back to Home</a>
+            <a href="#calendar" class="btn btn-secondary" onclick="document.getElementById('calendar-section').scrollIntoView({behavior: 'smooth'}); return false;">Schedule Now</a>
         </div>
 
-        <!-- Google Calendar Booking Section -->
-        <div class="calendar-section">
-            <h2>Want to Schedule Right Now?</h2>
-            <p>Skip the wait and book your consultation directly</p>
+        <!-- Calendly Booking Section -->
+        <div id="calendar-section" style="margin-top: 50px; padding-top: 30px; border-top: 1px solid #e0e0e0;">
+            <h2 style="color: #333; font-size: 24px; margin-bottom: 20px; text-align: center;">Schedule Your Free Consultation</h2>
+            <p style="color: #666; text-align: center; margin-bottom: 30px;">Choose a time that works best for you</p>
             
-            <!-- Google Calendar button container -->
-            <div class="google-calendar-container">
-                <!-- Google Calendar Appointment Scheduling begin -->
-                <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
-                <script>
-                (function() {
-                  var target = document.currentScript;
-                  window.addEventListener('load', function() {
-                    calendar.schedulingButton.load({
-                      url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0Ba78KESaJaFI2l_2pCVeXVZJD_WUT4GbTluRSz9Ec66d2r64QI_ZVhhEUZB9I6_yOcwZsnAiQ?gv=true',
-                      color: '#039BE5',
-                      label: "Schedule Your Free Consultation",
-                      target,
-                    });
-                  });
-                })();
-                </script>
-                <!-- end Google Calendar Appointment Scheduling -->
-            </div>
+            <!-- Calendly inline widget begin -->
+            <div class="calendly-inline-widget" data-url="https://calendly.com/perfectaim/30min" style="min-width:320px;height:700px;border-radius: 12px;overflow: hidden;"></div>
+            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+            <!-- Calendly inline widget end -->
         </div>
 
         <!-- Social Links -->
@@ -417,7 +384,7 @@
                 </a>
                 <a href="#" class="social-icon" aria-label="LinkedIn">
                     <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 24 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                     </svg>
                 </a>
             </div>
