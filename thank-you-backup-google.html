@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thank You - Perfect AI Marketing</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <!-- Google Calendar Appointment Scheduling CSS -->
+    <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -201,34 +203,12 @@
             padding-top: 3px;
         }
 
-        /* Schedule button */
-        .schedule-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
-            color: white;
-            padding: 16px 40px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-            margin: 30px 0;
-            animation: fadeIn 0.6s ease-out 1s both;
-        }
-
-        .schedule-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
-            background: linear-gradient(135deg, #059669 0%, #10B981 100%);
-        }
-
         /* Action buttons */
         .action-buttons {
             display: flex;
             gap: 15px;
             justify-content: center;
-            margin-top: 20px;
+            margin-top: 40px;
             animation: fadeIn 0.6s ease-out 1s both;
         }
 
@@ -252,6 +232,34 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Calendar section */
+        .calendar-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            animation: fadeIn 0.6s ease-out 1s both;
+        }
+
+        .calendar-section h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .calendar-section p {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Center the Google Calendar button */
+        .google-calendar-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
         }
 
         /* Social links */
@@ -362,14 +370,35 @@
             </div>
         </div>
 
-        <!-- Schedule Now Button -->
-        <a href="https://calendar.app.google/QDanmN7CQLEnZZ7WA" target="_blank" class="schedule-button">
-            Schedule Now! →
-        </a>
-
         <!-- Action Buttons -->
         <div class="action-buttons">
             <a href="/" class="btn btn-primary">Back to Home</a>
+        </div>
+
+        <!-- Google Calendar Booking Section -->
+        <div class="calendar-section">
+            <h2>Want to Schedule Right Now?</h2>
+            <p>Skip the wait and book your consultation directly</p>
+            
+            <!-- Google Calendar button container -->
+            <div class="google-calendar-container">
+                <!-- Google Calendar Appointment Scheduling begin -->
+                <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+                <script>
+                (function() {
+                  var target = document.currentScript;
+                  window.addEventListener('load', function() {
+                    calendar.schedulingButton.load({
+                      url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0Ba78KESaJaFI2l_2pCVeXVZJD_WUT4GbTluRSz9Ec66d2r64QI_ZVhhEUZB9I6_yOcwZsnAiQ?gv=true',
+                      color: '#039BE5',
+                      label: "Schedule Your Free Consultation",
+                      target,
+                    });
+                  });
+                })();
+                </script>
+                <!-- end Google Calendar Appointment Scheduling -->
+            </div>
         </div>
 
         <!-- Social Links -->
