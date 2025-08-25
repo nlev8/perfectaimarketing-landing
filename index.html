@@ -3,18 +3,30 @@
 <head>
     <meta name="google-site-verification" content="r4AePN9-Wk3JNXryWJiDO7IrL7W8pz17CiaxMQN0Z-U" />
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Perfect AIm - AI workflow automation that transforms businesses. Reduce response times from hours to seconds. Central Florida's premier automation partner.">
     <title>Perfect AIm - AI Infrastructure That Solves Inefficiencies</title>
     <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        /* Prevent horizontal scroll on mobile */
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
         }
 
         :root {
@@ -34,6 +46,21 @@
             color: white;
             background: var(--slate-950);
             overflow-x: hidden;
+        }
+
+        /* Better image handling on mobile */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Prevent text selection on UI elements */
+        .btn-primary, .btn-secondary, .btn-nav, button {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         /* SVG Icons */
@@ -139,7 +166,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 16px;
         }
 
         .nav-content {
@@ -188,25 +215,25 @@
         }
 
         .nav-links a:not(.btn-nav):hover {
-    color: var(--primary);
-}
+            color: var(--primary);
+        }
 
-.btn-nav {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--pink) 100%);
-    color: white !important;
-    padding: 0.5rem 1.5rem;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s;
-}
+        .btn-nav {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--pink) 100%);
+            color: white !important;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
 
-.btn-nav:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
-    background: linear-gradient(135deg, var(--primary-dark) 0%, #D61E8C 100%);
-    color: white !important;
-}
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #D61E8C 100%);
+            color: white !important;
+        }
 
         /* Mobile Menu Button */
         .mobile-menu-btn {
@@ -291,7 +318,7 @@
         }
 
         .hero-badge {
-            display: none;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
             padding: 8px 20px;
@@ -308,7 +335,7 @@
         }
 
         h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-size: clamp(2rem, 8vw, 5rem);
             font-weight: 700;
             line-height: 1.1;
             margin-bottom: 1.5rem;
@@ -322,7 +349,7 @@
         }
 
         .hero-description {
-            font-size: 1.25rem;
+            font-size: clamp(1rem, 3vw, 1.25rem);
             color: rgba(255, 255, 255, 0.8);
             max-width: 800px;
             margin: 0 auto 2rem;
@@ -514,7 +541,7 @@
         }
 
         .stat-number {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             font-weight: bold;
             background: linear-gradient(135deg, var(--primary) 0%, var(--pink) 100%);
             -webkit-background-clip: text;
@@ -566,19 +593,19 @@
         }
 
         .section-title {
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-size: clamp(1.75rem, 5vw, 3rem);
             font-weight: 700;
             margin-bottom: 1rem;
         }
 
         .section-subtitle {
-            font-size: 1.125rem;
+            font-size: clamp(1rem, 2vw, 1.125rem);
             color: rgba(255, 255, 255, 0.6);
             max-width: 700px;
             margin: 0 auto;
         }
 
-        /* Cards Grid - Updated for 4 cards */
+        /* Cards Grid */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -841,7 +868,7 @@
         }
 
         .pricing-price {
-            font-size: 3rem;
+            font-size: clamp(2rem, 5vw, 3rem);
             font-weight: bold;
             background: linear-gradient(135deg, var(--primary) 0%, var(--pink) 100%);
             -webkit-background-clip: text;
@@ -917,13 +944,13 @@
         }
 
         .cta-title {
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-size: clamp(1.75rem, 5vw, 3rem);
             font-weight: 700;
             margin-bottom: 1rem;
         }
 
         .cta-description {
-            font-size: 1.25rem;
+            font-size: clamp(1rem, 2vw, 1.25rem);
             color: rgba(255, 255, 255, 0.9);
             margin-bottom: 2rem;
         }
@@ -965,6 +992,31 @@
         .btn-outline-white:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
+        }
+
+        /* Form improvements for mobile */
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="tel"],
+        form textarea,
+        form select {
+            font-size: 16px !important; /* Prevents zoom on iOS */
+        }
+
+        .consent-section {
+            padding: 16px !important;
+        }
+
+        .consent-section label {
+            padding: 12px 0;
+            cursor: pointer;
+        }
+
+        /* Larger touch targets for checkboxes */
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
         }
 
         /* Footer */
@@ -1025,7 +1077,95 @@
             font-size: 0.875rem;
         }
 
-        /* Responsive */
+        /* Mobile Responsive Styles */
+        
+        /* Very small phones (320px and below) */
+        @media (max-width: 320px) {
+            .container {
+                padding: 0 12px;
+            }
+            
+            h1 {
+                font-size: 1.75rem !important;
+                line-height: 1.2;
+            }
+            
+            .hero-description {
+                font-size: 0.9rem !important;
+            }
+            
+            .btn-primary, .btn-secondary {
+                padding: 0.75rem 1.25rem;
+                font-size: 0.9rem;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+            
+            .trust-badges {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .trust-badge {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .workflow-demo {
+                padding: 1rem;
+            }
+            
+            .consent-section {
+                font-size: 14px;
+            }
+            
+            .consent-section p {
+                font-size: 12px;
+            }
+        }
+
+        /* Standard phones (375px) */
+        @media (max-width: 375px) {
+            h1 {
+                font-size: 2rem !important;
+            }
+            
+            .section-title {
+                font-size: 1.5rem !important;
+            }
+            
+            .pricing-card {
+                padding: 1.5rem !important;
+            }
+            
+            .pricing-price {
+                font-size: 2.25rem !important;
+            }
+        }
+
+        /* Large phones (414px) */
+        @media (max-width: 414px) {
+            .workflow-demo {
+                padding: 1.5rem;
+            }
+            
+            .workflow-connector {
+                display: none;
+            }
+            
+            .workflow-nodes {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .workflow-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* All mobile devices (up to 768px) */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -1034,63 +1174,188 @@
             .mobile-menu-btn {
                 display: block !important;
             }
-            
-            .hero-badge {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                padding: 8px 20px;
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 50px;
-                backdrop-filter: blur(10px);
-                margin-bottom: 2rem;
-            }
 
             .mobile-menu {
                 display: block;
             }
-
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+            
+            /* Hero mobile optimization */
+            .hero {
+                padding: 80px 16px 60px;
+                min-height: auto;
             }
             
-            .stat-item {
-                text-align: center;
+            h1 {
+                font-size: clamp(1.75rem, 6vw, 2.5rem);
+                margin-bottom: 1rem;
             }
-
-            .cards-grid {
+            
+            .hero-description {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+                padding: 0 10px;
+            }
+            
+            /* Buttons stack on mobile */
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 320px;
+                margin: 0 auto 2rem;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            /* Cards responsive */
+            .cards-grid, .services-grid, .pricing-grid, .testimonials-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
-
-            .services-grid {
-                grid-template-columns: 1fr;
+            
+            .card, .service-card, .pricing-card {
+                padding: 1.5rem;
             }
-
-            .testimonials-grid {
-                grid-template-columns: 1fr;
+            
+            /* Section spacing */
+            .section {
+                padding: 50px 0;
             }
-
-            .pricing-grid {
-                grid-template-columns: 1fr;
+            
+            .section-header {
+                margin-bottom: 2rem;
             }
-
+            
+            .section-title {
+                font-size: clamp(1.5rem, 5vw, 2rem);
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+            }
+            
+            /* Stats grid mobile */
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            
+            /* Footer mobile */
+            footer {
+                padding: 40px 0 30px;
+            }
+            
             .footer-grid {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-
+            
             .footer-brand {
                 justify-content: center;
             }
-
+            
+            /* Pricing card mobile */
             .pricing-card.featured {
-                transform: scale(1);
+                transform: none;
+                margin: 0;
             }
+            
+            .popular-badge {
+                position: static;
+                transform: none;
+                display: inline-block;
+                margin-bottom: 1rem;
+            }
+            
+            /* CTA Form mobile */
+            .cta-content img {
+                height: 200px !important;
+                margin-top: -2rem !important;
+            }
+        }
+
+        /* Landscape mode for phones */
+        @media (max-width: 896px) and (orientation: landscape) {
+            .hero {
+                min-height: auto;
+                padding: 60px 20px 40px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 40px 0;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            /* Make all interactive elements larger for touch */
+            button, .btn-primary, .btn-secondary, .btn-nav {
+                min-height: 48px;
+                min-width: 48px;
+            }
+            
+            /* Remove hover effects on touch devices */
+            .card:hover, .service-card:hover {
+                transform: none;
+            }
+            
+            /* Larger click targets for links */
+            a {
+                padding: 8px;
+                margin: -8px;
+            }
+        }
+
+        /* Fix for iOS Safari bottom bar */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            body {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+
+        /* Optimize animations for mobile performance */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Social Media Links */
+        .social-media-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .social-media-links a {
+            color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-media-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -1265,6 +1530,7 @@
                 <h2 class="section-title">The Silent Profit Killers Hiding in Plain Sight</h2>
                 <p class="section-subtitle">
                     While you're focused on growth, invisible friction points are bleeding your business dry—costing you tens of thousands in lost opportunity
+                </p>
             </div>
             
             <div class="cards-grid cards-grid-4">
@@ -1419,13 +1685,13 @@
                         <li>Syncs with your calendar in real-time</li>
                     </ul>
                     <a href="tel:321-850-3336" style="display: block; text-decoration: none;">
-    <div style="background: linear-gradient(135deg, #10B981, #34D399); padding: 1rem; border-radius: 8px; margin-top: 1.5rem; text-align: center; transition: all 0.3s; cursor: pointer;"
-         onmouseover="this.style.background='linear-gradient(135deg, #059669, #10B981)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 20px rgba(16, 185, 129, 0.3)';"
-         onmouseout="this.style.background='linear-gradient(135deg, #10B981, #34D399)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-        <p style="color: white; font-weight: 600; margin-bottom: 0.5rem;">Try it now! Call Aimee:</p>
-        <span style="color: white; font-size: 1.25rem; font-weight: bold;">321-850-3336</span>
-    </div>
-</a>
+                        <div style="background: linear-gradient(135deg, #10B981, #34D399); padding: 1rem; border-radius: 8px; margin-top: 1.5rem; text-align: center; transition: all 0.3s; cursor: pointer;"
+                             onmouseover="this.style.background='linear-gradient(135deg, #059669, #10B981)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 20px rgba(16, 185, 129, 0.3)';"
+                             onmouseout="this.style.background='linear-gradient(135deg, #10B981, #34D399)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                            <p style="color: white; font-weight: 600; margin-bottom: 0.5rem;">Try it now! Call Aimee:</p>
+                            <span style="color: white; font-size: 1.25rem; font-weight: bold;">321-850-3336</span>
+                        </div>
+                    </a>
                 </div>
                 
                 <div class="service-card">
@@ -1691,7 +1957,7 @@
                         name="name" 
                         placeholder="Your Name" 
                         required
-                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.95); color: #333;"
+                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 16px; background: rgba(255,255,255,0.95); color: #333;"
                     >
                     
                     <input 
@@ -1699,7 +1965,7 @@
                         name="email" 
                         placeholder="Business Email" 
                         required
-                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.95); color: #333;"
+                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 16px; background: rgba(255,255,255,0.95); color: #333;"
                     >
                     
                     <input 
@@ -1707,13 +1973,13 @@
                         name="phone" 
                         placeholder="Phone Number" 
                         required
-                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.95); color: #333;"
+                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 16px; background: rgba(255,255,255,0.95); color: #333;"
                     >
                     
                     <select 
                         name="company-size" 
                         required
-                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.95); color: #333; cursor: pointer;"
+                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 16px; background: rgba(255,255,255,0.95); color: #333; cursor: pointer;"
                     >
                         <option value="">Company Size</option>
                         <option value="1-10">1-10 employees</option>
@@ -1726,60 +1992,57 @@
                         name="biggest-challenge" 
                         placeholder="What's your biggest operational challenge right now?" 
                         rows="3"
-                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; background: rgba(255,255,255,0.95); color: #333; resize: vertical; font-family: inherit;"
+                        style="padding: 1rem; border-radius: 8px; border: none; font-size: 16px; background: rgba(255,255,255,0.95); color: #333; resize: vertical; font-family: inherit;"
                     ></textarea>
                 </div>
-                <!-- Updated Consent Section with Fixed Links and Black Text -->
-<div class="consent-section" style="background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 8px; padding: 20px; margin: 25px 0;">
-    
-    <!-- Title with black text -->
-    <p style="font-size: 16px; font-weight: bold; color: #333; margin-bottom: 15px;">
-        Communication Preferences
-    </p>
-    
-    <!-- Required Appointment Consent -->
-    <label style="display: flex; align-items: flex-start; margin-bottom: 15px; cursor: pointer;">
-        <input type="checkbox" 
-               id="consent-appointments" 
-               name="consent_appointments" 
-               checked 
-               required 
-               style="margin-right: 10px; margin-top: 3px;">
-        <span style="font-size: 14px; color: #333; line-height: 1.5;">
-            <strong style="color: #333;">(Required)</strong> I consent to receive appointment reminders and important updates about my scheduled services via email, SMS, and phone.
-        </span>
-    </label>
-    
-    <!-- Optional Marketing Consent -->
-    <label style="display: flex; align-items: flex-start; margin-bottom: 15px; cursor: pointer;">
-        <input type="checkbox" 
-               id="consent-promotional" 
-               name="consent_promotional" 
-               style="margin-right: 10px; margin-top: 3px;">
-        <span style="font-size: 14px; color: #333; line-height: 1.5;">
-            <strong style="color: #666;">(Optional)</strong> I'd like to receive promotional offers, marketing tips, and special announcements from Perfect AIm Marketing. You can unsubscribe at any time.
-        </span>
-    </label>
-    
-    <!-- Privacy Notice with WORKING LINKS -->
-    <p style="font-size: 12px; color: #666; margin-top: 15px; padding-top: 15px; border-top: 1px solid #dee2e6; line-height: 1.6;">
-        By providing your phone number, you agree to receive text messages at the number provided. 
-        Standard message and data rates may apply. Reply STOP to any SMS to unsubscribe. 
-        We respect your privacy and will never share your information with third parties.
-        <br><br>
-        <a href="https://perfectaimarketing.com/Privacy-Policy" 
-           target="_blank" 
-           style="color: #0066cc; text-decoration: underline;">
-           Privacy Policy
-        </a> 
-        | 
-        <a href="https://perfectaimarketing.com/terms-and-conditions" 
-           target="_blank" 
-           style="color: #0066cc; text-decoration: underline;">
-           Terms & Conditions
-        </a>
-    </p>
-</div>
+                
+                <!-- Updated Consent Section -->
+                <div class="consent-section" style="background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 8px; padding: 20px; margin: 25px 0;">
+                    
+                    <p style="font-size: 16px; font-weight: bold; color: #333; margin-bottom: 15px;">
+                        Communication Preferences
+                    </p>
+                    
+                    <label style="display: flex; align-items: flex-start; margin-bottom: 15px; cursor: pointer;">
+                        <input type="checkbox" 
+                               id="consent-appointments" 
+                               name="consent_appointments" 
+                               checked 
+                               required 
+                               style="margin-right: 10px; margin-top: 3px; width: 20px; height: 20px;">
+                        <span style="font-size: 14px; color: #333; line-height: 1.5;">
+                            <strong style="color: #333;">(Required)</strong> I consent to receive appointment reminders and important updates about my scheduled services via email, SMS, and phone.
+                        </span>
+                    </label>
+                    
+                    <label style="display: flex; align-items: flex-start; margin-bottom: 15px; cursor: pointer;">
+                        <input type="checkbox" 
+                               id="consent-promotional" 
+                               name="consent_promotional" 
+                               style="margin-right: 10px; margin-top: 3px; width: 20px; height: 20px;">
+                        <span style="font-size: 14px; color: #333; line-height: 1.5;">
+                            <strong style="color: #666;">(Optional)</strong> I'd like to receive promotional offers, marketing tips, and special announcements from Perfect AIm Marketing. You can unsubscribe at any time.
+                        </span>
+                    </label>
+                    
+                    <p style="font-size: 12px; color: #666; margin-top: 15px; padding-top: 15px; border-top: 1px solid #dee2e6; line-height: 1.6;">
+                        By providing your phone number, you agree to receive text messages at the number provided. 
+                        Standard message and data rates may apply. Reply STOP to any SMS to unsubscribe. 
+                        We respect your privacy and will never share your information with third parties.
+                        <br><br>
+                        <a href="https://perfectaimarketing.com/Privacy-Policy" 
+                           target="_blank" 
+                           style="color: #0066cc; text-decoration: underline;">
+                           Privacy Policy
+                        </a> 
+                        | 
+                        <a href="https://perfectaimarketing.com/terms-and-conditions" 
+                           target="_blank" 
+                           style="color: #0066cc; text-decoration: underline;">
+                           Terms & Conditions
+                        </a>
+                    </p>
+                </div>
 
                 <button type="submit" style="width: 100%; font-size: 1.1rem; padding: 1rem 2rem; background: #34D399; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: block; margin: 0 auto;" onmouseover="this.style.background='#10B981'" onmouseout="this.style.background='#34D399'" onmousedown="this.style.background='#059669'">
                     Get My Free Business Audit →
@@ -1818,6 +2081,20 @@
                     </a>
                 </div>
                 
+                <!-- Social Media Links -->
+                <div class="social-media-links">
+                    <a href="https://www.facebook.com/PerfectAImApp" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="https://instagram.com/perfect_aim.ai" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
+                        </svg>
+                    </a>
+                </div>
+                
                 <!-- Legal Links -->
                 <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
                     <a href="/terms-and-conditions.html" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 0.9rem; transition: color 0.3s;">
@@ -1836,7 +2113,7 @@
     </footer>
 
     <script>
-        // Particle Animation
+        // Particle Animation - Optimized for mobile
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         
@@ -1844,7 +2121,8 @@
         canvas.height = window.innerHeight;
         
         const particles = [];
-        const particleCount = 80;
+        // Reduce particles on mobile for better performance
+        const particleCount = window.innerWidth < 768 ? 30 : 80;
         
         class Particle {
             constructor() {
@@ -1887,22 +2165,24 @@
                 particle.draw();
             });
             
-            // Draw connections
-            particles.forEach((particle, i) => {
-                particles.slice(i + 1).forEach(otherParticle => {
-                    const dx = particle.x - otherParticle.x;
-                    const dy = particle.y - otherParticle.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 100) {
-                        ctx.beginPath();
-                        ctx.moveTo(particle.x, particle.y);
-                        ctx.lineTo(otherParticle.x, otherParticle.y);
-                        ctx.strokeStyle = `rgba(59, 130, 246, ${0.1 * (1 - distance / 100)})`;
-                        ctx.stroke();
-                    }
+            // Draw connections - skip on mobile for performance
+            if (window.innerWidth >= 768) {
+                particles.forEach((particle, i) => {
+                    particles.slice(i + 1).forEach(otherParticle => {
+                        const dx = particle.x - otherParticle.x;
+                        const dy = particle.y - otherParticle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            ctx.beginPath();
+                            ctx.moveTo(particle.x, particle.y);
+                            ctx.lineTo(otherParticle.x, otherParticle.y);
+                            ctx.strokeStyle = `rgba(59, 130, 246, ${0.1 * (1 - distance / 100)})`;
+                            ctx.stroke();
+                        }
+                    });
                 });
-            });
+            }
             
             requestAnimationFrame(animate);
         }
@@ -1950,96 +2230,96 @@
             });
         });
     </script>
+    
     <!-- Google Sheets Integration Script -->
-<script>
-// Google Apps Script Web App URL
-const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbz7h7nuig1CuYsmokg8VyCCjAbSvztsE_1vbftoSL9v2gl6Q1XNmhWCtQI7ZaRiUIU0/exec';
+    <script>
+    // Google Apps Script Web App URL
+    const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbz7h7nuig1CuYsmokg8VyCCjAbSvztsE_1vbftoSL9v2gl6Q1XNmhWCtQI7ZaRiUIU0/exec';
 
-// Intercept Netlify form submission and also send to Google Sheets
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form[name="consultation"]');
-    
-    if (form) {
-        form.addEventListener('submit', async function(e) {
-            // Don't prevent default - let Netlify handle the form too
-            // We'll send to Google Sheets in parallel
-            
-            // Get form values
-            const fullName = form.querySelector('[name="name"]').value;
-            const nameParts = fullName.trim().split(' ');
-            const firstName = nameParts[0] || '';
-            const lastName = nameParts.slice(1).join(' ') || '';
-            
-            // Prepare data for Google Sheets
-            const sheetsData = {
-                email: form.querySelector('[name="email"]').value,
-                phone: form.querySelector('[name="phone"]').value,
-                first_name: firstName,
-                last_name: lastName,
-                company_name: '', // Not in your form, leaving blank
-                consent_appts: form.querySelector('[name="consent_appointments"]').checked ? 'TRUE' : 'FALSE',
-                consent_marketing: form.querySelector('[name="consent_promotional"]').checked ? 'TRUE' : 'FALSE',
-                form_source: 'Landing Page - Consultation Form',
-                status: 'New Lead',
-                ip_address: 'Not captured', // Can't get real IP from client-side
-                company_size: form.querySelector('[name="company-size"]').value,
-                biggest_challenge: form.querySelector('[name="biggest-challenge"]').value
-            };
-            
-            // Send to Google Sheets (fire and forget - don't wait for response)
-            fetch(SHEETS_WEBHOOK_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(sheetsData)
-            }).then(() => {
-                console.log('✅ Data sent to Google Sheets');
-            }).catch(error => {
-                console.error('Error sending to Google Sheets:', error);
-                // Don't show error to user - Netlify form still works
-            });
-            
-            // Track conversion if Google Ads/Analytics is present
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'form_submit', {
-                    'event_category': 'engagement',
-                    'event_label': 'consultation_form'
-                });
-            }
-            
-            // Let the form submit normally to Netlify
-            // The form action will redirect to /thank-you.html as configured
-        });
+    // Intercept Netlify form submission and also send to Google Sheets
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form[name="consultation"]');
         
-        console.log('✅ Google Sheets integration active');
-    }
-});
-
-// Optional: Track form abandonment
-let formStarted = false;
-document.addEventListener('DOMContentLoaded', function() {
-    const formInputs = document.querySelectorAll('form[name="consultation"] input, form[name="consultation"] textarea, form[name="consultation"] select');
-    
-    formInputs.forEach(input => {
-        input.addEventListener('focus', function() {
-            if (!formStarted) {
-                formStarted = true;
-                console.log('📝 Form interaction started');
+        if (form) {
+            form.addEventListener('submit', async function(e) {
+                // Don't prevent default - let Netlify handle the form too
+                // We'll send to Google Sheets in parallel
                 
-                // Track form start if analytics is present
+                // Get form values
+                const fullName = form.querySelector('[name="name"]').value;
+                const nameParts = fullName.trim().split(' ');
+                const firstName = nameParts[0] || '';
+                const lastName = nameParts.slice(1).join(' ') || '';
+                
+                // Prepare data for Google Sheets
+                const sheetsData = {
+                    email: form.querySelector('[name="email"]').value,
+                    phone: form.querySelector('[name="phone"]').value,
+                    first_name: firstName,
+                    last_name: lastName,
+                    company_name: '', // Not in your form, leaving blank
+                    consent_appts: form.querySelector('[name="consent_appointments"]').checked ? 'TRUE' : 'FALSE',
+                    consent_marketing: form.querySelector('[name="consent_promotional"]').checked ? 'TRUE' : 'FALSE',
+                    form_source: 'Landing Page - Consultation Form',
+                    status: 'New Lead',
+                    ip_address: 'Not captured', // Can't get real IP from client-side
+                    company_size: form.querySelector('[name="company-size"]').value,
+                    biggest_challenge: form.querySelector('[name="biggest-challenge"]').value
+                };
+                
+                // Send to Google Sheets (fire and forget - don't wait for response)
+                fetch(SHEETS_WEBHOOK_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(sheetsData)
+                }).then(() => {
+                    console.log('✅ Data sent to Google Sheets');
+                }).catch(error => {
+                    console.error('Error sending to Google Sheets:', error);
+                    // Don't show error to user - Netlify form still works
+                });
+                
+                // Track conversion if Google Ads/Analytics is present
                 if (typeof gtag !== 'undefined') {
-                    gtag('event', 'form_start', {
+                    gtag('event', 'form_submit', {
                         'event_category': 'engagement',
                         'event_label': 'consultation_form'
                     });
                 }
-            }
+                
+                // Let the form submit normally to Netlify
+                // The form action will redirect to /thank-you.html as configured
+            });
+            
+            console.log('✅ Google Sheets integration active');
+        }
+    });
+
+    // Optional: Track form abandonment
+    let formStarted = false;
+    document.addEventListener('DOMContentLoaded', function() {
+        const formInputs = document.querySelectorAll('form[name="consultation"] input, form[name="consultation"] textarea, form[name="consultation"] select');
+        
+        formInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                if (!formStarted) {
+                    formStarted = true;
+                    console.log('📝 Form interaction started');
+                    
+                    // Track form start if analytics is present
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'form_start', {
+                            'event_category': 'engagement',
+                            'event_label': 'consultation_form'
+                        });
+                    }
+                }
+            });
         });
     });
-});
-</script>
+    </script>
 </body>
 </html>
-                            
