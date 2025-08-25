@@ -1130,44 +1130,6 @@
         </div>
     </section>
 
-    <!-- NEW: ROI Calculator Section -->
-    <section class="roi-calculator-section" id="roi-calculator">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-badge badge-green">ROI CALCULATOR</span>
-                <h2 class="section-title">See Your Potential Savings</h2>
-                <p class="section-subtitle">
-                    Based on industry benchmarks, calculate how much time and money automation could save you
-                </p>
-            </div>
-            
-            <div class="roi-calculator">
-                <div class="roi-form">
-                    <div class="roi-input-group">
-                        <label for="employees">Number of employees doing repetitive tasks</label>
-                        <input type="number" id="employees" class="roi-input" value="5" min="1" max="1000">
-                    </div>
-                    <div class="roi-input-group">
-                        <label for="hours">Average hours per week spent on repetitive tasks</label>
-                        <input type="number" id="hours" class="roi-input" value="20" min="1" max="168">
-                    </div>
-                    <div class="roi-input-group">
-                        <label for="hourly-cost">Average hourly cost per employee ($)</label>
-                        <input type="number" id="hourly-cost" class="roi-input" value="25" min="10" max="200">
-                    </div>
-                    <button class="btn-primary" onclick="calculateROI()">Calculate Savings</button>
-                </div>
-                
-                <div class="roi-result" id="roi-result">
-                    <div class="roi-amount" id="monthly-savings">$0</div>
-                    <p>Estimated Monthly Savings</p>
-                    <p style="margin-top: 1rem; font-size: 1.1rem;">That's <span id="annual-savings">$0</span> per year!</p>
-                    <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.9rem;">Based on 70% automation efficiency rate</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Problem Section -->
     <section class="section">
         <div class="container">
