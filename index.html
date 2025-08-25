@@ -1906,30 +1906,30 @@
             
             <!-- Main Feature Showcase -->
             <div class="ai-showcase animate-on-scroll fade-up" style="margin: 3rem 0;">
-                <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 3rem; border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
-                        <div>
+                <div class="ai-showcase-container" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 3rem; border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div class="ai-showcase-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+                        <div class="ai-showcase-content">
                             <h3 style="font-size: 2rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                                 Your AI Business Brain
                             </h3>
                             <p style="font-size: 1.1rem; color: rgba(255, 255, 255, 0.8); line-height: 1.8; margin-bottom: 1.5rem;">
                                 Imagine asking your business questions in plain English and getting instant, accurate answers backed by real data. Our Conversational AI connects to all your business systems, creating an intelligent layer that understands context, remembers history, and provides actionable insights.
                             </p>
-                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                                <div style="padding: 0.5rem 1rem; background: rgba(147, 51, 234, 0.2); border-radius: 20px; color: var(--purple); font-size: 0.9rem;">
+                            <div class="feature-tags" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <div style="padding: 0.5rem 1rem; background: rgba(147, 51, 234, 0.2); border-radius: 20px; color: var(--purple); font-size: 0.9rem; white-space: nowrap;">
                                     📊 Real-time Analytics
                                 </div>
-                                <div style="padding: 0.5rem 1rem; background: rgba(236, 72, 153, 0.2); border-radius: 20px; color: var(--pink); font-size: 0.9rem;">
+                                <div style="padding: 0.5rem 1rem; background: rgba(236, 72, 153, 0.2); border-radius: 20px; color: var(--pink); font-size: 0.9rem; white-space: nowrap;">
                                     🔍 Natural Language Search
                                 </div>
-                                <div style="padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.2); border-radius: 20px; color: var(--emerald); font-size: 0.9rem;">
+                                <div style="padding: 0.5rem 1rem; background: rgba(16, 185, 129, 0.2); border-radius: 20px; color: var(--emerald); font-size: 0.9rem; white-space: nowrap;">
                                     🚀 Instant Insights
                                 </div>
                             </div>
                         </div>
-                        <div style="position: relative;">
+                        <div class="ai-showcase-demo" style="position: relative;">
                             <!-- Chat Interface Mock -->
-                            <div style="background: rgba(0, 0, 0, 0.3); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div class="chat-interface" style="background: rgba(0, 0, 0, 0.3); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1);">
                                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
                                     <div style="width: 12px; height: 12px; background: #FF5F56; border-radius: 50%;"></div>
                                     <div style="width: 12px; height: 12px; background: #FFBD2E; border-radius: 50%;"></div>
@@ -1938,19 +1938,19 @@
                                 </div>
                                 
                                 <!-- Chat Messages -->
-                                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                                    <div style="align-self: flex-end; background: var(--purple); padding: 0.75rem 1rem; border-radius: 12px 12px 4px 12px; max-width: 80%;">
+                                <div class="chat-messages" style="display: flex; flex-direction: column; gap: 1rem;">
+                                    <div class="chat-message user" style="align-self: flex-end; background: var(--purple); padding: 0.75rem 1rem; border-radius: 12px 12px 4px 12px; max-width: 80%;">
                                         <p style="margin: 0; font-size: 0.9rem;">What were our top performing products last quarter?</p>
                                     </div>
-                                    <div style="align-self: flex-start; background: rgba(255, 255, 255, 0.1); padding: 0.75rem 1rem; border-radius: 12px 12px 12px 4px; max-width: 80%;">
+                                    <div class="chat-message ai" style="align-self: flex-start; background: rgba(255, 255, 255, 0.1); padding: 0.75rem 1rem; border-radius: 12px 12px 12px 4px; max-width: 80%;">
                                         <p style="margin: 0; font-size: 0.9rem; margin-bottom: 0.5rem;">Based on Q4 data:</p>
-                                        <p style="margin: 0; font-size: 0.8rem; color: rgba(255, 255, 255, 0.8);">
+                                        <p class="chat-data" style="margin: 0; font-size: 0.8rem; color: rgba(255, 255, 255, 0.8);">
                                             1. Product A: $2.3M revenue (+34%)<br>
                                             2. Product B: $1.8M revenue (+22%)<br>
                                             3. Product C: $1.5M revenue (+18%)
                                         </p>
                                     </div>
-                                    <div style="padding: 0.75rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; display: flex; align-items: center; gap: 0.5rem;">
+                                    <div class="chat-typing" style="padding: 0.75rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; display: flex; align-items: center; gap: 0.5rem;">
                                         <span style="color: var(--emerald);">●</span>
                                         <span style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6);">AI is typing...</span>
                                     </div>
@@ -1964,102 +1964,102 @@
             <!-- Statistics Grid -->
             <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 3rem 0;">
                 <div class="stat-card animate-on-scroll scale" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 12px; padding: 2rem; text-align: center; border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <div style="font-size: 3rem; font-weight: bold; background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">85%</div>
-                    <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem;">Faster Decision Making</p>
-                    <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem;">vs. traditional reporting methods</p>
+                    <div class="stat-number" style="font-size: 3rem; font-weight: bold; background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">85%</div>
+                    <p class="stat-title" style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem;">Faster Decision Making</p>
+                    <p class="stat-subtitle" style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem;">vs. traditional reporting methods</p>
                 </div>
                 
                 <div class="stat-card animate-on-scroll scale" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 12px; padding: 2rem; text-align: center; border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <div style="font-size: 3rem; font-weight: bold; background: linear-gradient(135deg, var(--emerald) 0%, var(--success) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">92%</div>
-                    <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem;">Data Accessibility</p>
-                    <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem;">for non-technical team members</p>
+                    <div class="stat-number" style="font-size: 3rem; font-weight: bold; background: linear-gradient(135deg, var(--emerald) 0%, var(--success) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">92%</div>
+                    <p class="stat-title" style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem;">Data Accessibility</p>
+                    <p class="stat-subtitle" style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem;">for non-technical team members</p>
                 </div>
                 
                 <div class="stat-card animate-on-scroll scale" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 12px; padding: 2rem; text-align: center; border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <div style="font-size: 3rem; font-weight: bold; background: linear-gradient(135deg, var(--primary) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">3.2x</div>
-                    <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem;">ROI Improvement</p>
-                    <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem;">within 6 months of implementation</p>
+                    <div class="stat-number" style="font-size: 3rem; font-weight: bold; background: linear-gradient(135deg, var(--primary) 0%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">3.2x</div>
+                    <p class="stat-title" style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem;">ROI Improvement</p>
+                    <p class="stat-subtitle" style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem;">within 6 months of implementation</p>
                 </div>
                 
                 <div class="stat-card animate-on-scroll scale" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 12px; padding: 2rem; text-align: center; border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <div style="font-size: 3rem; font-weight: bold; background: linear-gradient(135deg, var(--purple) 0%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">67%</div>
-                    <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem;">Cost Reduction</p>
-                    <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem;">in data analysis operations</p>
+                    <div class="stat-number" style="font-size: 3rem; font-weight: bold; background: linear-gradient(135deg, var(--purple) 0%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">67%</div>
+                    <p class="stat-title" style="color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem;">Cost Reduction</p>
+                    <p class="stat-subtitle" style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem;">in data analysis operations</p>
                 </div>
             </div>
             
             <!-- Use Cases -->
             <div class="use-cases animate-on-scroll fade-up" style="margin-top: 4rem;">
-                <h3 style="text-align: center; font-size: 1.8rem; margin-bottom: 2rem;">Ask Anything, Get Answers Instantly</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                <h3 class="use-cases-title" style="text-align: center; font-size: 1.8rem; margin-bottom: 2rem;">Ask Anything, Get Answers Instantly</h3>
+                <div class="use-cases-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
                     <!-- Sales Intelligence -->
                     <div class="use-case-card" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                        <div class="use-case-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="use-case-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
                                 📈
                             </div>
-                            <h4 style="font-size: 1.2rem; margin: 0;">Sales Intelligence</h4>
+                            <h4 class="use-case-title" style="font-size: 1.2rem; margin: 0;">Sales Intelligence</h4>
                         </div>
                         <ul style="list-style: none; padding: 0;">
                             <li style="color: rgba(255, 255, 255, 0.7); padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
                                 <span style="color: var(--emerald);">✓</span>
-                                "Which customers are at risk of churning?"
+                                <span>"Which customers are at risk of churning?"</span>
                             </li>
                             <li style="color: rgba(255, 255, 255, 0.7); padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
                                 <span style="color: var(--emerald);">✓</span>
-                                "What's our pipeline velocity this month?"
+                                <span>"What's our pipeline velocity this month?"</span>
                             </li>
                             <li style="color: rgba(255, 255, 255, 0.7); padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
                                 <span style="color: var(--emerald);">✓</span>
-                                "Show me deals closing this week"
+                                <span>"Show me deals closing this week"</span>
                             </li>
                         </ul>
                     </div>
                     
                     <!-- Operations Analytics -->
                     <div class="use-case-card" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--emerald) 0%, var(--success) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                        <div class="use-case-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="use-case-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--emerald) 0%, var(--success) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
                                 ⚙️
                             </div>
-                            <h4 style="font-size: 1.2rem; margin: 0;">Operations Analytics</h4>
+                            <h4 class="use-case-title" style="font-size: 1.2rem; margin: 0;">Operations Analytics</h4>
                         </div>
                         <ul style="list-style: none; padding: 0;">
                             <li style="color: rgba(255, 255, 255, 0.7); padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
                                 <span style="color: var(--emerald);">✓</span>
-                                "Where are our biggest bottlenecks?"
+                                <span>"Where are our biggest bottlenecks?"</span>
                             </li>
                             <li style="color: rgba(255, 255, 255, 0.7); padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
                                 <span style="color: var(--emerald);">✓</span>
-                                "How efficient was production today?"
+                                <span>"How efficient was production today?"</span>
                             </li>
                             <li style="color: rgba(255, 255, 255, 0.7); padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
                                 <span style="color: var(--emerald);">✓</span>
-                                "Compare this month to last year"
+                                <span>"Compare this month to last year"</span>
                             </li>
                         </ul>
                     </div>
                     
                     <!-- Financial Insights -->
                     <div class="use-case-card" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary) 0%, var(--pink) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                        <div class="use-case-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="use-case-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary) 0%, var(--pink) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
                                 💰
                             </div>
-                            <h4 style="font-size: 1.2rem; margin: 0;">Financial Insights</h4>
+                            <h4 class="use-case-title" style="font-size: 1.2rem; margin: 0;">Financial Insights</h4>
                         </div>
                         <ul style="list-style: none; padding: 0;">
                             <li style="color: rgba(255, 255, 255, 0.7); padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
                                 <span style="color: var(--emerald);">✓</span>
-                                "What's our burn rate trend?"
+                                <span>"What's our burn rate trend?"</span>
                             </li>
                             <li style="color: rgba(255, 255, 255, 0.7); padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
                                 <span style="color: var(--emerald);">✓</span>
-                                "Show revenue by product line"
+                                <span>"Show revenue by product line"</span>
                             </li>
                             <li style="color: rgba(255, 255, 255, 0.7); padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
                                 <span style="color: var(--emerald);">✓</span>
-                                "Forecast next quarter's cash flow"
+                                <span>"Forecast next quarter's cash flow"</span>
                             </li>
                         </ul>
                     </div>
@@ -2069,13 +2069,18 @@
             <!-- Integration Partners -->
             <div class="integrations animate-on-scroll fade-up" style="margin-top: 4rem; text-align: center;">
                 <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 2rem;">Seamlessly connects with your existing data sources</p>
-                <div style="display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; align-items: center;">
-                    <div style="opacity: 0.6;">CRM Systems</div>
-                    <div style="opacity: 0.6;">• ERP Platforms</div>
-                    <div style="opacity: 0.6;">• Databases</div>
-                    <div style="opacity: 0.6;">• Spreadsheets</div>
-                    <div style="opacity: 0.6;">• APIs</div>
-                    <div style="opacity: 0.6;">• Cloud Storage •</div>
+                <div class="integration-list" style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; align-items: center;">
+                    <div style="color: rgba(255, 255, 255, 0.6);">CRM Systems</div>
+                    <div style="color: rgba(255, 255, 255, 0.3);">•</div>
+                    <div style="color: rgba(255, 255, 255, 0.6);">ERP Platforms</div>
+                    <div style="color: rgba(255, 255, 255, 0.3);">•</div>
+                    <div style="color: rgba(255, 255, 255, 0.6);">Databases</div>
+                    <div style="color: rgba(255, 255, 255, 0.3);">•</div>
+                    <div style="color: rgba(255, 255, 255, 0.6);">Spreadsheets</div>
+                    <div style="color: rgba(255, 255, 255, 0.3);">•</div>
+                    <div style="color: rgba(255, 255, 255, 0.6);">APIs</div>
+                    <div style="color: rgba(255, 255, 255, 0.3);">•</div>
+                    <div style="color: rgba(255, 255, 255, 0.6);">Cloud Storage</div>
                 </div>
             </div>
             
@@ -2091,6 +2096,156 @@
             </div>
         </div>
     </section>
+
+    <!-- Mobile Responsive CSS for Conversational AI Section -->
+    <style>
+    /* Mobile styles for Conversational AI section */
+    @media (max-width: 768px) {
+        /* Main showcase grid - stack on mobile */
+        .ai-showcase-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+        }
+        
+        /* Adjust padding on mobile */
+        .ai-showcase-container {
+            padding: 1.5rem !important;
+        }
+        
+        /* Content section adjustments */
+        .ai-showcase-content h3 {
+            font-size: 1.5rem !important;
+        }
+        
+        .ai-showcase-content p {
+            font-size: 1rem !important;
+        }
+        
+        /* Feature tags - allow wrapping */
+        .feature-tags {
+            justify-content: center !important;
+        }
+        
+        .feature-tags > div {
+            font-size: 0.8rem !important;
+            padding: 0.4rem 0.8rem !important;
+        }
+        
+        /* Chat interface adjustments */
+        .chat-interface {
+            padding: 1rem !important;
+        }
+        
+        .chat-message {
+            font-size: 0.8rem !important;
+            padding: 0.6rem 0.8rem !important;
+        }
+        
+        .chat-data {
+            font-size: 0.75rem !important;
+        }
+        
+        /* Stats grid - ensure proper stacking */
+        .stats-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+            margin: 2rem 0 !important;
+        }
+        
+        /* Stat cards adjustments */
+        .stat-card {
+            padding: 1.5rem !important;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem !important;
+        }
+        
+        .stat-title {
+            font-size: 0.9rem !important;
+        }
+        
+        .stat-subtitle {
+            font-size: 0.75rem !important;
+        }
+        
+        /* Use cases grid */
+        .use-cases-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+        }
+        
+        .use-cases-title {
+            font-size: 1.5rem !important;
+        }
+        
+        /* Use case cards */
+        .use-case-card {
+            padding: 1.25rem !important;
+        }
+        
+        .use-case-header {
+            flex-wrap: wrap !important;
+        }
+        
+        .use-case-icon {
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 1.25rem !important;
+        }
+        
+        .use-case-title {
+            font-size: 1.1rem !important;
+        }
+        
+        .use-case-card li {
+            font-size: 0.85rem !important;
+        }
+        
+        /* Integration list */
+        .integration-list {
+            gap: 1rem !important;
+            font-size: 0.85rem !important;
+        }
+        
+        /* Hide bullet points on very small screens */
+        .integration-list > div:nth-child(2n) {
+            display: none !important;
+        }
+    }
+
+    /* Small mobile adjustments */
+    @media (max-width: 480px) {
+        .ai-showcase-container {
+            padding: 1rem !important;
+            border-radius: 12px !important;
+        }
+        
+        .feature-tags > div {
+            font-size: 0.75rem !important;
+            padding: 0.3rem 0.6rem !important;
+        }
+        
+        .stat-number {
+            font-size: 2rem !important;
+        }
+        
+        .use-case-card {
+            padding: 1rem !important;
+        }
+    }
+
+    /* Tablet adjustments */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+        
+        .use-cases-grid {
+            grid-template-columns: 1fr !important;
+        }
+    }
+    </style>
 
     <!-- Pricing Section with Pilot Program -->
     <section class="section" id="pricing">
