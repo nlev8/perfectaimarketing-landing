@@ -945,7 +945,7 @@
             .hero {
                 min-height: 100vh;
                 min-height: 100svh; /* Use small viewport height for mobile browsers */
-                padding: 80px 15px 20px; /* Reduced padding */
+                padding: 80px 15px 40px; /* Adequate bottom padding */
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -960,38 +960,38 @@
             .hero-badge {
                 font-size: 0.7rem;
                 padding: 6px 12px;
-                margin-bottom: 1.5rem; /* Reduced from 2rem */
+                margin-bottom: 1.5rem;
             }
             
             /* Compact hero title */
             h1 {
-                font-size: 2.25rem; /* Slightly larger than before */
+                font-size: 2.25rem;
                 line-height: 1.15;
-                margin-bottom: 1rem; /* Reduced from 1.5rem */
+                margin-bottom: 1rem;
             }
             
             /* Compact hero description */
             .hero-description {
                 font-size: 1rem;
-                margin-bottom: 1.5rem; /* Reduced from 2rem */
+                margin-bottom: 1.5rem;
                 padding: 0 10px;
             }
             
             /* CTA buttons */
             .cta-buttons {
-                margin-bottom: 0; /* Remove margin - let trust badges handle spacing */
+                margin-bottom: 2rem; /* Space before trust badges */
             }
             
-            /* Move Aimee experience completely out of first viewport */
+            /* PUSH AIMEE EXPERIENCE WELL BELOW THE FOLD */
             .aimee-experience {
-                margin: 2rem 0 1rem 0; /* Reduced top margin */
+                margin: 4rem 0 2rem 0; /* Large top margin to ensure it's off-screen */
                 padding: 1.25rem;
             }
             
-            /* Trust badges - much less space */
+            /* Trust badges - compact but with enough bottom margin to fill viewport */
             .trust-badges {
-                margin-bottom: 1rem; /* Drastically reduced from 3rem */
-                margin-top: 1.5rem;
+                margin-bottom: 2rem; /* This ensures we fill the viewport but don't show Aimee */
+                margin-top: 0;
                 gap: 0.5rem;
             }
             
@@ -1009,14 +1009,14 @@
                 height: 16px;
             }
             
-            /* Problem Section - Reduce top padding significantly */
+            /* Problem Section - Reduce top padding to minimize gap after trust badges */
             .section {
-                padding: 40px 0 30px; /* Reduced from 80px */
+                padding: 40px 0 30px;
             }
             
-            /* First section after hero needs even less top padding */
+            /* First section after hero needs minimal top padding */
             .hero + .section {
-                padding-top: 30px;
+                padding-top: 20px; /* Minimal gap after trust badges */
             }
         }
 
@@ -1025,27 +1025,27 @@
             /* Hero adjustments for tablets */
             .hero {
                 min-height: 100vh;
-                padding: 100px 20px 40px;
+                padding: 100px 20px 60px;
             }
             
-            /* Reduce trust badges margin on tablets too */
+            /* Push Aimee down on tablets too */
+            .aimee-experience {
+                margin-top: 3rem;
+            }
+            
+            /* Reduce trust badges margin on tablets */
             .trust-badges {
-                margin-bottom: 2rem; /* Reduced from 3rem */
+                margin-bottom: 2rem;
             }
             
             /* Reduce section padding on tablets */
             .section {
-                padding: 60px 0; /* Reduced from 80px */
+                padding: 60px 0;
             }
         }
 
         /* Additional mobile optimizations for better viewport usage */
         @media (max-width: 575px) {
-            /* Hide decorative elements on mobile to save space */
-            .badge-text::before {
-                display: none;
-            }
-            
             /* Make buttons more thumb-friendly */
             .btn-primary {
                 padding: 1rem 1.5rem;
@@ -1072,7 +1072,7 @@
         @supports (padding-bottom: env(safe-area-inset-bottom)) {
             @media (max-width: 575px) {
                 .hero {
-                    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+                    padding-bottom: calc(40px + env(safe-area-inset-bottom));
                 }
             }
         }
