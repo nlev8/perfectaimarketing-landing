@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://perfectaimarketing.com/</loc>
-    <lastmod>2025-08-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://perfectaimarketing.com/thank-you.html</loc>
-    <lastmod>2024-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://perfectaimarketing.com/llm.txt</loc>
-    <lastmod>2024-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://perfectaimarketing.com/robots.txt</loc>
-    <lastmod>2024-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+    <!-- Homepage -->
+    <url>
+        <loc>https://perfectaimarketing.com/</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- Privacy Policy -->
+    <url>
+        <loc>https://perfectaimarketing.com/privacy-policy</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
+    <!-- Terms & Conditions -->
+    <url>
+        <loc>https://perfectaimarketing.com/terms-and-conditions</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    
+    <!-- Thank You Page (usually not indexed, but included for completeness) -->
+    <url>
+        <loc>https://perfectaimarketing.com/thank-you</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+    </url>
 </urlset>
