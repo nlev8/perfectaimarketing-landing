@@ -1326,7 +1326,7 @@
     <!-- Problem Section -->
     <section class="section">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header animate-on-scroll fade-up">
                 <span class="section-badge badge-orange">THE REAL COST</span>
                 <h2 class="section-title">The Silent Profit Killers Hiding in Plain Sight</h2>
                 <p class="section-subtitle">
@@ -1401,7 +1401,7 @@
     <!-- Solution Section -->
     <section class="section" id="solutions" style="background: rgba(255, 255, 255, 0.02);">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header animate-on-scroll fade-up">
                 <span class="section-badge badge-green">THE SOLUTION</span>
                 <h2 class="section-title">Intelligent Systems That Evolve With You</h2>
                 <p class="section-subtitle">
@@ -1459,7 +1459,7 @@
     <!-- Services Section -->
     <section class="section" id="services">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header animate-on-scroll fade-up">
                 <span class="section-badge badge-purple">AUTOMATION SOLUTIONS</span>
                 <h2 class="section-title">Automate What Actually Drains Your Time</h2>
                 <p class="section-subtitle">
@@ -1483,7 +1483,8 @@
                         <li>AI receptionist answers calls instantly</li>
                         <li>Books appointments while you sleep</li>
                         <li>Sends automatic reminders</li>
-                        <li>Syncs with your calendar in real-time</li>
+                        <li>Syncs with your calendar and CRM in real-time</li>
+                        <li>Can answer questions about your products or services</li>
                     </ul>
                     <div style="background: linear-gradient(135deg, #10B981, #34D399); padding: 1rem; border-radius: 8px; margin-top: 1.5rem; text-align: center;">
                         <p style="color: white; font-weight: 600; margin-bottom: 0.5rem;">Try it now! Call Aimee:</p>
@@ -1779,12 +1780,124 @@
             width: 50px;
         }
     }
+        /* =================================== */
+        /* SCROLL-TRIGGERED ANIMATIONS */
+        /* =================================== */
+
+        /* Fade in animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Fade in from left */
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Fade in from right */
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Scale in animation */
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Initial state for animated elements */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.fade-up {
+            transform: translateY(30px);
+        }
+
+        .animate-on-scroll.fade-left {
+            transform: translateX(-30px);
+        }
+
+        .animate-on-scroll.fade-right {
+            transform: translateX(30px);
+        }
+
+        .animate-on-scroll.scale {
+            transform: scale(0.9);
+        }
+
+        /* Visible state */
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0) translateX(0) scale(1);
+        }
+
+        /* Stagger children animations */
+        .stagger-children > * {
+            transition-delay: 0ms;
+        }
+
+        .stagger-children.visible > *:nth-child(1) { transition-delay: 100ms; }
+        .stagger-children.visible > *:nth-child(2) { transition-delay: 200ms; }
+        .stagger-children.visible > *:nth-child(3) { transition-delay: 300ms; }
+        .stagger-children.visible > *:nth-child(4) { transition-delay: 400ms; }
+        .stagger-children.visible > *:nth-child(5) { transition-delay: 500ms; }
+        .stagger-children.visible > *:nth-child(6) { transition-delay: 600ms; }
+
+        /* Hero animations - immediate on load */
+        .hero h1 {
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        .hero .hero-description {
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+
+        .hero .cta-buttons {
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+
+        .hero .aimee-experience {
+            animation: scaleIn 1s ease-out 0.8s backwards;
+        }
+
+        .hero .trust-badges {
+            animation: fadeInUp 1s ease-out 1s backwards;
+        }
     </style>
 
     <!-- Pricing Section with Pilot Program -->
     <section class="section" id="pricing">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header animate-on-scroll fade-up">
                 <span class="section-badge badge-purple">INVESTMENT OPTIONS</span>
                 <h2 class="section-title">Start Small, Scale Smart</h2>
                 <p class="section-subtitle">
@@ -2248,6 +2361,50 @@
            
            animate();
            
+           // Intersection Observer for scroll animations
+           document.addEventListener('DOMContentLoaded', function() {
+               // Add animation classes to elements
+               // Section headers
+               document.querySelectorAll('.section-header').forEach(header => {
+                   header.classList.add('animate-on-scroll', 'fade-up');
+               });
+               
+               // Cards
+               document.querySelectorAll('.card, .service-card, .pricing-card').forEach(card => {
+                   card.classList.add('animate-on-scroll', 'scale');
+               });
+               
+               // Grid containers for stagger effect
+               document.querySelectorAll('.cards-grid, .services-grid, .pricing-grid').forEach(grid => {
+                   grid.classList.add('stagger-children');
+               });
+               
+               // Create intersection observer
+               const observerOptions = {
+                   threshold: 0.1,
+                   rootMargin: '0px 0px -50px 0px'
+               };
+               
+               const observer = new IntersectionObserver((entries) => {
+                   entries.forEach(entry => {
+                       if (entry.isIntersecting) {
+                           entry.target.classList.add('visible');
+                           // Optional: unobserve after animation
+                           // observer.unobserve(entry.target);
+                       }
+                   });
+               }, observerOptions);
+               
+               // Observe all animated elements
+               document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                   observer.observe(el);
+               });
+               
+               // Also observe grids for stagger effect
+               document.querySelectorAll('.stagger-children').forEach(el => {
+                   observer.observe(el);
+               });
+           });
            // Resize handler
            window.addEventListener('resize', () => {
                canvas.width = window.innerWidth;
