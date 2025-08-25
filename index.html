@@ -983,8 +983,9 @@
             }
             
             .aimee-experience {
-                margin: 1.5rem 0 2rem 0; /* Large top margin to ensure it's off-screen */
-                padding: 1.25rem;
+                margin: 0.5rem auto;
+                padding: 0.75rem;
+                line-height: 1.2;
             }
             
             /* Trust badges - compact but with enough bottom margin to fill viewport */
@@ -1099,6 +1100,118 @@
         @media (max-width: 767px) {
             .pricing-grid {
                 grid-template-columns: 1fr;
+            }
+        }
+        /* AIMEE SECTION LINE SPACING FIX */
+
+        /* Mobile - Tighter line spacing for Aimee */
+        @media (max-width: 575px) {
+            .aimee-experience {
+                margin: 0.5rem auto;
+                padding: 0.75rem;
+                line-height: 1.2; /* Tighter line height */
+            }
+            
+            .aimee-experience h3 {
+                font-size: 0.95rem;
+                margin-bottom: 0.2rem;
+                line-height: 1.1;
+            }
+            
+            .aimee-experience p {
+                font-size: 0.875rem;
+                margin-bottom: 0.3rem;
+                line-height: 1.2; /* Reduce line spacing */
+            }
+            
+            .phone-number {
+                font-size: 1.2rem;
+                padding: 0.4rem 0.8rem;
+                margin-bottom: 0;
+                line-height: 1;
+            }
+            
+            /* Hide the last p tag (response time) on mobile to save space */
+            .aimee-experience p:last-child {
+                display: none;
+            }
+        }
+
+        /* Desktop - Ensure trust badges are visible in viewport */
+        @media (min-width: 992px) {
+            .hero {
+                min-height: 100vh;
+                padding: 100px 20px 40px; /* Adjusted padding */
+            }
+            
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                max-width: 1200px;
+                margin: 0 auto;
+                height: calc(100vh - 140px); /* Account for padding */
+            }
+            
+            /* Reduce spacing between elements on desktop */
+            .hero-badge {
+                margin-bottom: 1.5rem;
+            }
+            
+            h1 {
+                margin-bottom: 1rem;
+            }
+            
+            .hero-description {
+                margin-bottom: 1.5rem;
+            }
+            
+            .cta-buttons {
+                margin-bottom: 1rem;
+            }
+            
+            .aimee-experience {
+                margin: 1rem auto;
+                padding: 1rem;
+            }
+            
+            /* Ensure trust badges are visible */
+            .trust-badges {
+                margin-top: 1rem;
+                margin-bottom: 0;
+                padding-bottom: 1rem;
+            }
+        }
+
+        /* Tablet adjustments */
+        @media (min-width: 576px) and (max-width: 991px) {
+            .aimee-experience {
+                line-height: 1.3;
+            }
+            
+            .aimee-experience p {
+                line-height: 1.3;
+            }
+        }
+
+        /* Very small phones - even tighter */
+        @media (max-width: 375px) {
+            .aimee-experience {
+                padding: 0.5rem;
+            }
+            
+            .aimee-experience h3 {
+                font-size: 0.875rem;
+            }
+            
+            .aimee-experience p {
+                font-size: 0.8rem;
+                margin-bottom: 0.25rem;
+            }
+            
+            .phone-number {
+                font-size: 1.1rem;
+                padding: 0.3rem 0.6rem;
             }
         }
     </style>
