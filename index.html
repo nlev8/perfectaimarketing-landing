@@ -323,9 +323,15 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--pink) 50%, var(--purple) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: block;
+            background-clip: text;
+            display: inline-block;
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            filter: none;
+            -webkit-filter: none;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
         }
-
         .hero-description {
             font-size: 1.25rem;
             color: rgba(255, 255, 255, 0.8);
@@ -2068,21 +2074,23 @@
             </div>
             
             <!-- Integration Partners -->
-            <div class="integrations animate-on-scroll fade-up" style="margin-top: 4rem; text-align: center;">
-                <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 2rem;">Seamlessly connects with your existing data sources</p>
-                <div class="integration-list" style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; align-items: center;">
-                    <div style="color: rgba(255, 255, 255, 0.6);">CRM Systems</div>
-                    <div style="color: rgba(255, 255, 255, 0.3);">•</div>
-                    <div style="color: rgba(255, 255, 255, 0.6);">ERP Platforms</div>
-                    <div style="color: rgba(255, 255, 255, 0.3);">•</div>
-                    <div style="color: rgba(255, 255, 255, 0.6);">Databases</div>
-                    <div style="color: rgba(255, 255, 255, 0.3);">•</div>
-                    <div style="color: rgba(255, 255, 255, 0.6);">Spreadsheets</div>
-                    <div style="color: rgba(255, 255, 255, 0.3);">•</div>
-                    <div style="color: rgba(255, 255, 255, 0.6);">APIs</div>
-                    <div style="color: rgba(255, 255, 255, 0.3);">•</div>
-                    <div style="color: rgba(255, 255, 255, 0.6);">Cloud Storage</div>
+            <div class="service-card">
+                <div class="card-icon">
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 40px; height: 40px;">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
                 </div>
+                <h3 class="card-title">Seamless Data Integration</h3>
+                <p class="card-description">Connect all your existing data sources in one unified platform</p>
+                <ul class="service-features">
+                    <li>CRM Systems</li>
+                    <li>ERP Platforms</li>
+                    <li>Databases</li>
+                    <li>Spreadsheets</li>
+                    <li>APIs</li>
+                    <li>Cloud Storage</li>
+                </ul>
             </div>
             
             <!-- CTA -->
