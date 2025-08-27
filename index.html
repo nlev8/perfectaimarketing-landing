@@ -1016,28 +1016,31 @@
                 .trust-badge:nth-child(1),
                 .trust-badge:nth-child(2) {
                     flex: 0 1 calc(50% - 0.25rem); /* Half width minus gap */
-                    min-width: 140px;
+                    min-width: 120px;
                 }
                 
                 /* Third badge centered below */
                 .trust-badge:nth-child(3) {
                     flex: 0 1 auto;
-                    min-width: 280px;
-                    max-width: 100%;
+                            min-width: auto;
+                            max-width: max-content;
+                            font-size: 0.7rem;
+                            padding: 5px 8px; /* Smaller padding */
                 }
             
             .trust-badge {
-                font-size: 0.8rem;
-                padding: 8px 12px;
+                font-size: 0.75rem;
+                padding: 6px 10px;
+                white-space: nowrap;
             }
             
             .trust-badge-text {
-                font-size: 0.8rem;
+                font-size: 0.7rem;
             }
             
             .trust-badge-icon {
-                width: 16px;
-                height: 16px;
+                width: 14px;
+                height: 14px;
             }
             
             /* Problem Section - Reduce top padding to minimize gap after trust badges */
@@ -1243,6 +1246,19 @@
                 font-size: 1.1rem;
                 padding: 0.3rem 0.6rem;
             }
+            .trust-badge {
+                    font-size: 0.65rem;
+                    padding: 5px 8px;
+                }
+                
+                .trust-badge-text {
+                    font-size: 0.65rem;
+                }
+                
+                .trust-badge-icon {
+                    width: 12px;
+                    height: 12px;
+                }
         }
     </style>
 </head>
