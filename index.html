@@ -951,13 +951,13 @@
         @media (max-width: 575px) {
             /* Hero section - exactly one viewport */
             .hero {
-                min-height: 100vh;
-                min-height: 100svh; /* Use small viewport height for mobile browsers */
-                padding: 80px 15px 40px; /* Adequate bottom padding */
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+                    min-height: 100vh;
+                    min-height: 100svh;
+                    padding: 80px 15px 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
             
             .hero-content {
                 width: 100%;
@@ -968,39 +968,40 @@
             .hero-badge {
                 font-size: 0.7rem;
                 padding: 6px 12px;
-                margin-bottom: 1.5rem;
+                margin-bottom: 1rem;
             }
             
             /* Compact hero title */
             h1 {
                 font-size: 2.25rem;
                 line-height: 1.15;
-                margin-bottom: 1rem;
+                margin-bottom: .75rem;
             }
             
             /* Compact hero description */
             .hero-description {
                 font-size: 1rem;
-                margin-bottom: 1.5rem;
+                margin-bottom: 1rem;
                 padding: 0 10px;
             }
             
             /* CTA buttons */
             .cta-buttons {
-                margin-bottom: 2rem; /* Space before trust badges */
+                margin-bottom: 0.5rem; /* Space before trust badges */
+                gap: 0.5rem;
             }
             
             .aimee-experience {
-                margin: 0.5rem auto;
-                padding: 0.75rem;
+                margin: 0.25rem auto;
+                padding: 0.5rem;
                 line-height: 1.2;
             }
             
             /* Trust badges - compact but with enough bottom margin to fill viewport */
             .trust-badges {
-                margin-bottom: 2rem; /* This ensures we fill the viewport but don't show Aimee */
+                margin-bottom: 1rem; /* This ensures we fill the viewport but don't show Aimee */
                 margin-top: 0;
-                gap: 0.5rem;
+                gap: 0.4rem;
             }
             
             .trust-badge {
