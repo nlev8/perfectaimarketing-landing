@@ -941,13 +941,15 @@
             box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
             background: linear-gradient(135deg, #059669 0%, #10B981 100%);
         }
-
-        /* Fix 4-column grid layout */
-        @media (min-width: 1200px) {
-            .pricing-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
+        
+        /* Desktop - 3 columns for pricing */
+@media (min-width: 1200px) {
+    .pricing-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+}
 
         /* MOBILE VIEWPORT AND SPACING FIXES */
 
