@@ -1421,10 +1421,19 @@
                         <span>Weekend: Actually yours again</span>
                     </li>
                 </ul>
+                    <!-- Add this at the bottom of your after-card -->
+<div class="time-saved-indicator" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(16, 185, 129, 0.2);">
+    <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: rgba(255, 255, 255, 0.7);">Time Saved Weekly:</p>
+    <div class="progress-bar-container" style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+        <div class="progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--emerald) 0%, var(--success) 100%); transition: width 2s ease-out;"></div>
+    </div>
+    <p style="font-size: 1.25rem; margin-top: 0.5rem; font-weight: bold; color: var(--emerald);">15-20 Hours</p>
+</div>
             </div>
         </div>
     </div>
 </section>
+
     <!-- Solution Section - Simplified -->
 <section class="section" id="solutions" style="background: rgba(255, 255, 255, 0.02);">
     <div class="container">
@@ -2980,13 +2989,54 @@
                document.querySelectorAll('.stagger-children').forEach(el => {
                    observer.observe(el);
                });
+               / Animate progress bar when visible
+const progressBar = document.querySelector('.progress-bar');
+if (progressBar) {
+    const afterCard = progressBar.closest('.after-card');
+    const progressObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    progressBar.style.width = '75%';
+                }, 500);
+                // Stop observing after animation
+                progressObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.5 // Trigger when 50% visible
+    });
+    progressObserver.observe(afterCard);
+}
            });
            // Resize handler
            window.addEventListener('resize', () => {
                canvas.width = window.innerWidth;
                canvas.height = window.innerHeight;
            });
-           
+           // Force scroll to top on page load/refresh
+window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+};
+
+// Also handle page show event for iOS Safari
+window.addEventListener('pageshow', function(event) {
+    // If page is loaded from cache (back button)
+    if (event.persisted) {
+        window.scrollTo(0, 0);
+    }
+});
+
+// Ensure we're at top when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant'
+        });
+    }, 0);
+});
            // Navigation scroll effect
            window.addEventListener('scroll', function() {
                const nav = document.getElementById('navbar');
