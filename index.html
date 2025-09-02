@@ -1727,7 +1727,7 @@
 
     .logo-track {
         display: flex;
-        animation: scroll 30s linear infinite;
+        animation: scroll 25s linear infinite;
     }
 
     .logo-item {
@@ -2046,21 +2046,64 @@
     }
 }
 
-/* Add subtle animations */
+/* ===== BEFORE/AFTER SLIDE ANIMATION ===== */
+
+/* Initial state - hidden */
 .before-after-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
 }
 
-.before-after-card:hover {
+.before-card {
+    transform: translateX(-50px);
+}
+
+.after-card {
+    transform: translateX(50px);
+}
+
+/* Visible state */
+.before-after-card.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Hover effects (only after visible) */
+.before-after-card.visible:hover {
     transform: translateY(-5px);
 }
 
-.before-card:hover {
+.before-card.visible:hover {
     box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
 }
 
-.after-card:hover {
+.after-card.visible:hover {
     box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
+}
+
+/* Stagger the animation */
+.after-card.visible {
+    transition-delay: 0.3s;
+}
+
+/* On mobile, slide up instead of sideways */
+@media (max-width: 768px) {
+    .before-card {
+        transform: translateY(30px);
+    }
+    
+    .after-card {
+        transform: translateY(30px);
+    }
+    
+    .after-card.visible {
+        transition-delay: 0.2s;
+    }
+    
+    /* Disable hover lift on mobile */
+    .before-after-card.visible:hover {
+        transform: none;
+    }
 }
 
 /* Optional: Add icons instead of emoji for better consistency */
