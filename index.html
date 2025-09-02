@@ -1370,7 +1370,7 @@
         
         <div class="before-after-grid">
             <!-- Before Column -->
-            <div class="before-after-card before-card">
+            <div class="before-after-card before-card animate-on-scroll">
                 <h3>😓 Your Day Now</h3>
                 <ul>
                     <li>
@@ -1397,7 +1397,7 @@
             </div>
             
             <!-- After Column -->
-            <div class="before-after-card after-card">
+            <div class="before-after-card after-card animate-on-scroll">
                 <h3>🎯 Your Day With Perfect AIm</h3>
                 <ul>
                     <li>
@@ -2046,64 +2046,21 @@
     }
 }
 
-/* ===== BEFORE/AFTER SLIDE ANIMATION ===== */
-
-/* Initial state - hidden */
+/* Add subtle animations */
 .before-after-card {
-    opacity: 0;
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.before-card {
-    transform: translateX(-50px);
-}
-
-.after-card {
-    transform: translateX(50px);
-}
-
-/* Visible state */
-.before-after-card.visible {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Hover effects (only after visible) */
-.before-after-card.visible:hover {
+.before-after-card:hover {
     transform: translateY(-5px);
 }
 
-.before-card.visible:hover {
+.before-card:hover {
     box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
 }
 
-.after-card.visible:hover {
+.after-card:hover {
     box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
-}
-
-/* Stagger the animation */
-.after-card.visible {
-    transition-delay: 0.3s;
-}
-
-/* On mobile, slide up instead of sideways */
-@media (max-width: 768px) {
-    .before-card {
-        transform: translateY(30px);
-    }
-    
-    .after-card {
-        transform: translateY(30px);
-    }
-    
-    .after-card.visible {
-        transition-delay: 0.2s;
-    }
-    
-    /* Disable hover lift on mobile */
-    .before-after-card.visible:hover {
-        transform: none;
-    }
 }
 
 /* Optional: Add icons instead of emoji for better consistency */
@@ -2112,6 +2069,35 @@
     .before-after-card h3 {
         text-align: center;
     }
+}
+
+/* Simple fade-in animation that won't break layout */
+.before-after-card {
+    transition: all 0.3s ease;
+}
+
+/* Add these classes to trigger animation */
+.before-after-card.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.before-after-card.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover effects */
+.before-after-card:hover {
+    transform: translateY(-5px);
+}
+
+.before-card:hover {
+    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+}
+
+.after-card:hover {
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
 }
 
     </style>
