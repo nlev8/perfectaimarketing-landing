@@ -1394,6 +1394,14 @@
                         <span>Weekend: Still catching up</span>
                     </li>
                 </ul>
+                <!-- Add this inside the before-card, after the </ul> -->
+<div class="stress-indicator" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 107, 53, 0.2);">
+    <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: rgba(255, 255, 255, 0.7);">Daily Stress Level:</p>
+    <div class="stress-meter-container" style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+        <div class="stress-meter" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary) 0%, #ff4444 100%); transition: width 2s ease-out;"></div>
+    </div>
+    <p style="font-size: 1.25rem; margin-top: 0.5rem; font-weight: bold; color: var(--primary);">Overwhelming 😰</p>
+</div>
             </div>
             
             <!-- After Column -->
@@ -3007,6 +3015,24 @@ if (progressBar) {
         threshold: 0.5 // Trigger when 50% visible
     });
     progressObserver.observe(afterCard);
+}
+                // Animate stress meter when visible
+const stressMeter = document.querySelector('.stress-meter');
+if (stressMeter) {
+    const beforeCard = stressMeter.closest('.before-card');
+    const stressObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    stressMeter.style.width = '90%'; // High stress!
+                }, 300); // Starts before the progress bar
+                stressObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.5
+    });
+    stressObserver.observe(beforeCard);
 }
            });
            // Resize handler
