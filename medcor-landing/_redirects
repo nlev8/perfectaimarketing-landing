@@ -1,2 +1,0 @@
-# Subdomain routing
-https://medcor.perfectaimarketing.com/* /medcor/:splat 200!
