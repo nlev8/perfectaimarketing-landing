@@ -225,13 +225,14 @@
             color: rgba(255,255,255,0.8);
         }
 
-        /* Hero Section */
+        /* Hero Section - Mobile Optimized */
         .hero {
             min-height: 100vh;
+            min-height: 100svh; /* For mobile browsers with dynamic viewports */
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 120px var(--side-padding) 80px;
+            padding: 100px var(--side-padding) 60px;
             position: relative;
             z-index: 10;
             width: 100%;
@@ -253,7 +254,20 @@
             backdrop-filter: blur(10px);
             margin-bottom: 2rem;
         }
-
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px var(--side-padding) 40px;
+                min-height: 100vh;
+                min-height: 100dvh; /* Dynamic viewport height */
+            }
+            
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                height: 100%;
+            }
+        }
         .badge-text {
             color: var(--medical-teal);
             font-size: 0.875rem;
@@ -692,7 +706,204 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
-        
+        /* Mobile Optimizations - Add this around line 650, before the animations */
+        @media (max-width: 768px) {
+            /* Hero text sizing */
+            h1 {
+                font-size: 2rem;
+                line-height: 1.2;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+                padding: 0 10px;
+            }
+            
+            /* Compact badges */
+            .hero-badge {
+                font-size: 0.7rem;
+                padding: 6px 12px;
+                margin-bottom: 1rem;
+            }
+            
+            /* Stack CTA buttons vertically */
+            .cta-buttons {
+                flex-direction: column;
+                gap: 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+                font-size: 1rem;
+                padding: 0.875rem 1.5rem;
+            }
+            
+            /* Compact trust badges */
+            .trust-badges {
+                gap: 0.5rem;
+                margin-bottom: 1rem;
+                flex-wrap: wrap;
+            }
+            
+            .trust-badge {
+                font-size: 0.75rem;
+                padding: 6px 10px;
+            }
+            
+            .trust-badge-icon {
+                width: 16px;
+                height: 16px;
+            }
+            
+            /* First two badges side by side, third centered */
+            .trust-badge:nth-child(1),
+            .trust-badge:nth-child(2) {
+                flex: 0 1 calc(50% - 0.25rem);
+            }
+            
+            .trust-badge:nth-child(3) {
+                flex: 0 1 auto;
+            }
+        }
+
+        /* Very small phones */
+        @media (max-width: 375px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            .hero-description {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+            
+            .btn-primary, .btn-secondary {
+                font-size: 0.9rem;
+                padding: 0.75rem 1.25rem;
+            }
+            
+            .trust-badge {
+                font-size: 0.65rem;
+                padding: 5px 8px;
+            }
+        }
+
+        /* Tablets */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero {
+                padding: 100px var(--side-padding) 60px;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-description {
+                font-size: 1.125rem;
+            }
+        }
+        /* Form Section Mobile - Add right after #2 */
+        @media (max-width: 768px) {
+            .cta-section {
+                padding: 60px var(--side-padding);
+            }
+            
+            .cta-content img {
+                height: 200px !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .cta-title {
+                font-size: 1.75rem;
+            }
+            
+            .consent-section {
+                padding: 15px !important;
+            }
+            
+            .consent-section p {
+                font-size: 13px !important;
+            }
+            
+            .consent-section label {
+                font-size: 13px !important;
+            }
+            
+            input[type="checkbox"] {
+                width: 16px !important;
+                height: 16px !important;
+            }
+        }
+        /* Pricing Mobile - Add right after Form Section Mobile */
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .pricing-card {
+                padding: 1.5rem;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            
+            .pricing-price {
+                font-size: 2.5rem;
+            }
+            
+            /* Infrastructure box responsive */
+            div[style*="max-width: fit-content"] {
+                max-width: 100% !important;
+                margin: 1rem 0 !important;
+            }
+            
+            /* Stack infrastructure cards on very small screens */
+            @media (max-width: 480px) {
+                div[style*="grid-template-columns: 1fr 1fr"] {
+                    grid-template-columns: 1fr !important;
+                    gap: 0.75rem !important;
+                }
+            }
+        }
+        /* Section padding adjustments */
+        @media (max-width: 768px) {
+            .section {
+                padding: 50px var(--side-padding);
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+            }
+            
+            /* Example cards */
+            .example-grid {
+                gap: 1.5rem;
+            }
+            
+            .example-card {
+                padding: 1.5rem;
+            }
+            
+            .example-header {
+                font-size: 1.25rem;
+            }
+            
+            /* Fix line breaks in hero description */
+            .hero-description br {
+                display: none;
+            }
+        }
         /* =================================== */
         /* SCROLL-TRIGGERED ANIMATIONS */
         /* =================================== */
@@ -842,6 +1053,58 @@
 
         .demo-submit-btn:hover::before {
             left: 100%;
+        }
+        /* Mobile Menu - Add around line 790 */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: rgba(2, 6, 23, 0.98);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            padding: 80px 30px 30px;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+            display: block;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: color 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--medical-teal);
+        }
+
+        .btn-nav-mobile {
+            background: linear-gradient(135deg, var(--medical-teal) 0%, var(--medical-dark) 100%);
+            color: white !important;
+            text-align: center;
+            padding: 12px 20px !important;
+            border-radius: 8px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -1761,6 +2024,34 @@
             }
         });
     });
+    
+    // Mobile Menu Functionality - Add around line 1770
+    document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+        // Create mobile menu if it doesn't exist
+        let mobileMenu = document.getElementById('mobileMenu');
+        if (!mobileMenu) {
+            mobileMenu = document.createElement('div');
+            mobileMenu.id = 'mobileMenu';
+            mobileMenu.className = 'mobile-menu';
+            mobileMenu.innerHTML = `
+                <button class="mobile-menu-close" onclick="closeMobileMenu()">&times;</button>
+                <a href="#problem" onclick="closeMobileMenu()">The Problem</a>
+                <a href="#solution" onclick="closeMobileMenu()">How It Works</a>
+                <a href="#examples" onclick="closeMobileMenu()">Examples</a>
+                <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+                <a href="#demo" class="btn-nav-mobile" onclick="closeMobileMenu()">Book a Demo</a>
+            `;
+            document.body.appendChild(mobileMenu);
+        }
+        mobileMenu.classList.add('active');
+    });
+
+    function closeMobileMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu) {
+            mobileMenu.classList.remove('active');
+        }
+    }
     
     // Intersection Observer for scroll animations
     document.addEventListener('DOMContentLoaded', function() {
