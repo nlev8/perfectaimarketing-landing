@@ -8,6 +8,14 @@
         <priority>1.0</priority>
     </url>
     
+    <!-- MedCor AI Product Page -->
+    <url>
+        <loc>https://medcor.perfectaimarketing.com/</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
     <!-- Privacy Policy -->
     <url>
         <loc>https://perfectaimarketing.com/privacy-policy</loc>
@@ -24,11 +32,27 @@
         <priority>0.5</priority>
     </url>
     
-    <!-- Thank You Page (usually not indexed, but included for completeness) -->
+    <!-- Thank You Page -->
     <url>
         <loc>https://perfectaimarketing.com/thank-you</loc>
         <lastmod>2025-01-27</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    
+    <!-- LLM.txt - For AI Crawlers -->
+    <url>
+        <loc>https://perfectaimarketing.com/llm.txt</loc>
+        <lastmod>2025-01-27</lastmod>
         <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Robots.txt -->
+    <url>
+        <loc>https://perfectaimarketing.com/robots.txt</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
 </urlset>
