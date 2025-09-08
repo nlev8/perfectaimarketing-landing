@@ -244,6 +244,8 @@
         }
 
         .hero-badge {
+            margin-left: auto !important;
+                   margin-right: auto !important;
             display: inline-flex !important;
             align-items: center;
             gap: 8px;
@@ -265,9 +267,11 @@
             }
             
             .hero-content {
+                text-align: center;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                align-items: center;
                 height: 100%;
             }
         }
@@ -353,22 +357,27 @@
 
         /* Trust badges */
         .trust-badges {
-            display: flex;
+            display: inline-flex;
             gap: 1rem;
             justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
             margin-bottom: 3rem;
         }
 
         .trust-badge {
-            display: flex;
+            display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             padding: 8px 16px;
             background: rgba(6, 214, 160, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 8px;
             border: 1px solid rgba(6, 214, 160, 0.2);
+            width: auto;
+            flex: 0 0 auto;
+            white-space: nowrap;
         }
 
         .trust-badge-icon {
@@ -378,6 +387,9 @@
         .trust-badge-text {
             color: rgba(255, 255, 255, 0.8);
             font-size: 0.9rem;
+            line-height: 1; /* Add this to fix vertical alignment */
+                display: inline-flex; /* Add this */
+                align-items: center; /* Add this */
         }
 
         /* Section Base Styles */
@@ -1170,9 +1182,6 @@
             <div class="cta-buttons">
                 <a href="#demo" class="btn-primary">
                     Get in touch
-                    <svg class="icon" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
-                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
                 </a>
                 <a href="#examples" class="btn-secondary">
                     View Examples
