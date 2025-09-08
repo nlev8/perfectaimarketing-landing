@@ -1835,7 +1835,7 @@
             Join forward-thinking practices using MedCor AI to make better decisions faster
         </p>
         
-        <form name="medcor-demo" method="POST" data-netlify="true" action="/thank-you.html" style="max-width: 500px; margin: 2rem auto;">
+        <form name="medcor-demo" method="POST" data-netlify="true" action="/medcor-landing/thank-you.html" style="max-width: 500px; margin: 2rem auto;">
             <input type="hidden" name="form-name" value="medcor-demo">
             
             <div style="display: grid; gap: 1rem; margin-bottom: 1rem;">
@@ -2112,6 +2112,46 @@
             observer.observe(el);
         });
     });
+</script>
+<script>
+// Google Sheets Integration
+const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbw_fBQfZXNEtOotGLkHNLR-LxXUEiuB6g_tn7C9PCZyYOklS72t-77J7LRx6EcSrA4NAw/exec';
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[name="medcor-demo"]');
+    
+    if (form) {
+        form.addEventListener('submit', async function(e) {
+            // Don't prevent default - let Netlify handle the form too
+            
+            // Prepare data for Google Sheets
+            const formData = {
+                name: form.querySelector('[name="name"]').value,
+                email: form.querySelector('[name="email"]').value,
+                phone: form.querySelector('[name="phone"]').value,
+                practice_size: form.querySelector('[name="practice-size"]').value,
+                ehr_system: form.querySelector('[name="ehr-system"]').value,
+                biggest_challenge: form.querySelector('[name="biggest-challenge"]').value,
+                consent_appointments: form.querySelector('[name="consent_appointments"]').checked ? 'TRUE' : 'FALSE',
+                consent_promotional: form.querySelector('[name="consent_promotional"]').checked ? 'TRUE' : 'FALSE'
+            };
+            
+            // Send to Google Sheets (fire and forget)
+            fetch(SHEETS_WEBHOOK_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            }).then(() => {
+                console.log('Data sent to Google Sheets');
+            }).catch(error => {
+                console.error('Error sending to Google Sheets:', error);
+            });
+        });
+    }
+});
 </script>
 </body>
 </html>
