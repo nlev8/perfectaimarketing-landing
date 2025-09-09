@@ -1126,6 +1126,33 @@
             border-radius: 8px;
             margin-top: 20px;
         }
+        /* Mobile responsiveness for Real Results section */
+        @media (max-width: 768px) {
+            /* Adjust padding on mobile */
+            .animate-on-scroll[style*="padding: 2rem"] {
+                padding: 1.5rem !important;
+            }
+            
+            /* Stack stats vertically on very small screens */
+            @media (max-width: 480px) {
+                div[style*="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))"] {
+                    grid-template-columns: 1fr !important;
+                    gap: 1rem !important;
+                }
+            }
+        }
+
+        /* Ensure stats don't break on very small screens */
+        @media (max-width: 320px) {
+            /* Even smaller text on tiny screens */
+            h3[style*="clamp(2rem, 6vw, 3rem)"] {
+                font-size: 1.75rem !important;
+            }
+            
+            p[style*="clamp(0.875rem, 2vw, 1rem)"] {
+                font-size: 0.8rem !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1403,53 +1430,8 @@
             </div>
         </div>
         
-        <!-- Real Statistics -->
-        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(6, 214, 160, 0.1); border-radius: 16px; border: 2px solid var(--medical-teal);">
-            <h3 style="color: var(--medical-teal); margin-bottom: 1rem;">Real Results from Healthcare Analytics</h3>
-            <p style="font-size: 1.1rem; color: rgba(255, 255, 255, 0.9);">
-                <strong>$49.8M</strong> revenue recovered at Health Catalyst client • <strong>15,791 hours</strong> saved by Kaiser physicians • <strong>86%</strong> of denials are preventable
-            </p>
-            <p style="margin-top: 1rem; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">
-                Sources: Health Catalyst, NEJM Catalyst, Healthcare Financial Management Association
-            </p>
-        </div>
-    </section>
+       
 
-    <!-- Success Story Section -->
-    <section class="section" style="background: linear-gradient(135deg, rgba(6, 214, 160, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%);">
-        <div class="section-header">
-            <span class="section-badge badge-teal">SUCCESS STORY</span>
-            <h2 class="section-title">Texas Children's Hospital Transforms Operations</h2>
-        </div>
-        
-        <div style="max-width: 100%; text-align: center;">
-            <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 3rem; border: 1px solid rgba(255, 255, 255, 0.1);">
-                <h3 style="font-size: 3rem; color: var(--medical-teal); margin-bottom: 1rem;">90% Reduction</h3>
-                <p style="font-size: 1.25rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem;">
-                    in RVU reporting time - from one month to just hours
-                </p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                    <div>
-                        <h4 style="font-size: 2rem; color: var(--purple); margin-bottom: 0.5rem;">$20M</h4>
-                        <p style="color: rgba(255, 255, 255, 0.7);">in operational improvements</p>
-                    </div>
-                    <div>
-                        <h4 style="font-size: 2rem; color: var(--purple); margin-bottom: 0.5rem;">5,000</h4>
-                        <p style="color: rgba(255, 255, 255, 0.7);">nursing hours saved annually</p>
-                    </div>
-                    <div>
-                        <h4 style="font-size: 2rem; color: var(--purple); margin-bottom: 0.5rem;">69%</h4>
-                        <p style="color: rgba(255, 255, 255, 0.7); text-align: center;">reduction in surgical supply costs</p>
-                    </div>
-                </div>
-                
-                <p style="font-style: italic; color: rgba(255, 255, 255, 0.8); margin-top: 2rem; font-size: 1.1rem;">
-                    "What used to take our team a month now happens automatically in hours. We're making better decisions faster than ever before."
-                </p>
-            </div>
-        </div>
-    </section>
 
     <!-- How It Works Section -->
     <section class="section" id="solution">
@@ -1651,6 +1633,324 @@
         </div>
     </div>
 </section>
+    
+    <!-- Voice-Driven Data Entry Section -->
+    <section class="section" id="data-entry" style="background: rgba(255, 255, 255, 0.02);">
+        <div class="section-header animate-on-scroll fade-up">
+            <span class="section-badge badge-purple">VOICE-DRIVEN DATA ENTRY</span>
+            <h2 class="section-title">Talk. MedCor AI Types.<br><span class="gradient-text">Documentation Done.</span></h2>
+            <p class="section-subtitle">
+                Transform hours of typing into seconds of natural conversation. Just speak while you work—MedCor AI handles all the documentation.
+            </p>
+        </div>
+        
+        <!-- Live Examples -->
+        <div class="example-grid stagger-children">
+            <!-- Example 1: Primary Care -->
+            <div class="example-card animate-on-scroll scale">
+                <h3 class="example-header">Example 1: Primary Care Visit 🩺</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-box before-box">
+                        <h4 style="color: var(--primary); margin-bottom: 1rem;">❌ Before (7 Minutes)</h4>
+                        <ol style="color: rgba(255, 255, 255, 0.8); font-size: 1rem; line-height: 1.8; padding-left: 1.25rem; margin: 0;">
+                            <li style="margin-bottom: 0.5rem;">Write notes during exam</li>
+                            <li style="margin-bottom: 0.5rem;">Type vitals into EHR</li>
+                            <li style="margin-bottom: 0.5rem;">Document chief complaint</li>
+                            <li style="margin-bottom: 0.5rem;">Enter assessment & plan</li>
+                            <li style="margin-bottom: 0.5rem;">Select billing codes</li>
+                            <li style="margin-bottom: 0;">Order prescriptions</li>
+                        </ol>
+                    </div>
+                    <div class="comparison-box after-box">
+                        <h4 style="color: var(--medical-teal); margin-bottom: 1rem;">✅ After (30 Seconds)</h4>
+                        <p style="font-style: italic; color: rgba(255, 255, 255, 0.9); margin-bottom: 1rem;">
+                            "Blood pressure 130/80, patient has headaches and fatigue, prescribe lisinopril 10mg daily"
+                        </p>
+                        <div class="ai-response">
+                            <p style="color: var(--medical-teal); margin-bottom: 0.5rem;">MedCor AI instantly:</p>
+                            <p style="color: rgba(255, 255, 255, 0.8);">
+                                ✓ Documents vitals & symptoms<br>
+                                ✓ Codes visit as 99214<br>
+                                ✓ Creates prescription order<br>
+                                <strong>Ready for next patient!</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Example 2: Specialist -->
+            <div class="example-card animate-on-scroll scale">
+                <h3 class="example-header">Example 2: Specialist Procedure 🔬</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-box before-box">
+                        <h4 style="color: var(--primary); margin-bottom: 1rem;">❌ Before (15 Minutes)</h4>
+                        <ol style="color: rgba(255, 255, 255, 0.8); font-size: 1rem; line-height: 1.8; padding-left: 1.25rem; margin: 0;">
+                            <li style="margin-bottom: 0.5rem;">Complete procedure</li>
+                            <li style="margin-bottom: 0.5rem;">Write detailed op note</li>
+                            <li style="margin-bottom: 0.5rem;">Document supplies used</li>
+                            <li style="margin-bottom: 0.5rem;">Enter procedure codes</li>
+                            <li style="margin-bottom: 0.5rem;">Create follow-up plan</li>
+                            <li style="margin-bottom: 0;">Dictate findings later</li>
+                        </ol>
+                    </div>
+                    <div class="comparison-box after-box">
+                        <h4 style="color: var(--medical-teal); margin-bottom: 1rem;">✅ After (Real-time)</h4>
+                        <p style="font-style: italic; color: rgba(255, 255, 255, 0.9); margin-bottom: 1rem;">
+                            "Starting colonoscopy, cecum reached, two polyps found at hepatic flexure"
+                        </p>
+                        <div class="ai-response">
+                            <p style="color: var(--medical-teal); margin-bottom: 0.5rem;">MedCor AI documents:</p>
+                            <p style="color: rgba(255, 255, 255, 0.8);">
+                                ✓ Procedure timeline logged<br>
+                                ✓ Findings mapped anatomically<br>
+                                ✓ CPT & path codes ready<br>
+                                <strong>Op note complete at scope out!</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Example 3: Emergency -->
+            <div class="example-card animate-on-scroll scale">
+                <h3 class="example-header">Example 3: Emergency Department 🚨</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-box before-box">
+                        <h4 style="color: var(--primary); margin-bottom: 1rem;">❌ Before (20+ Minutes)</h4>
+                        <ol style="color: rgba(255, 255, 255, 0.8); font-size: 1rem; line-height: 1.8; padding-left: 1.25rem; margin: 0;">
+                            <li style="margin-bottom: 0.5rem;">Treat patient urgently</li>
+                            <li style="margin-bottom: 0.5rem;">Remember all interventions</li>
+                            <li style="margin-bottom: 0.5rem;">Chart medications given</li>
+                            <li style="margin-bottom: 0.5rem;">Document timeline</li>
+                            <li style="margin-bottom: 0.5rem;">Complete trauma notes</li>
+                            <li style="margin-bottom: 0;">Often hours later</li>
+                        </ol>
+                    </div>
+                    <div class="comparison-box after-box">
+                        <h4 style="color: var(--medical-teal); margin-bottom: 1rem;">✅ After (Continuous)</h4>
+                        <p style="font-style: italic; color: rgba(255, 255, 255, 0.9); margin-bottom: 1rem;">
+                            "Chest pain patient, giving aspirin 325mg, starting IV, EKG shows ST elevation"
+                        </p>
+                        <div class="ai-response">
+                            <p style="color: var(--medical-teal); margin-bottom: 0.5rem;">MedCor AI tracks:</p>
+                            <p style="color: rgba(255, 255, 255, 0.8);">
+                                ✓ STEMI protocol activated<br>
+                                ✓ Medication times logged<br>
+                                ✓ Alerts cath lab<br>
+                                <strong>Documentation complete in real-time</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- How It Works -->
+        <div style="margin-top: 4rem;" class="animate-on-scroll fade-up">
+            <h3 style="text-align: center; font-size: 2rem; margin-bottom: 3rem;">Simple. Natural. Powerful.</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <!-- Feature 1 -->
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--medical-teal) 0%, var(--medical-dark) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px; stroke: white;">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                <line x1="12" y1="19" x2="12" y2="23"></line>
+                                <line x1="8" y1="23" x2="16" y2="23"></line>
+                            </svg>
+                        </div>
+                        <h4 style="font-size: 1.25rem; margin: 0;">Speak Naturally</h4>
+                    </div>
+                    <p style="color: rgba(255, 255, 255, 0.7);">
+                        Talk as you normally would during patient care. MedCor understands medical terminology, dosages, and context.
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px; stroke: white;">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <h4 style="font-size: 1.25rem; margin: 0;">Instant Documentation</h4>
+                    </div>
+                    <p style="color: rgba(255, 255, 255, 0.7);">
+                        Everything is documented in real-time. No delays, no backlog, no staying late to finish notes.
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg class="icon" viewBox="0 0 24 24" style="width: 24px; height: 24px; stroke: white;">
+                                <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"></path>
+                            </svg>
+                        </div>
+                        <h4 style="font-size: 1.25rem; margin: 0;">Complete Automation</h4>
+                    </div>
+                    <p style="color: rgba(255, 255, 255, 0.7);">
+                        Billing codes, prescriptions, referrals, and follow-ups—all handled automatically from your voice commands.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Real Statistics -->
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(6, 214, 160, 0.1); border-radius: 16px; border: 2px solid var(--medical-teal);" class="animate-on-scroll fade-up">
+            <h3 style="color: var(--medical-teal); margin-bottom: 1.5rem; font-size: clamp(1.75rem, 5vw, 2.5rem); font-weight: 700;">Real Results from Healthcare Analytics</h3>
+            
+            <!-- Updated Hero Stats with Citations -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; max-width: 600px; margin: 0 auto;">
+                    <div>
+                        <h3 style="font-size: clamp(2rem, 6vw, 3rem); font-weight: bold; background: linear-gradient(135deg, var(--medical-teal) 0%, var(--purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">15,791</h3>
+                        <p style="color: rgba(255, 255, 255, 0.6); font-size: clamp(0.875rem, 2vw, 1rem);">hours saved<sup style="font-size: 0.7rem; color: var(--medical-teal);">1</sup></p>
+                    </div>
+                    <div>
+                        <h3 style="font-size: clamp(2rem, 6vw, 3rem); font-weight: bold; background: linear-gradient(135deg, var(--medical-teal) 0%, var(--purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">2.5M+</h3>
+                        <p style="color: rgba(255, 255, 255, 0.6); font-size: clamp(0.875rem, 2vw, 1rem);">encounters<sup style="font-size: 0.7rem; color: var(--medical-teal);">1</sup></p>
+                    </div>
+                    <div>
+                        <h3 style="font-size: clamp(2rem, 6vw, 3rem); font-weight: bold; background: linear-gradient(135deg, var(--medical-teal) 0%, var(--purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">88%</h3>
+                        <p style="color: rgba(255, 255, 255, 0.6); font-size: clamp(0.875rem, 2vw, 1rem);">satisfaction<sup style="font-size: 0.7rem; color: var(--medical-teal);">2</sup></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Satisfaction Metrics Section - Add this after the examples or wherever appropriate -->
+    <div style="background: linear-gradient(135deg, rgba(6, 214, 160, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%); border-radius: 20px; padding: 3rem; margin-top: 4rem;" class="animate-on-scroll fade-up">
+        <h3 style="text-align: center; font-size: 2rem; margin-bottom: 3rem;">Proven Impact on Provider & Patient Satisfaction</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1000px; margin: 0 auto;">
+            <!-- Provider Satisfaction -->
+            <div>
+                <h4 style="color: var(--medical-teal); font-size: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 28px; height: 28px; stroke: var(--medical-teal);">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Provider Satisfaction
+                </h4>
+                <div style="space-y: 1rem;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem;">
+                            <span style="font-size: 2.5rem; font-weight: bold; color: var(--medical-teal);">84%</span>
+                            <span style="color: rgba(255, 255, 255, 0.8);">report better patient communication</span>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem;">
+                            <span style="font-size: 2.5rem; font-weight: bold; color: var(--primary);">88%</span>
+                            <span style="color: rgba(255, 255, 255, 0.8);">positive impact on visits</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Patient Response -->
+            <div>
+                <h4 style="color: var(--medical-teal); font-size: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 28px; height: 28px; stroke: var(--medical-teal);">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    Patient Response
+                </h4>
+                <div style="space-y: 1rem;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem;">
+                            <span style="font-size: 2.5rem; font-weight: bold; color: var(--medical-teal);">33%+</span>
+                            <span style="color: rgba(255, 255, 255, 0.8);">say doctors spent more time with them</span>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem;">
+                            <span style="font-size: 2.5rem; font-weight: bold; color: var(--purple);">67%</span>
+                            <span style="color: rgba(255, 255, 255, 0.8);">comfortable with AI technology<sup style="font-size: 0.7rem; color: var(--medical-teal);">3</sup></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Citation Note -->
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center;">
+            <p style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.6);">
+                Data from Kaiser Permanente's 63-week study of 7,260 physicians across 2.5+ million patient encounters<br>
+                <span style="font-size: 0.8rem;">
+                    <sup>1</sup>American Medical Association, June 2025 |
+                    <sup>2</sup>Kaiser Permanente Division of Research, 2025 |
+                    <sup>3</sup>Kaiser Permanente Northern California, 2025
+                </span>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Success Story Section -->
+    <section class="section" style="background: linear-gradient(135deg, rgba(6, 214, 160, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%);">
+        <div class="section-header">
+            <span class="section-badge badge-teal">SUCCESS STORY</span>
+            <h2 class="section-title">Texas Children's Hospital Transforms Operations</h2>
+        </div>
+        
+        <div style="max-width: 100%; text-align: center;">
+            <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 3rem; border: 1px solid rgba(255, 255, 255, 0.1);">
+                <h3 style="font-size: 3rem; color: var(--medical-teal); margin-bottom: 1rem;">90% Reduction</h3>
+                <p style="font-size: 1.25rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem;">
+                    in RVU reporting time - from one month to just hours
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div>
+                        <h4 style="font-size: 2rem; color: var(--purple); margin-bottom: 0.5rem;">$20M</h4>
+                        <p style="color: rgba(255, 255, 255, 0.7);">in operational improvements</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 2rem; color: var(--purple); margin-bottom: 0.5rem;">5,000</h4>
+                        <p style="color: rgba(255, 255, 255, 0.7);">nursing hours saved annually</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 2rem; color: var(--purple); margin-bottom: 0.5rem;">69%</h4>
+                        <p style="color: rgba(255, 255, 255, 0.7); text-align: center;">reduction in surgical supply costs</p>
+                    </div>
+                </div>
+                
+                <p style="font-style: italic; color: rgba(255, 255, 255, 0.8); margin-top: 2rem; font-size: 1.1rem;">
+                    "What used to take our team a month now happens automatically in hours. We're making better decisions faster than ever before."
+                </p>
+            </div>
+        </div>
+    </section>
+        
+        <!-- Bottom CTA -->
+        <div style="text-align: center; margin-top: 4rem; padding: 3rem; background: linear-gradient(135deg, rgba(6, 214, 160, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%); border-radius: 16px; border: 1px solid rgba(6, 214, 160, 0.2);" class="animate-on-scroll fade-up">
+            <h3 style="font-size: 2rem; margin-bottom: 1rem;">Ready to Reclaim Your Time?</h3>
+            <p style="font-size: 1.125rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem;">
+                Join thousands of providers who've eliminated documentation burden with MedCor AI
+            </p>
+            <a href="#demo" class="btn-primary" style="font-size: 1.125rem; padding: 1rem 2.5rem;">
+                See Voice Entry in Action
+                <svg class="icon" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </div>
+    </section>
+
 
 <!-- Pricing Section -->
 
@@ -1835,7 +2135,7 @@
             Join forward-thinking practices using MedCor AI to make better decisions faster
         </p>
         
-        <form name="medcor-demo" method="POST" data-netlify="true" action="/medcor-landing/thank-you.html" style="max-width: 500px; margin: 2rem auto;">
+        <form id="medcor-demo-form" name="medcor-demo" method="POST" data-netlify="true" style="max-width: 500px; margin: 2rem auto;">
             <input type="hidden" name="form-name" value="medcor-demo">
             
             <div style="display: grid; gap: 1rem; margin-bottom: 1rem;">
@@ -2153,7 +2453,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+<script>
+    document.getElementById('medcor-demo-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Submit the form data to Netlify
+        fetch('/', {
+            method: 'POST',
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(new FormData(e.target)).toString()
+        })
+        .then(() => {
+            // Redirect after successful submission
+            window.location.href = '/thank-you.html';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Fallback redirect
+            window.location.href = '/thank-you.html';
+        });
+    });
+</script>
 </body>
 </html>
+
 
 
