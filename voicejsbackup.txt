@@ -1,0 +1,852 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mic, MicOff, Play, Pause, Download, Loader2, FileText, Copy, Save, AlertCircle } from 'lucide-react';
+import { applyMedicalCorrections } from './enhanced-medical-corrections';
+import './Voice.css';
+
+const Voice = ({ isDarkMode }) => {
+  const [isRecording, setIsRecording] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const [transcript, setTranscript] = useState('');
+  const [interimTranscript, setInterimTranscript] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [medicalData, setMedicalData] = useState(null);
+  const [structuredNote, setStructuredNote] = useState('');
+  const [narrativeNote, setNarrativeNote] = useState('');
+  const [activeTab, setActiveTab] = useState('structured');
+  const [copySuccess, setCopySuccess] = useState(false);
+  
+  // Refs
+  const mediaRecorderRef = useRef(null);
+  const chunksRef = useRef([]);
+  const intervalRef = useRef(null);
+  const audioContextRef = useRef(null);
+  const analyserRef = useRef(null);
+  const canvasRef = useRef(null);
+  const animationRef = useRef(null);
+  const streamRef = useRef(null);
+  const recognitionRef = useRef(null);
+
+  // Initialize speech recognition
+  useEffect(() => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+      
+      recognition.onresult = (event) => {
+        let interim = '';
+        let final = '';
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcriptText = event.results[i][0].transcript;
+          
+          if (event.results[i].isFinal) {
+            final += transcriptText + ' ';
+          } else {
+            interim += transcriptText;
+          }
+        }
+
+        if (final) {
+          setTranscript(prev => prev + final);
+        }
+        setInterimTranscript(interim);
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        if (event.error === 'no-speech') {
+          recognition.stop();
+          recognition.start();
+        }
+      };
+
+      recognitionRef.current = recognition;
+    }
+
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+    };
+  }, []);
+
+  // Waveform visualization
+  const startWaveform = async () => {
+    try {
+      audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+      analyserRef.current = audioContextRef.current.createAnalyser();
+      analyserRef.current.fftSize = 2048;
+      
+      const source = audioContextRef.current.createMediaStreamSource(streamRef.current);
+      source.connect(analyserRef.current);
+      
+      drawWaveform();
+    } catch (error) {
+      console.error('Error setting up waveform:', error);
+    }
+  };
+
+  const drawWaveform = () => {
+    if (!canvasRef.current || !analyserRef.current) return;
+    
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const bufferLength = analyserRef.current.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    
+    const draw = () => {
+      animationRef.current = requestAnimationFrame(draw);
+      
+      analyserRef.current.getByteTimeDomainData(dataArray);
+      
+      ctx.fillStyle = isDarkMode ? 'rgba(15, 23, 42, 0.1)' : 'rgba(248, 250, 252, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#06D6A0';
+      ctx.beginPath();
+      
+      const sliceWidth = canvas.width * 1.0 / bufferLength;
+      let x = 0;
+      
+      for (let i = 0; i < bufferLength; i++) {
+        const v = dataArray[i] / 128.0;
+        const y = v * canvas.height / 2;
+        
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+        
+        x += sliceWidth;
+      }
+      
+      ctx.lineTo(canvas.width, canvas.height / 2);
+      ctx.stroke();
+    };
+    
+    draw();
+  };
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
+      
+      // Set up MediaRecorder
+      const options = { mimeType: 'audio/webm' };
+      mediaRecorderRef.current = new MediaRecorder(stream, options);
+      chunksRef.current = [];
+      
+      mediaRecorderRef.current.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          chunksRef.current.push(event.data);
+        }
+      };
+      
+      mediaRecorderRef.current.onstop = async () => {
+        const audioBlob = new Blob(chunksRef.current, { type: 'audio/webm' });
+        await processRecording(audioBlob);
+      };
+      
+      // Start recording
+      mediaRecorderRef.current.start(100);
+      setIsRecording(true);
+      setIsPaused(false);
+      setRecordingTime(0);
+      setTranscript('');
+      setInterimTranscript('');
+      
+      // Start timer
+      intervalRef.current = setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000);
+      
+      // Start waveform
+      await startWaveform();
+      
+      // Start speech recognition
+      if (recognitionRef.current) {
+        recognitionRef.current.start();
+      }
+    } catch (error) {
+      console.error('Error starting recording:', error);
+    }
+  };
+
+  const pauseRecording = () => {
+    if (!isPaused) {
+      mediaRecorderRef.current?.pause();
+      recognitionRef.current?.stop();
+      clearInterval(intervalRef.current);
+      setIsPaused(true);
+    } else {
+      mediaRecorderRef.current?.resume();
+      recognitionRef.current?.start();
+      intervalRef.current = setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000);
+      setIsPaused(false);
+    }
+  };
+
+  const stopRecording = () => {
+    mediaRecorderRef.current?.stop();
+    recognitionRef.current?.stop();
+    streamRef.current?.getTracks().forEach(track => track.stop());
+    clearInterval(intervalRef.current);
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+    }
+    if (audioContextRef.current) {
+      audioContextRef.current.close();
+    }
+    setIsRecording(false);
+    setIsPaused(false);
+  };
+
+  const processRecording = async (audioBlob) => {
+    setIsProcessing(true);
+    
+    try {
+      // Send to backend for processing
+      const formData = new FormData();
+      formData.append('audio', audioBlob, 'recording.webm');
+      
+      const response = await fetch('http://localhost:8000/voice-transcribe-claude', {
+        method: 'POST',
+        body: formData
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        // Update transcript if backend provides a better one
+        if (result.transcript && result.transcript.length > transcript.length) {
+          setTranscript(result.transcript);
+        }
+        
+        // Parse medical data
+        const parsedData = parseMedicalInfo(result.transcript || transcript);
+        setMedicalData(parsedData);
+        
+        // Generate notes
+        generateNotes(parsedData);
+      }
+    } catch (error) {
+      console.error('Processing failed:', error);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const parseMedicalInfo = (text) => {
+    // Apply medical corrections first
+    const correctedText = applyMedicalCorrections(text);
+    console.log('Corrected text:', correctedText);
+    
+    // Initialize medical data structure
+    const data = {
+      demographics: {},
+      chiefComplaint: [],
+      conditions: [],
+      vitals: {},
+      medications: [],
+      symptoms: [],
+      procedures: [],
+      orders: [],
+      plan: [],
+      labs: {}
+    };
+
+    // Demographics - Age and Gender
+    const demographicsMatch = correctedText.match(/(\d{1,3})[\s-]*year[\s-]*old\s*(male|female|man|woman)/i);
+    if (demographicsMatch) {
+      data.demographics.age = demographicsMatch[1];
+      data.demographics.gender = demographicsMatch[2].toLowerCase().replace('woman', 'female').replace('man', 'male');
+    }
+
+    // Blood Pressure - Multiple patterns
+    const bpPatterns = [
+      /(?:blood pressure|bp)\s*(?:is|of|:)?\s*(\d{2,3})\s*(?:\/|over)\s*(\d{2,3})/i,
+      /(\d{2,3})\s*(?:\/|over)\s*(\d{2,3})\s*(?:blood pressure|bp)/i,
+      /(?:pressure|bp)\s*(\d{2,3})\s*(?:\/|over)\s*(\d{2,3})/i,
+      /(\d{2,3})\s*(?:\/|over)\s*(\d{2,3})/
+    ];
+    
+    for (const pattern of bpPatterns) {
+      const bpMatch = correctedText.match(pattern);
+      if (bpMatch && bpMatch[1] && bpMatch[2]) {
+        data.vitals.bloodPressure = `${bpMatch[1]}/${bpMatch[2]}`;
+        break;
+      }
+    }
+
+    // Heart Rate/Pulse
+    const hrPatterns = [
+      /(?:heart rate|pulse|hr)\s*(?:is|of|:)?\s*(\d{2,3})/i,
+      /(\d{2,3})\s*(?:bpm|beats per minute)/i
+    ];
+    
+    for (const pattern of hrPatterns) {
+      const hrMatch = correctedText.match(pattern);
+      if (hrMatch && hrMatch[1]) {
+        data.vitals.heartRate = parseInt(hrMatch[1]);
+        break;
+      }
+    }
+
+    // Other Vitals
+    const tempMatch = correctedText.match(/(?:temperature|temp)\s*(?:is|of|:)?\s*([\d.]+)/i);
+    if (tempMatch) data.vitals.temperature = tempMatch[1];
+
+    const respMatch = correctedText.match(/(?:respirations?|resp rate|rr)\s*(?:is|of|:)?\s*(\d+)/i);
+    if (respMatch) data.vitals.respirations = parseInt(respMatch[1]);
+
+    const o2Match = correctedText.match(/(?:o2 sat|oxygen saturation|spo2)\s*(?:is|of|:)?\s*(\d+)/i);
+    if (o2Match) data.vitals.o2Sat = parseInt(o2Match[1]);
+
+    // Medical Conditions - Comprehensive list
+    const conditionPatterns = [
+      /(?:stage\s*)?([\d]\w*)\s*(?:chronic kidney disease|ckd)/i,
+      /(?:chronic kidney disease|ckd)\s*(?:stage\s*)?([\d]\w*)?/i,
+      /focal segmental glomerulosclerosis|fsgs/i,
+      /diabetic nephropathy/i,
+      /(?:type\s*)?([12])\s*diabetes(?:\s*mellitus)?/i,
+      /diabetes(?:\s*mellitus)?(?:\s*type\s*([12]))?/i,
+      /hypertension|htn/i,
+      /anemia of chronic disease/i,
+      /end[- ]?stage renal disease|esrd/i,
+      /acute kidney injury|aki/i,
+      /proteinuria/i,
+      /heart failure|chf/i,
+      /coronary artery disease|cad/i
+    ];
+
+    conditionPatterns.forEach(pattern => {
+      const match = correctedText.match(pattern);
+      if (match) {
+        let condition = match[0];
+        // Add stage number if captured
+        if (match[1] && /\d/.test(match[1])) {
+          condition = condition.replace(/stage\s*/i, 'Stage ');
+        }
+        if (!data.conditions.some(c => c.toLowerCase() === condition.toLowerCase())) {
+          data.conditions.push(condition);
+        }
+      }
+    });
+
+    // Chief Complaint
+    const chiefComplaintPatterns = [
+      /(?:presents?\s+(?:for|with)|presenting\s+(?:for|with)|here\s+for)\s+([^.]+?)(?:\.|,|;|$)/i,
+      /(?:chief complaint|cc)\s*:?\s*([^.]+?)(?:\.|,|;|$)/i,
+      /(?:follow[- ]?up|f\/u)\s+(?:for|on)\s+([^.]+?)(?:\.|,|;|$)/i
+    ];
+
+    for (const pattern of chiefComplaintPatterns) {
+      const match = correctedText.match(pattern);
+      if (match && match[1]) {
+        const complaint = match[1].trim();
+        if (!complaint.toLowerCase().includes('medication') && complaint.length > 5) {
+          data.chiefComplaint.push(complaint);
+          break;
+        }
+      }
+    }
+
+    // Medications - Enhanced extraction with dosages
+    const medicationPattern = /(\b(?:lisinopril|amlodipine|furosemide|metoprolol|aspirin|atorvastatin|simvastatin|pravastatin|carvedilol|metformin|insulin|losartan|valsartan|hydrochlorothiazide|hctz|spironolactone|eplerenone|clonidine|hydralazine|minoxidil|sevelamer(?:\s+carbonate)?|calcium acetate|calcitriol|paricalcitol|doxercalciferol|cinacalcet|epoetin(?:\s+alfa)?|epogen|darbepoetin|iron\s+(?:sucrose|dextran)|ferric|sodium bicarbonate|allopurinol|febuxostat|tacrolimus|prograf|cyclosporine|mycophenolate|cellcept|prednisone|prednisolone|azathioprine|sirolimus|everolimus|patiromer|sodium polystyrene)\b)\s+(\d+(?:\.\d+)?)\s*(mg|mcg|grams?|units?|ml)\s*(?:(?:by\s+)?(?:mouth|po|orally|subcutaneously|subq|sq|iv|im))?\s*(?:(once|twice|three times|four times|q\d+h|qid|tid|bid|daily|every other day|weekly|as needed|prn))?(?:\s+(?:a\s+)?(?:day|daily))?/gi;
+
+    const medicationMatches = correctedText.matchAll(medicationPattern);
+    const medications = new Set();
+
+    for (const match of medicationMatches) {
+      const drug = match[1];
+      const dose = match[2];
+      const unit = match[3];
+      const frequency = match[4] || 'daily';
+      
+      const medString = `${drug} ${dose} ${unit} ${frequency}`.trim();
+      medications.add(medString);
+    }
+
+    // Also check for medications mentioned without full details
+    const simpleMediaPatterns = [
+      'lisinopril', 'amlodipine', 'furosemide', 'metoprolol', 'aspirin',
+      'sevelamer', 'calcitriol', 'epoetin', 'epogen', 'sodium bicarbonate',
+      'atorvastatin', 'metformin', 'losartan', 'prednisone'
+    ];
+
+    simpleMediaPatterns.forEach(med => {
+      const regex = new RegExp(`\\b${med}\\b`, 'i');
+      if (regex.test(correctedText) && ![...medications].some(m => m.toLowerCase().includes(med))) {
+        medications.add(med);
+      }
+    });
+
+    data.medications = Array.from(medications);
+
+    // Lab Values - Comprehensive extraction with units
+    const labPatterns = {
+      creatinine: /creatinine\s*(?:is|of|:|level)?\s*(\d+\.?\d*)\s*(mg\/dl|mg per deciliter)?/i,
+      gfr: /(?:gfr|egfr)\s*(?:is|of|:|level)?\s*(\d+)\s*(ml\/min|ml per minute)?/i,
+      potassium: /potassium\s*(?:is|of|:|level)?\s*(\d+\.?\d*)\s*(m?mol\/l|millimoles per liter)?/i,
+      hemoglobin: /hemoglobin\s*(?:is|of|:|level)?\s*(\d+\.?\d*)\s*(g\/dl|grams per deciliter)?/i,
+      bicarbonate: /(?<!sodium\s)bicarbonate\s*(?:is|of|:|level)?\s*(\d+)\s*(m?mol\/l|millimoles per liter)?/i,
+      pth: /(?:pth|intact pth)\s*(?:is|of|:|level|elevated at)?\s*(\d+)\s*(pg\/ml)?/i,
+      phosphorus: /phosphorus\s*(?:is|of|:|level)?\s*(\d+\.?\d*)\s*(mg\/dl)?/i,
+      calcium: /calcium\s*(?:is|of|:|level)?\s*(\d+\.?\d*)\s*(mg\/dl)?/i,
+      albumin: /albumin\s*(?:is|of|:|level)?\s*(\d+\.?\d*)\s*(g\/dl)?/i,
+      bun: /(?:bun|blood urea nitrogen)\s*(?:is|of|:|level)?\s*(\d+)\s*(mg\/dl)?/i
+    };
+
+    for (const [lab, pattern] of Object.entries(labPatterns)) {
+      const match = correctedText.match(pattern);
+      if (match && match[1]) {
+        const value = parseFloat(match[1]);
+        data.labs[lab] = value;
+      }
+    }
+
+    // Symptoms
+    const symptomPatterns = [
+      /(?:reports?|complains? of|denies)\s+([^.,]+)/gi,
+      /(?:no|denies)\s+(chest pain|shortness of breath|edema|swelling|nausea|vomiting|fatigue)/gi,
+      /(?:positive for|has)\s+(chest pain|shortness of breath|edema|swelling|nausea|vomiting|fatigue)/gi
+    ];
+
+    symptomPatterns.forEach(pattern => {
+      const matches = correctedText.matchAll(pattern);
+      for (const match of matches) {
+        if (match[1] && !data.symptoms.includes(match[1])) {
+          data.symptoms.push(match[1].trim());
+        }
+      }
+    });
+
+    // Plan - Enhanced extraction
+    const planPatterns = [
+      /plan\s*(?:is|:)?\s*(?:to\s+)?(.+?)(?=\.|$)/i,
+      /(?:will|plan to|continue|start|discontinue|increase|decrease|titrate)\s+([^.,]+)/gi,
+      /(?:repeat|recheck|follow[- ]?up)\s+([^.,]+)/gi,
+      /(?:consider|reassess|monitor)\s+([^.,]+)/gi
+    ];
+
+    planPatterns.forEach(pattern => {
+      const matches = correctedText.matchAll(pattern);
+      for (const match of matches) {
+        if (match[1]) {
+          const planItem = match[1].trim();
+          if (planItem.length > 10 && !data.plan.some(p => p.includes(planItem))) {
+            data.plan.push(planItem);
+          }
+        }
+      }
+    });
+
+    return data;
+  };
+
+  const generateNotes = (data) => {
+    // Generate structured note
+    let structured = '';
+    
+    // Demographics
+    if (Object.keys(data.demographics).length > 0) {
+      structured += '**DEMOGRAPHICS**\n';
+      if (data.demographics.age) structured += `Age: ${data.demographics.age} years\n`;
+      if (data.demographics.gender) structured += `Gender: ${data.demographics.gender}\n`;
+      structured += '\n';
+    }
+    
+    // Chief Complaint
+    if (data.chiefComplaint && data.chiefComplaint.length > 0) {
+      structured += '**CHIEF COMPLAINT**\n';
+      data.chiefComplaint.forEach(cc => {
+        structured += `${cc}\n`;
+      });
+      structured += '\n';
+    }
+    
+    // Medical History
+    if (data.conditions && data.conditions.length > 0) {
+      structured += '**MEDICAL HISTORY**\n';
+      data.conditions.forEach(condition => {
+        structured += `• ${condition}\n`;
+      });
+      structured += '\n';
+    }
+    
+    // Vitals
+    if (Object.keys(data.vitals).length > 0) {
+      structured += '**VITALS**\n';
+      if (data.vitals.bloodPressure) structured += `BP: ${data.vitals.bloodPressure}\n`;
+      if (data.vitals.heartRate) structured += `HR: ${data.vitals.heartRate}\n`;
+      if (data.vitals.temperature) structured += `Temp: ${data.vitals.temperature}°F\n`;
+      if (data.vitals.respirations) structured += `RR: ${data.vitals.respirations}\n`;
+      if (data.vitals.o2Sat) structured += `O2 Sat: ${data.vitals.o2Sat}%\n`;
+      structured += '\n';
+    }
+    
+    // Medications
+    if (data.medications && data.medications.length > 0) {
+      structured += '**MEDICATIONS**\n';
+      data.medications.forEach(med => {
+        structured += `• ${med}\n`;
+      });
+      structured += '\n';
+    }
+    
+    // Lab Results
+    if (data.labs && Object.keys(data.labs).length > 0) {
+      structured += '**LAB RESULTS**\n';
+      const labUnits = {
+        creatinine: 'mg/dL',
+        gfr: 'mL/min',
+        potassium: 'mmol/L',
+        hemoglobin: 'g/dL',
+        bicarbonate: 'mmol/L',
+        pth: 'pg/mL',
+        phosphorus: 'mg/dL',
+        calcium: 'mg/dL',
+        albumin: 'g/dL',
+        bun: 'mg/dL'
+      };
+      
+      for (const [lab, value] of Object.entries(data.labs)) {
+        const unit = labUnits[lab] || '';
+        structured += `${lab.toUpperCase()}: ${value} ${unit}\n`;
+      }
+      structured += '\n';
+    }
+    
+    // Symptoms
+    if (data.symptoms && data.symptoms.length > 0) {
+      structured += '**SYMPTOMS**\n';
+      data.symptoms.forEach(symptom => {
+        structured += `• ${symptom}\n`;
+      });
+      structured += '\n';
+    }
+    
+    // Plan
+    if (data.plan && data.plan.length > 0) {
+      structured += '**PLAN**\n';
+      data.plan.forEach(item => {
+        structured += `• ${item}\n`;
+      });
+    }
+    
+    setStructuredNote(structured);
+    
+    // Generate narrative note
+    let narrative = '';
+    
+    // Opening
+    if (data.demographics.age || data.demographics.gender) {
+      narrative += `Patient is a ${data.demographics.age || '[age]'} year old ${data.demographics.gender || '[gender]'} `;
+    } else {
+      narrative += 'Patient ';
+    }
+    
+    // Chief complaint or reason for visit
+    if (data.chiefComplaint && data.chiefComplaint.length > 0) {
+      narrative += `presenting ${data.chiefComplaint[0]}. `;
+    } else if (data.conditions && data.conditions.length > 0) {
+      narrative += `with a history of ${data.conditions.join(', ')}. `;
+    } else {
+      narrative += `presenting for follow-up. `;
+    }
+    
+    // Medical history
+    if (data.conditions && data.conditions.length > 0) {
+      narrative += `Past medical history is significant for ${data.conditions.join(', ')}. `;
+    }
+    
+    // Current medications
+    if (data.medications && data.medications.length > 0) {
+      narrative += `Current medications include ${data.medications.join(', ')}. `;
+    }
+    
+    // Symptoms
+    if (data.symptoms && data.symptoms.length > 0) {
+      const denials = data.symptoms.filter(s => s.toLowerCase().includes('denies') || s.toLowerCase().includes('no '));
+      const positives = data.symptoms.filter(s => !s.toLowerCase().includes('denies') && !s.toLowerCase().includes('no '));
+      
+      if (positives.length > 0) {
+        narrative += `Patient reports ${positives.join(', ')}. `;
+      }
+      if (denials.length > 0) {
+        narrative += `Patient ${denials.join(' and ')}. `;
+      }
+    }
+    
+    // Vital signs
+    if (Object.keys(data.vitals).length > 0) {
+      narrative += 'On examination, ';
+      const vitalParts = [];
+      if (data.vitals.bloodPressure) vitalParts.push(`blood pressure is ${data.vitals.bloodPressure}`);
+      if (data.vitals.heartRate) vitalParts.push(`heart rate is ${data.vitals.heartRate}`);
+      if (data.vitals.temperature) vitalParts.push(`temperature is ${data.vitals.temperature}°F`);
+      if (data.vitals.respirations) vitalParts.push(`respiratory rate is ${data.vitals.respirations}`);
+      if (data.vitals.o2Sat) vitalParts.push(`oxygen saturation is ${data.vitals.o2Sat}%`);
+      narrative += vitalParts.join(', ') + '. ';
+    }
+    
+    // Lab results
+    if (data.labs && Object.keys(data.labs).length > 0) {
+      narrative += 'Recent labs show ';
+      const labParts = [];
+      for (const [lab, value] of Object.entries(data.labs)) {
+        const labUnits = {
+          creatinine: 'mg/dL',
+          gfr: 'mL/min',
+          potassium: 'mmol/L',
+          hemoglobin: 'g/dL',
+          bicarbonate: 'mmol/L',
+          pth: 'pg/mL'
+        };
+        const unit = labUnits[lab] || '';
+        labParts.push(`${lab} ${value} ${unit}`);
+      }
+      narrative += labParts.join(', ') + '. ';
+    }
+    
+    // Plan
+    if (data.plan && data.plan.length > 0) {
+      narrative += `Plan is to ${data.plan.join(', ')}.`;
+    }
+    
+    setNarrativeNote(narrative);
+  };
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const copyToClipboard = () => {
+    const textToCopy = activeTab === 'structured' ? structuredNote :
+                       activeTab === 'narrative' ? narrativeNote :
+                       transcript;
+    
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    });
+  };
+
+  const saveToEHR = async () => {
+    // Mock save functionality
+    console.log('Saving to EHR...');
+    // In real implementation, this would send to the EHR system
+  };
+
+  return (
+    <div className="voice-container">
+      <div className="voice-header">
+        <h1>Voice Documentation</h1>
+        <p>Record patient encounters and automatically generate structured documentation</p>
+      </div>
+
+      <div className="recording-section">
+        <div className="recorder-card glass-card">
+          <div className="waveform-container">
+            {isRecording ? (
+              <canvas
+                ref={canvasRef}
+                className="waveform-canvas"
+                width={200}
+                height={80}
+              />
+            ) : (
+              <div className="mic-icon-large">
+                <Mic size={24} />
+              </div>
+            )}
+          </div>
+
+          <div className="recording-info">
+            <div className="recording-time">
+              {formatTime(recordingTime)}
+            </div>
+
+            <div className="recording-status">
+              <span className={`status-badge ${isRecording ? isPaused ? 'paused' : 'recording' : 'ready'}`}>
+                {isRecording ? (isPaused ? 'Paused' : 'Recording') : 'Ready'}
+              </span>
+            </div>
+          </div>
+
+          <div className="recording-controls">
+            {!isRecording ? (
+              <motion.button
+                className="control-btn record"
+                onClick={startRecording}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Mic size={18} />
+                Start
+              </motion.button>
+            ) : (
+              <>
+                <motion.button
+                  className="control-btn pause"
+                  onClick={pauseRecording}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {isPaused ? <Play size={18} /> : <Pause size={18} />}
+                  {isPaused ? 'Resume' : 'Pause'}
+                </motion.button>
+                <motion.button
+                  className="control-btn stop"
+                  onClick={stopRecording}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <MicOff size={18} />
+                  Stop
+                </motion.button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Live Transcription */}
+      <AnimatePresence>
+        {(transcript || interimTranscript) && (
+          <motion.div
+            className="transcription-section glass-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+          >
+            <h3>Live Transcription</h3>
+            <div className="transcription-text">
+              <p>{transcript}</p>
+              {interimTranscript && (
+                <span className="interim-text">{interimTranscript}</span>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Processing Overlay */}
+      <AnimatePresence>
+        {isProcessing && (
+          <motion.div
+            className="processing-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="processing-content glass-card">
+              <Loader2 className="spin" size={48} />
+              <h3>Processing Recording...</h3>
+              <p>Transcribing audio and extracting medical data</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Generated Notes */}
+      {medicalData && !isProcessing && (
+        <motion.div
+          className="notes-section"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <div className="notes-card glass-card">
+            <h3>Generated Medical Note</h3>
+            
+            <div className="tab-navigation">
+              <button
+                className={`tab-btn ${activeTab === 'structured' ? 'active' : ''}`}
+                onClick={() => setActiveTab('structured')}
+              >
+                Structured
+              </button>
+              <button
+                className={`tab-btn ${activeTab === 'narrative' ? 'active' : ''}`}
+                onClick={() => setActiveTab('narrative')}
+              >
+                Narrative
+              </button>
+              <button
+                className={`tab-btn ${activeTab === 'raw' ? 'active' : ''}`}
+                onClick={() => setActiveTab('raw')}
+              >
+                Raw
+              </button>
+            </div>
+            
+            <div className="note-content">
+              {activeTab === 'structured' && (
+                <div className="structured-note">
+                  <pre>{structuredNote}</pre>
+                </div>
+              )}
+              {activeTab === 'narrative' && (
+                <div className="narrative-note">
+                  <p>{narrativeNote}</p>
+                </div>
+              )}
+              {activeTab === 'raw' && (
+                <div className="raw-transcript">
+                  <p>{transcript}</p>
+                </div>
+              )}
+            </div>
+            
+            <div className="note-actions">
+              <motion.button
+                className="action-btn"
+                onClick={copyToClipboard}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Copy size={16} />
+                {copySuccess ? 'Copied!' : 'Copy to Clipboard'}
+              </motion.button>
+              <motion.button
+                className="action-btn primary"
+                onClick={saveToEHR}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Save size={16} />
+                Save to EHR
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Tips Section */}
+      <div className="tips-section glass-card">
+        <h3>Voice Commands</h3>
+        <ul className="tips-list">
+          <li>Say "New paragraph" to start a new section</li>
+          <li>Say "Period" or "Comma" for punctuation</li>
+          <li>Speak medication names clearly and spell if needed</li>
+          <li>Say "Correction" followed by the correct text to fix errors</li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default Voice;

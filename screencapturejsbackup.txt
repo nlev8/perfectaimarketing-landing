@@ -1,0 +1,1184 @@
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Camera, Monitor, Loader2, Copy, Download, Maximize2, Send, AlertCircle, TrendingUp, Brain, Plus, Upload, Bot, X } from 'lucide-react';
+
+const ScreenCapture = ({ isDarkMode }) => {
+  const [isCapturing, setIsCapturing] = useState(false);
+  const [captures, setCaptures] = useState([]); // Store multiple captures
+  const [extractedText, setExtractedText] = useState('');
+  const [medicalData, setMedicalData] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
+  const [rpaJobId, setRpaJobId] = useState(null);
+  const [rpaStatus, setRpaStatus] = useState(null);
+  const [query, setQuery] = useState('');
+  const [aiResponse, setAiResponse] = useState(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [showFullscreenPreview, setShowFullscreenPreview] = useState(null);
+  const fileInputRef = useRef(null);
+  
+  // Create alias for Image icon
+  const FileImage = Image;
+  
+  // Define processImage BEFORE handleCapture
+  const processImage = async (blob) => {
+    setIsProcessing(true);
+    console.log('Processing image, blob size:', blob.size);
+    
+    try {
+      // Create FormData with single image
+      const formData = new FormData();
+      formData.append('file', blob, 'screenshot.png');
+      
+      // Try to send to backend for OCR
+      try {
+        const response = await fetch('http://localhost:8000/process-image', {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          
+          if (result.success) {
+            setExtractedText(result.text);
+            setMedicalData(result.medical_data);
+            return;
+          }
+        }
+      } catch (fetchError) {
+        console.log('Backend not available, using mock data');
+      }
+      
+      // Fallback to mock data for demo
+      console.log('Using mock data for demo');
+      const mockText = `Patient: John Doe
+Age: 45 years
+MRN: 12345678
+
+Chief Complaint: Chest pain
+
+Vitals:
+BP: 140/90
+HR: 88
+Temp: 98.6°F
+O2 Sat: 96%
+
+Medications:
+- Lisinopril 10mg daily
+- Metformin 500mg BID
+- Atorvastatin 40mg daily
+
+Labs:
+GFR: 45 mL/min
+Creatinine: 1.8 mg/dL
+Potassium: 4.2 mEq/L
+Hemoglobin: 11.2 g/dL`;
+
+      setExtractedText(mockText);
+      
+      // Parse medical data
+      const data = {
+        demographics: {
+          name: 'John Doe',
+          age: '45 years',
+          mrn: '12345678'
+        },
+        vitals: {
+          bp: '140/90',
+          hr: '88',
+          temp: '98.6°F',
+          o2: '96%'
+        },
+        medications: [
+          'Lisinopril 10mg daily',
+          'Metformin 500mg BID',
+          'Atorvastatin 40mg daily'
+        ],
+        labs: {
+          gfr: 45,
+          creatinine: 1.8,
+          potassium: 4.2,
+          hemoglobin: 11.2
+        }
+      };
+      
+      setMedicalData(data);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+  
+  const handleCapture = async (addToMulti = false) => {
+    try {
+      setIsCapturing(true);
+      
+      // Request screen capture
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: { mediaSource: 'screen' }
+      });
+      
+      // Create video element to capture frame
+      const video = document.createElement('video');
+      video.srcObject = stream;
+      video.play();
+      
+      // Wait for video to load
+      video.onloadedmetadata = () => {
+        // Create canvas to capture frame
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext('2d');
+        
+        // Draw video frame to canvas
+        ctx.drawImage(video, 0, 0);
+        
+        // Convert to blob
+        canvas.toBlob((blob) => {
+          if (addToMulti || captures.length > 0) {
+            // Add to multi-capture array
+            const newCapture = {
+              id: Date.now(),
+              blob: blob,
+              preview: URL.createObjectURL(blob),
+              timestamp: new Date()
+            };
+            setCaptures(prev => [...prev, newCapture]);
+          } else {
+            // Single capture - process immediately
+            processImage(blob);
+          }
+        });
+        
+        // Stop the stream
+        stream.getTracks().forEach(track => track.stop());
+      };
+    } catch (error) {
+      console.error('Error capturing screen:', error);
+    } finally {
+      setIsCapturing(false);
+    }
+  };
+  
+  const processAllCaptures = async () => {
+    if (captures.length === 0) return;
+    
+    setIsProcessing(true);
+    
+    try {
+      // Create FormData with all images
+      const formData = new FormData();
+      captures.forEach((capture, index) => {
+        formData.append('files', capture.blob, `screen_${index + 1}.png`);
+      });
+      
+      // Send to backend for multi-screen processing
+      const response = await fetch('http://localhost:8000/process-multi-screen', {
+        method: 'POST',
+        body: formData
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        setExtractedText(result.combined_text);
+        setMedicalData(result.extracted_data);
+      } else {
+        throw new Error('Processing failed');
+      }
+    } catch (error) {
+      console.error('Processing failed:', error);
+      // Mock multi-screen processing
+      const mockCombinedText = captures.map((_, idx) =>
+        `=== Screen ${idx + 1} ===\nPatient data from screen ${idx + 1}...`
+      ).join('\n\n');
+      setExtractedText(mockCombinedText);
+      
+      // Set mock medical data
+      setMedicalData({
+        demographics: { name: 'John Doe', age: '45', mrn: '12345678' },
+        vitals: { bp: '140/90', hr: '88' },
+        labs: { gfr: 45, creatinine: 1.8 },
+        medications: ['Lisinopril 10mg', 'Metformin 500mg']
+      });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+  
+  const saveToEHRWithRPA = async () => {
+    try {
+      setRpaStatus({ state: 'starting', progress: 'Initializing RPA bot...' });
+      
+      const response = await fetch('http://localhost:8000/save-to-ehr-rpa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          demographics: medicalData.demographics || {},
+          medical_data: medicalData
+        })
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        setRpaJobId(result.rpa_job_id);
+        // Start polling for status
+        pollRPAStatus(result.rpa_job_id);
+      }
+    } catch (error) {
+      console.error('RPA trigger failed:', error);
+      // Mock RPA process
+      mockRPAProcess();
+    }
+  };
+  
+  const mockRPAProcess = () => {
+    let step = 0;
+    const steps = [
+      'Logging into EHR system...',
+      'Navigating to patient chart...',
+      'Entering demographics...',
+      'Updating vital signs...',
+      'Recording lab results...',
+      'Saving medications...',
+      'Finalizing entry...',
+      'Entry complete!'
+    ];
+    
+    const interval = setInterval(() => {
+      if (step < steps.length) {
+        setRpaStatus({
+          state: step === steps.length - 1 ? 'completed' : 'running',
+          progress: `${step + 1}/${steps.length} - ${steps[step]}`,
+          screenshot: null
+        });
+        step++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 2000);
+  };
+  
+  const pollRPAStatus = async (jobId) => {
+    const checkStatus = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/rpa-status/${jobId}`);
+        const status = await response.json();
+        
+        setRpaStatus(status);
+        
+        if (status.state === 'running') {
+          setTimeout(() => checkStatus(), 2000);
+        }
+      } catch (error) {
+        // Fallback to mock
+        mockRPAProcess();
+      }
+    };
+    
+    checkStatus();
+  };
+  
+  const removeCapture = (id) => {
+    setCaptures(prev => prev.filter(cap => cap.id !== id));
+  };
+  
+  const clearAllCaptures = () => {
+    setCaptures([]);
+    setExtractedText('');
+    setMedicalData(null);
+    setAiResponse(null);
+    setQuery('');
+  };
+  
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(extractedText).then(() => {
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    });
+  };
+  
+  const analyzeQuery = async () => {
+    if (!query.trim() || !medicalData) return;
+    
+    setIsAnalyzing(true);
+    setAiResponse(null);
+    
+    try {
+      const response = await fetch('http://localhost:8000/analyze-flexible', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: query,
+          data: medicalData,
+          raw_text: extractedText,
+          data_type: captures.length > 1 ? 'multi_screen_ehr' : 'single_screen_ehr'
+        })
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        setAiResponse(result.analysis);
+      } else {
+        throw new Error('Analysis failed');
+      }
+    } catch (error) {
+      console.error('Analysis failed:', error);
+      // Fallback demo response
+      setAiResponse(getDemoAnalysis(query, medicalData));
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+  
+  const getDemoAnalysis = (query, data) => {
+    const queryLower = query.toLowerCase();
+    let analysis = '';
+    
+    if (queryLower.includes('abnormal') || queryLower.includes('concerning')) {
+      analysis = `Based on the extracted data, I've identified several concerning values:\n\n`;
+      
+      if (data.labs?.gfr && data.labs.gfr < 60) {
+        analysis += `• GFR of ${data.labs.gfr} mL/min indicates Stage ${data.labs.gfr < 30 ? '4' : '3'} CKD\n`;
+      }
+      if (data.labs?.creatinine && data.labs.creatinine > 1.2) {
+        analysis += `• Elevated creatinine (${data.labs.creatinine} mg/dL) confirms kidney dysfunction\n`;
+      }
+      if (data.labs?.hemoglobin && data.labs.hemoglobin < 12) {
+        analysis += `• Low hemoglobin (${data.labs.hemoglobin} g/dL) suggests anemia of CKD\n`;
+      }
+      
+      analysis += `\nRecommendations:\n`;
+      analysis += `• Consider nephrology referral for CKD management\n`;
+      analysis += `• Monitor kidney function closely\n`;
+      analysis += `• Evaluate medications for renal dosing adjustments`;
+    } else if (queryLower.includes('kidney') || queryLower.includes('renal')) {
+      analysis = `Kidney Function Analysis:\n\n`;
+      if (data.labs?.gfr) {
+        analysis += `• eGFR: ${data.labs.gfr} mL/min/1.73m² `;
+        analysis += `(${data.labs.gfr < 60 ? 'Below normal' : 'Normal'})\n`;
+      }
+      if (data.labs?.creatinine) {
+        analysis += `• Creatinine: ${data.labs.creatinine} mg/dL `;
+        analysis += `(${data.labs.creatinine > 1.2 ? 'Elevated' : 'Normal'})\n`;
+      }
+      analysis += `\nClinical Significance:\n`;
+      analysis += `The patient shows signs of chronic kidney disease requiring close monitoring and potential intervention.`;
+    } else if (queryLower.includes('medication')) {
+      analysis = `Medication Review:\n\n`;
+      if (data.medications && data.medications.length > 0) {
+        analysis += `Current medications:\n`;
+        data.medications.forEach(med => {
+          analysis += `• ${med}\n`;
+        });
+        analysis += `\nConsiderations:\n`;
+        analysis += `• All medications should be reviewed for renal dosing given the reduced GFR\n`;
+        analysis += `• ACE inhibitor (Lisinopril) is appropriate for CKD but monitor potassium`;
+      }
+    } else {
+      analysis = `Medical Data Summary:\n\n`;
+      analysis += `Patient: ${data.demographics?.name || 'Unknown'}, ${data.demographics?.age || 'Unknown age'}\n`;
+      analysis += `MRN: ${data.demographics?.mrn || 'Not provided'}\n\n`;
+      
+      if (data.vitals) {
+        analysis += `Vital Signs:\n`;
+        Object.entries(data.vitals).forEach(([key, value]) => {
+          analysis += `• ${key.toUpperCase()}: ${value}\n`;
+        });
+      }
+      
+      if (data.labs) {
+        analysis += `\nLab Results:\n`;
+        Object.entries(data.labs).forEach(([key, value]) => {
+          analysis += `• ${key.toUpperCase()}: ${value}\n`;
+        });
+      }
+    }
+    
+    return analysis;
+  };
+  
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      analyzeQuery();
+    }
+  };
+  
+  // Check if any lab values are abnormal
+  const checkAbnormalValue = (lab, value) => {
+    const abnormalRanges = {
+      gfr: (v) => v < 60,
+      creatinine: (v) => v > 1.2,
+      potassium: (v) => v < 3.5 || v > 5.0,
+      hemoglobin: (v) => v < 12,
+      phosphorus: (v) => v > 4.5,
+      pth: (v) => v > 65
+    };
+    
+    return abnormalRanges[lab] && abnormalRanges[lab](parseFloat(value));
+  };
+  
+  return (
+    <div className="screen-capture-container" style={{
+      padding: '1.5rem',
+      maxWidth: '1200px',
+      margin: '0 auto',
+      height: 'calc(100vh - 4rem)',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '1rem',
+      overflow: 'auto'
+    }}>
+      <div className="capture-header" style={{ marginBottom: '1rem' }}>
+        <h1 style={{
+          fontSize: '1.75rem',
+          fontWeight: '600',
+          color: 'var(--text-primary)',
+          margin: '0 0 0.5rem 0'
+        }}>Screen Capture & Analysis</h1>
+        <p style={{
+          fontSize: '0.875rem',
+          color: 'var(--text-secondary)',
+          margin: 0
+        }}>Capture any EHR screen and extract medical information instantly</p>
+      </div>
+      
+      <div className="capture-section" style={{
+        background: 'var(--card-bg)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid var(--border)',
+        borderRadius: '16px',
+        padding: '1.5rem',
+        marginBottom: '1rem'
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: '1rem'
+        }}>
+          <div>
+            <h2 style={{
+              fontSize: '1.25rem',
+              fontWeight: '600',
+              color: 'var(--text-primary)',
+              margin: '0 0 0.25rem 0'
+            }}>Capture Screen</h2>
+            <p style={{
+              fontSize: '0.813rem',
+              color: 'var(--text-secondary)',
+              margin: 0
+            }}>Select any window or screen to capture</p>
+          </div>
+          
+          <motion.button
+            className="capture-btn"
+            onClick={() => handleCapture()}
+            disabled={isCapturing}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.75rem 1.5rem',
+              background: 'linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '0.875rem',
+              fontWeight: '600',
+              cursor: isCapturing ? 'not-allowed' : 'pointer',
+              opacity: isCapturing ? 0.7 : 1
+            }}
+          >
+            {isCapturing ? (
+              <>
+                <Loader2 className="spin" size={18} />
+                Capturing...
+              </>
+            ) : (
+              <>
+                <Camera size={18} />
+                Capture Screen
+              </>
+            )}
+          </motion.button>
+          
+          {captures.length > 0 && (
+            <motion.button
+              onClick={clearAllCaptures}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.375rem',
+                padding: '0.5rem 1rem',
+                background: 'transparent',
+                border: '1px solid var(--border)',
+                borderRadius: '6px',
+                color: 'var(--text-secondary)',
+                fontSize: '0.813rem',
+                fontWeight: '600',
+                cursor: 'pointer'
+              }}
+            >
+              <X size={16} />
+              Clear All
+            </motion.button>
+          )}
+        </div>
+        
+        {/* Multi-capture controls */}
+        {captures.length > 0 && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            marginTop: '1rem',
+            paddingTop: '1rem',
+            borderTop: '1px solid var(--border)'
+          }}>
+            <motion.button
+              onClick={() => handleCapture(true)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.5rem 1rem',
+                background: 'transparent',
+                border: '1px solid var(--border)',
+                borderRadius: '6px',
+                color: 'var(--text-primary)',
+                fontSize: '0.813rem',
+                fontWeight: '600',
+                cursor: 'pointer'
+              }}
+            >
+              <Plus size={16} />
+              Add Another Screen
+            </motion.button>
+            
+            <span style={{
+              color: 'var(--text-secondary)',
+              fontSize: '0.813rem'
+            }}>
+              {captures.length} screen{captures.length > 1 ? 's' : ''} captured
+            </span>
+            
+            <motion.button
+              onClick={processAllCaptures}
+              disabled={isProcessing}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.5rem 1rem',
+                background: 'var(--primary)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                fontSize: '0.813rem',
+                fontWeight: '600',
+                cursor: isProcessing ? 'not-allowed' : 'pointer',
+                marginLeft: 'auto'
+              }}
+            >
+              {isProcessing ? (
+                <>
+                  <Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} />
+                  Processing...
+                </>
+              ) : (
+                <>
+                  <Brain size={16} />
+                  Process All Screens
+                </>
+              )}
+            </motion.button>
+          </div>
+        )}
+        
+        {/* Capture previews */}
+        {captures.length > 0 && (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+            gap: '0.75rem',
+            marginTop: '1rem'
+          }}>
+            {captures.map((capture) => (
+              <div key={capture.id} style={{
+                position: 'relative',
+                border: '1px solid var(--border)',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                background: 'rgba(0, 0, 0, 0.2)'
+              }}>
+                <img
+                  src={capture.preview}
+                  alt={`Screen ${capture.id}`}
+                  style={{
+                    width: '100%',
+                    height: '100px',
+                    objectFit: 'cover',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => setShowFullscreenPreview(capture.preview)}
+                />
+                <motion.button
+                  onClick={() => removeCapture(capture.id)}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  style={{
+                    position: 'absolute',
+                    top: '0.25rem',
+                    right: '0.25rem',
+                    padding: '0.25rem',
+                    background: 'rgba(239, 68, 68, 0.9)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontSize: '0.75rem',
+                    width: '20px',
+                    height: '20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  ×
+                </motion.button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      
+      {/* Processing Overlay */}
+      <AnimatePresence>
+        {isProcessing && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0, 0, 0, 0.8)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1000
+            }}
+          >
+            <div style={{
+              background: 'var(--card-bg)',
+              padding: '2rem',
+              borderRadius: '16px',
+              textAlign: 'center'
+            }}>
+              <Loader2 className="spin" size={48} style={{ marginBottom: '1rem' }} />
+              <h3 style={{ color: 'var(--text-primary)', marginBottom: '0.5rem' }}>Processing Image...</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Extracting text and medical data</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* Results Section */}
+      {extractedText && !isProcessing && (
+        <div className="results-section" style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '1rem',
+          marginBottom: '1rem'
+        }}>
+          {/* Extracted Text */}
+          <div style={{
+            background: 'var(--card-bg)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid var(--border)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '1rem'
+            }}>
+              <h3 style={{
+                fontSize: '1.125rem',
+                fontWeight: '600',
+                color: 'var(--text-primary)',
+                margin: 0
+              }}>Extracted Text</h3>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <motion.button
+                  onClick={copyToClipboard}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.375rem',
+                    padding: '0.5rem 1rem',
+                    background: 'transparent',
+                    border: '1px solid var(--border)',
+                    borderRadius: '6px',
+                    color: 'var(--text-primary)',
+                    fontSize: '0.813rem',
+                    fontWeight: '600',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <Copy size={14} />
+                  {copySuccess ? 'Copied!' : 'Copy'}
+                </motion.button>
+                <motion.button
+                  onClick={saveToEHRWithRPA}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.375rem',
+                    padding: '0.5rem 1rem',
+                    background: 'var(--primary)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '6px',
+                    fontSize: '0.813rem',
+                    fontWeight: '600',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <Bot size={14} />
+                  Upload to EHR
+                </motion.button>
+              </div>
+            </div>
+            <pre style={{
+              background: 'rgba(255, 255, 255, 0.02)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              borderRadius: '8px',
+              padding: '1rem',
+              fontSize: '0.813rem',
+              lineHeight: '1.5',
+              color: 'var(--text-primary)',
+              overflow: 'auto',
+              flex: 1,
+              margin: 0,
+              fontFamily: 'Consolas, Monaco, monospace',
+              maxHeight: '300px'
+            }}>{extractedText}</pre>
+          </div>
+          
+          {/* Medical Data */}
+          <div style={{
+            background: 'var(--card-bg)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid var(--border)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <h3 style={{
+              fontSize: '1.125rem',
+              fontWeight: '600',
+              color: 'var(--text-primary)',
+              margin: '0 0 1rem 0'
+            }}>Parsed Medical Data</h3>
+            
+            <div style={{ flex: 1, overflow: 'auto', maxHeight: '300px' }}>
+              {medicalData && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {/* Demographics */}
+                  {medicalData.demographics && Object.keys(medicalData.demographics).length > 0 && (
+                    <div style={{
+                      background: 'rgba(255, 255, 255, 0.02)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '8px',
+                      padding: '1rem'
+                    }}>
+                      <h4 style={{
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        color: 'var(--primary)',
+                        margin: '0 0 0.5rem 0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                      }}>
+                        <Monitor size={16} />
+                        Demographics
+                      </h4>
+                      <div style={{ fontSize: '0.813rem', color: 'var(--text-primary)', lineHeight: '1.5' }}>
+                        {medicalData.demographics.name && <div>Name: {medicalData.demographics.name}</div>}
+                        {medicalData.demographics.age && <div>Age: {medicalData.demographics.age}</div>}
+                        {medicalData.demographics.mrn && <div>MRN: {medicalData.demographics.mrn}</div>}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Vitals */}
+                  {medicalData.vitals && Object.keys(medicalData.vitals).length > 0 && (
+                    <div style={{
+                      background: 'rgba(255, 255, 255, 0.02)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '8px',
+                      padding: '1rem'
+                    }}>
+                      <h4 style={{
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        color: 'var(--primary)',
+                        margin: '0 0 0.5rem 0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                      }}>
+                        <TrendingUp size={16} />
+                        Vitals
+                      </h4>
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(2, 1fr)',
+                        gap: '0.5rem',
+                        fontSize: '0.813rem',
+                        color: 'var(--text-primary)'
+                      }}>
+                        {medicalData.vitals.bp && <div>BP: {medicalData.vitals.bp}</div>}
+                        {medicalData.vitals.hr && <div>HR: {medicalData.vitals.hr}</div>}
+                        {medicalData.vitals.temp && <div>Temp: {medicalData.vitals.temp}</div>}
+                        {medicalData.vitals.o2 && <div>O2: {medicalData.vitals.o2}</div>}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Labs with abnormal indicators */}
+                  {medicalData.labs && Object.keys(medicalData.labs).length > 0 && (
+                    <div style={{
+                      background: 'rgba(255, 255, 255, 0.02)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '8px',
+                      padding: '1rem'
+                    }}>
+                      <h4 style={{
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        color: 'var(--primary)',
+                        margin: '0 0 0.5rem 0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                      }}>
+                        <AlertCircle size={16} />
+                        Lab Results
+                      </h4>
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(2, 1fr)',
+                        gap: '0.5rem',
+                        fontSize: '0.813rem'
+                      }}>
+                        {Object.entries(medicalData.labs).map(([lab, value]) => {
+                          const isAbnormal = checkAbnormalValue(lab, value);
+                          return (
+                            <div key={lab} style={{
+                              color: isAbnormal ? '#EF4444' : 'var(--text-primary)',
+                              fontWeight: isAbnormal ? '600' : '400'
+                            }}>
+                              {lab.toUpperCase()}: {value} {isAbnormal && '⚠️'}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Medications */}
+                  {medicalData.medications && medicalData.medications.length > 0 && (
+                    <div style={{
+                      background: 'rgba(255, 255, 255, 0.02)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '8px',
+                      padding: '1rem'
+                    }}>
+                      <h4 style={{
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        color: 'var(--primary)',
+                        margin: '0 0 0.5rem 0'
+                      }}>Medications</h4>
+                      <ul style={{
+                        margin: 0,
+                        paddingLeft: '1.25rem',
+                        fontSize: '0.813rem',
+                        color: 'var(--text-primary)',
+                        lineHeight: '1.5'
+                      }}>
+                        {medicalData.medications.map((med, index) => (
+                          <li key={index}>{med}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Query Section */}
+      {medicalData && (
+        <div style={{
+          background: 'var(--card-bg)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid var(--border)',
+          borderRadius: '16px',
+          padding: '1.5rem',
+          marginBottom: '1rem'
+        }}>
+          <h3 style={{
+            fontSize: '1.125rem',
+            fontWeight: '600',
+            color: 'var(--text-primary)',
+            margin: '0 0 1rem 0',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            <Brain size={20} />
+            AI Analysis
+          </h3>
+          
+          <div style={{
+            display: 'flex',
+            gap: '0.75rem',
+            marginBottom: '1rem'
+          }}>
+            <input
+              type="text"
+              placeholder="Ask about abnormal values, kidney function, medications..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyPress={handleKeyPress}
+              style={{
+                flex: 1,
+                padding: '0.75rem 1rem',
+                border: '1px solid var(--border)',
+                borderRadius: '8px',
+                background: 'transparent',
+                color: 'var(--text-primary)',
+                fontSize: '0.875rem',
+                outline: 'none'
+              }}
+            />
+            <motion.button
+              onClick={analyzeQuery}
+              disabled={isAnalyzing || !query.trim()}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.75rem 1.5rem',
+                background: query.trim() ? 'var(--primary)' : 'var(--border)',
+                color: query.trim() ? 'white' : 'var(--text-secondary)',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '0.875rem',
+                fontWeight: '600',
+                cursor: query.trim() && !isAnalyzing ? 'pointer' : 'not-allowed'
+              }}
+            >
+              {isAnalyzing ? (
+                <>
+                  <Loader2 className="spin" size={16} />
+                  Analyzing...
+                </>
+              ) : (
+                <>
+                  <Send size={16} />
+                  Analyze
+                </>
+              )}
+            </motion.button>
+          </div>
+          
+          {/* Suggested Queries */}
+          <div style={{
+            display: 'flex',
+            gap: '0.5rem',
+            flexWrap: 'wrap',
+            marginBottom: '1rem'
+          }}>
+            {['What values are abnormal?', 'Analyze kidney function', 'Review medications'].map((suggestion) => (
+              <motion.button
+                key={suggestion}
+                onClick={() => {
+                  setQuery(suggestion);
+                  setTimeout(() => analyzeQuery(), 100);
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                style={{
+                  padding: '0.375rem 0.75rem',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '20px',
+                  color: 'var(--text-secondary)',
+                  fontSize: '0.75rem',
+                  cursor: 'pointer'
+                }}
+              >
+                {suggestion}
+              </motion.button>
+            ))}
+          </div>
+          
+          {/* AI Response */}
+          {aiResponse && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{
+                background: 'rgba(255, 255, 255, 0.02)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: '8px',
+                padding: '1rem',
+                whiteSpace: 'pre-wrap',
+                fontSize: '0.875rem',
+                lineHeight: '1.6',
+                color: 'var(--text-primary)',
+                maxHeight: '300px',
+                overflow: 'auto'
+              }}
+            >
+              {aiResponse}
+            </motion.div>
+          )}
+        </div>
+      )}
+      
+      {/* RPA Bot Status */}
+      {rpaStatus && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            background: 'var(--card-bg)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid var(--border)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            marginBottom: '1rem'
+          }}
+        >
+          <h3 style={{
+            fontSize: '1.125rem',
+            fontWeight: '600',
+            color: 'var(--text-primary)',
+            margin: '0 0 1rem 0',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            <Bot size={20} />
+            RPA Bot Status
+          </h3>
+          
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            marginBottom: '1rem'
+          }}>
+            <div style={{
+              width: '24px',
+              height: '24px',
+              borderRadius: '50%',
+              background: rpaStatus.state === 'running' ? '#F59E0B' : '#10B981',
+              animation: rpaStatus.state === 'running' ? 'pulse 2s infinite' : 'none'
+            }} />
+            <span style={{ color: 'var(--text-primary)', fontWeight: '600' }}>
+              {rpaStatus.state === 'running' ? 'Bot is working...' : 'Bot completed'}
+            </span>
+            <span style={{ color: 'var(--text-secondary)', fontSize: '0.813rem' }}>
+              {rpaStatus.progress}
+            </span>
+          </div>
+          
+          {rpaStatus.screenshot && (
+            <div style={{
+              border: '1px solid var(--border)',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              marginTop: '1rem'
+            }}>
+              <img
+                src={rpaStatus.screenshot}
+                alt="RPA Bot Progress"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block'
+                }}
+              />
+            </div>
+          )}
+        </motion.div>
+      )}
+      
+      {/* Fullscreen Preview */}
+      {showFullscreenPreview && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setShowFullscreenPreview(null)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.9)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 2000,
+            cursor: 'pointer'
+          }}
+        >
+          <img
+            src={showFullscreenPreview}
+            alt="Fullscreen preview"
+            style={{
+              maxWidth: '90%',
+              maxHeight: '90%',
+              objectFit: 'contain'
+            }}
+          />
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+export default ScreenCapture;
+        
