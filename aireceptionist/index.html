@@ -296,6 +296,83 @@
             }
         }
 
+        /* Metrics Section */
+        .metrics-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .metrics-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Tablet view - 2 columns */
+        @media (max-width: 1024px) {
+            .metrics-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Mobile view - 2 columns */
+        @media (max-width: 768px) {
+            .metrics-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .metric-value {
+                font-size: 2rem;
+            }
+
+            .metric-label {
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Very small screens - 1 column */
+        @media (max-width: 480px) {
+            .metrics-container {
+                grid-template-columns: 1fr;
+            }
+
+            .metric-card {
+                padding: 1rem;
+            }
+        }
+
         /* Features Section */
         .features {
             padding: 5rem 2rem;
@@ -320,17 +397,34 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
         }
 
+        /* Large tablets and small laptops */
         @media (max-width: 1200px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Tablets */
+        @media (max-width: 1024px) {
             .features-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
+        /* Mobile devices */
         @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
             .features-grid {
                 grid-template-columns: 1fr;
             }
@@ -527,52 +621,278 @@
             50% { transform: scale(1.05); }
         }
 
+        /* Fade in from left */
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Fade in from right */
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Scale in animation */
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Initial state for animated elements */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.fade-up {
+            transform: translateY(30px);
+        }
+
+        .animate-on-scroll.fade-left {
+            transform: translateX(-30px);
+        }
+
+        .animate-on-scroll.fade-right {
+            transform: translateX(30px);
+        }
+
+        .animate-on-scroll.scale {
+            transform: scale(0.9);
+        }
+
+        /* Visible state */
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0) translateX(0) scale(1);
+        }
+
+        /* Stagger children animation */
+        .stagger-children.visible > * {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+        }
+
+        .stagger-children.visible > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-children.visible > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-children.visible > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-children.visible > *:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Dynamic particle canvas */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Use Cases Section */
+        .use-cases-section {
+            padding: 5rem 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .use-cases-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .use-cases-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+        }
+
+        .tab-button.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .tab-button:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .use-case-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .use-case-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        .use-case-item {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .use-case-item h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .use-case-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Pain Points Grid Responsive */
+        @media (max-width: 1200px) {
+            .pain-points-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .pain-points-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+        }
+
         /* Integration Section */
         .integrations {
             padding: 5rem 2rem;
             background: var(--bg-primary);
             position: relative;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .integration-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 3rem;
+        .integration-carousel {
+            overflow: hidden;
+            position: relative;
             margin-top: 3rem;
-            flex-wrap: wrap;
+        }
+
+        .integration-carousel::before,
+        .integration-carousel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .integration-carousel::before {
+            left: 0;
+            background: linear-gradient(to right, var(--bg-primary) 0%, transparent 100%);
+        }
+
+        .integration-carousel::after {
+            right: 0;
+            background: linear-gradient(to left, var(--bg-primary) 0%, transparent 100%);
+        }
+
+        .integration-track {
+            display: flex;
+            animation: scrollIntegrations 30s linear infinite;
         }
 
         .integration-logo {
-            width: 140px;
-            height: 70px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex: 0 0 150px;
+            height: 80px;
+            margin: 0 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-            color: var(--text-primary);
+            gap: 0.5rem;
             transition: all 0.3s;
-            animation: logo-float 4s ease-in-out infinite;
-        }
-
-        .integration-logo:nth-child(2) { animation-delay: 0.5s; }
-        .integration-logo:nth-child(3) { animation-delay: 1s; }
-        .integration-logo:nth-child(4) { animation-delay: 1.5s; }
-        .integration-logo:nth-child(5) { animation-delay: 2s; }
-
-        @keyframes logo-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            backdrop-filter: blur(10px);
         }
 
         .integration-logo:hover {
+            transform: translateY(-5px);
             border-color: var(--accent);
-            color: var(--text-primary);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .integration-logo img {
+            height: 35px;
+            width: auto;
+            opacity: 0.8;
+        }
+
+        .integration-logo span {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        @keyframes scrollIntegrations {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .integration-carousel:hover .integration-track {
+            animation-play-state: paused;
         }
 
         /* CTA Section */
@@ -716,14 +1036,19 @@
                 font-size: 0.95rem;
             }
             
-            .integration-logos {
-                gap: 1.5rem;
-            }
-            
             .integration-logo {
-                width: 120px;
-                height: 60px;
-                font-size: 0.875rem;
+                flex: 0 0 120px;
+                height: 70px;
+                margin: 0 0.75rem;
+            }
+
+            .integration-logo img {
+                height: 28px;
+            }
+
+            .integration-carousel::before,
+            .integration-carousel::after {
+                width: 50px;
             }
         }
         
@@ -828,6 +1153,8 @@
     </style>
 </head>
 <body>
+    <!-- Dynamic particle canvas -->
+    <canvas id="particleCanvas"></canvas>
     <!-- Animated Background -->
     <div class="animated-bg">
         <div class="gradient-orb orb1"></div>
@@ -869,9 +1196,74 @@
     <section class="hero">
         <div class="hero-content">
             <img src="../logo-name.png" alt="Perfect AIm" style="height: 200px; width: auto; margin-bottom: 2rem; display: block; margin-left: auto; margin-right: auto;">
-            <h1>Your AI Receptionist Never Sleeps</h1>
-            <p>24/7 appointment booking, perfect transcription, and seamless integration with your business</p>
-            <a href="#cta-section" class="cta-button" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Start Free Trial</a>
+            <h1>AI Appointment Booking That Works As Well As Humans—At 10% The Cost</h1>
+            <p>Finally, an AI receptionist that manages scheduling, reminders, and customer calls with human-level quality. Save 50% on admin work while capturing every opportunity—24/7.</p>
+            <a href="#cta-section" class="cta-button" style="font-size: 1.1rem; padding: 1rem 2.5rem;">See AI Receptionist in Action</a>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">No credit card required • 14-day free trial</p>
+        </div>
+    </section>
+
+    <!-- Metrics Section -->
+    <section class="metrics-section">
+        <div class="metrics-container">
+            <div class="metric-card">
+                <div class="metric-value">30%</div>
+                <div class="metric-label">Reduction in No-Shows</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">50%</div>
+                <div class="metric-label">Less Admin Work</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">24/7</div>
+                <div class="metric-label">Always Available</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">100%</div>
+                <div class="metric-label">Call Coverage</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pain Points Section -->
+    <section style="padding: 5rem 2rem; background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(252, 165, 165, 0.05) 100%);">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title">The Hidden Cost of Missed Calls</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem; font-size: 1.1rem;">
+                Every unanswered call is a lost opportunity. Here's what it's really costing you:
+            </p>
+            <div class="pain-points-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;">
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 16px; border-left: 4px solid #ef4444;">
+                    <h3 style="color: #ef4444; margin-bottom: 1rem; font-size: 1.3rem;">📞 Missed Revenue</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">
+                        67% of callers hang up when they reach voicemail. With average appointment values of $150-500, you're losing thousands monthly.
+                    </p>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 16px; border-left: 4px solid #f59e0b;">
+                    <h3 style="color: #f59e0b; margin-bottom: 1rem; font-size: 1.3rem;">⏰ Admin Overload</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">
+                        Your team spends 15+ hours weekly on phone tag, scheduling, and rescheduling—time they could spend on revenue-generating activities.
+                    </p>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 16px; border-left: 4px solid #8b5cf6;">
+                    <h3 style="color: #8b5cf6; margin-bottom: 1rem; font-size: 1.3rem;">❌ No-Show Epidemic</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">
+                        Without proper reminders and confirmation, 20-30% of appointments no-show, wasting valuable time slots and reducing revenue.
+                    </p>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 16px; border-left: 4px solid #06b6d4;">
+                    <h3 style="color: #06b6d4; margin-bottom: 1rem; font-size: 1.3rem;">🌙 After-Hours Gaps</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">
+                        70% of calls come outside business hours. Without 24/7 coverage, competitors who answer are winning your customers.
+                    </p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <p style="font-size: 1.25rem; color: var(--text-primary); margin-bottom: 1.5rem;">
+                    <strong>Stop letting money walk out the door.</strong>
+                </p>
+                <a href="#cta-section" class="cta-button" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Fix These Problems Now →</a>
+            </div>
         </div>
     </section>
 
@@ -936,16 +1328,112 @@
                     <h3>CRM & Calendar Integration</h3>
                     <p>Works with your existing tools - Google Calendar, Outlook, Salesforce, HubSpot, and more.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path><path d="M14.05 2a9 9 0 0 1 8 7.94"></path><path d="M14.05 6A5 5 0 0 1 18 10"></path></svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases-section" id="use-cases">
+        <div class="use-cases-container">
+            <h2 class="section-title">Built for Every Industry</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem;">
+                See how businesses like yours use AI Receptionist to transform their customer experience
+            </p>
+
+            <div class="use-cases-tabs">
+                <button class="tab-button active" onclick="showTab('healthcare')">Healthcare</button>
+                <button class="tab-button" onclick="showTab('home-services')">Home Services</button>
+                <button class="tab-button" onclick="showTab('beauty')">Beauty & Wellness</button>
+                <button class="tab-button" onclick="showTab('professional')">Professional Services</button>
+            </div>
+
+            <div id="healthcare" class="tab-content active">
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <h4>Patient Appointments</h4>
+                        <p>Schedule, reschedule, and confirm patient appointments automatically, reducing no-shows by 30%.</p>
                     </div>
-                    <h3>No More Voicemail</h3>
-                    <p>Your AI receptionist ensures no calls are ever missed. Every caller gets immediate attention, 24/7/365.</p>
+                    <div class="use-case-item">
+                        <h4>After-Hours Calls</h4>
+                        <p>Capture patient needs 24/7, prioritize urgent cases, and schedule callbacks for non-emergencies.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>Insurance Verification</h4>
+                        <p>Collect insurance information accurately and verify coverage before appointments.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="home-services" class="tab-content">
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <h4>Service Scheduling</h4>
+                        <p>Book plumbing, HVAC, or electrical appointments based on technician availability and location.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>Emergency Dispatch</h4>
+                        <p>Identify urgent requests and dispatch emergency crews immediately while capturing all details.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>Quote Requests</h4>
+                        <p>Gather project details and schedule in-home estimates with qualified leads.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="beauty" class="tab-content">
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <h4>Salon Bookings</h4>
+                        <p>Book haircuts, colors, and treatments with specific stylists based on their specialties.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>Spa Services</h4>
+                        <p>Schedule massages, facials, and wellness treatments while managing room availability.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>Package Deals</h4>
+                        <p>Upsell service packages and membership programs during booking conversations.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="professional" class="tab-content">
+                <div class="use-case-grid">
+                    <div class="use-case-item">
+                        <h4>Consultations</h4>
+                        <p>Schedule legal, financial, or business consultations with intake form completion.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>Client Onboarding</h4>
+                        <p>Collect initial information and documents before first appointments.</p>
+                    </div>
+                    <div class="use-case-item">
+                        <h4>Meeting Coordination</h4>
+                        <p>Coordinate multi-party meetings and send calendar invites automatically.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Remove active from all buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+
+            // Mark button as active
+            event.target.classList.add('active');
+        }
+    </script>
 
     <!-- Pricing Section -->
     <section class="pricing" id="pricing">
@@ -996,16 +1484,189 @@
         </div>
     </section>
 
+    <!-- Comparison Table Section -->
+    <section style="padding: 5rem 2rem; background: var(--bg-secondary);">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h2 class="section-title">AI Receptionist vs Traditional Solutions</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem;">
+                See why businesses are switching to AI-powered reception
+            </p>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; background: rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden;">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));">
+                            <th style="padding: 1.5rem; text-align: left; font-weight: 600; color: white;">Feature</th>
+                            <th style="padding: 1.5rem; text-align: center; font-weight: 600; color: white; background: rgba(255,255,255,0.1);">AI Receptionist</th>
+                            <th style="padding: 1.5rem; text-align: center; font-weight: 600; color: white;">Human Receptionist</th>
+                            <th style="padding: 1.5rem; text-align: center; font-weight: 600; color: white;">Voicemail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 1rem 1.5rem; color: var(--text-secondary);">Availability</td>
+                            <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: 600;">✓ 24/7/365</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">Business Hours</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">24/7 (No interaction)</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 1rem 1.5rem; color: var(--text-secondary);">Monthly Cost</td>
+                            <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: 600;">✓ From $297</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">$3,000-$5,000</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">$50-$200</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 1rem 1.5rem; color: var(--text-secondary);">Call Capacity</td>
+                            <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: 600;">✓ Unlimited</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">1 at a time</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">Records only</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 1rem 1.5rem; color: var(--text-secondary);">Appointment Booking</td>
+                            <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: 600;">✓ Instant</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">Manual entry</td>
+                            <td style="padding: 1rem; text-align: center; color: #ef4444;">✗ None</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 1rem 1.5rem; color: var(--text-secondary);">Accuracy</td>
+                            <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: 600;">✓ 99.9%</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">Human error</td>
+                            <td style="padding: 1rem; text-align: center; color: #ef4444;">✗ N/A</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 1rem 1.5rem; color: var(--text-secondary);">Languages</td>
+                            <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: 600;">✓ 30+</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">Usually 1-2</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">1</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="padding: 1rem 1.5rem; color: var(--text-secondary);">Setup Time</td>
+                            <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: 600;">✓ 48 hours</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">2-4 weeks</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">1 day</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1rem 1.5rem; color: var(--text-secondary);">Sick Days/Vacation</td>
+                            <td style="padding: 1rem; text-align: center; color: #10b981; font-weight: 600;">✓ Never</td>
+                            <td style="padding: 1rem; text-align: center; color: var(--text-secondary);">15-20 days/year</td>
+                            <td style="padding: 1rem; text-align: center; color: #10b981;">✓ Never</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <p style="font-size: 1.25rem; color: var(--text-primary); margin-bottom: 1.5rem;">
+                    <strong>The choice is clear.</strong> Get enterprise-grade reception at a fraction of the cost.
+                </p>
+                <a href="#cta-section" class="cta-button" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Switch to AI Receptionist →</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Integration Section -->
     <section class="integrations" id="integrations">
         <div class="features-container">
-            <h2 class="section-title">Seamless Integration With Your Tools</h2>
-            <div class="integration-logos">
-                <div class="integration-logo">Google Calendar</div>
-                <div class="integration-logo">Outlook</div>
-                <div class="integration-logo">Salesforce</div>
-                <div class="integration-logo">HubSpot</div>
-                <div class="integration-logo">Zoom</div>
+            <h2 class="section-title">Works With Everything You Already Use</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 1rem;">
+                AI Receptionist integrates seamlessly with your existing tools
+            </p>
+        </div>
+
+        <div class="integration-carousel">
+            <div class="integration-track">
+                <!-- First set of logos -->
+                <div class="integration-logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google">
+                    <span>Google</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/slack/slack-original.svg" alt="Slack">
+                    <span>Slack</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" alt="Outlook">
+                    <span>Outlook</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/salesforce/salesforce-original.svg" alt="Salesforce">
+                    <span>Salesforce</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" alt="HubSpot">
+                    <span>HubSpot</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.worldvectorlogo.com/logos/quickbooks.svg" alt="QuickBooks">
+                    <span>QuickBooks</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/trello/trello-plain.svg" alt="Calendly">
+                    <span>Calendly</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.worldvectorlogo.com/logos/zoom-app.svg" alt="Zoom">
+                    <span>Zoom</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.worldvectorlogo.com/logos/microsoft-teams-1.svg" alt="Teams">
+                    <span>Teams</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.worldvectorlogo.com/logos/asana-logo.svg" alt="Asana">
+                    <span>Asana</span>
+                </div>
+
+                <!-- Duplicate set for seamless loop -->
+                <div class="integration-logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google">
+                    <span>Google</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/slack/slack-original.svg" alt="Slack">
+                    <span>Slack</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" alt="Outlook">
+                    <span>Outlook</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/salesforce/salesforce-original.svg" alt="Salesforce">
+                    <span>Salesforce</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" alt="HubSpot">
+                    <span>HubSpot</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.worldvectorlogo.com/logos/quickbooks.svg" alt="QuickBooks">
+                    <span>QuickBooks</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/trello/trello-plain.svg" alt="Calendly">
+                    <span>Calendly</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.worldvectorlogo.com/logos/zoom-app.svg" alt="Zoom">
+                    <span>Zoom</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.worldvectorlogo.com/logos/microsoft-teams-1.svg" alt="Teams">
+                    <span>Teams</span>
+                </div>
+                <div class="integration-logo">
+                    <img src="https://cdn.worldvectorlogo.com/logos/asana-logo.svg" alt="Asana">
+                    <span>Asana</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-container" style="margin-top: 3rem;">
+            <div style="text-align: center;">
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                    Plus 50+ more integrations
+                </p>
+                <a href="#cta-section" style="color: var(--accent); text-decoration: underline; font-weight: 500;">
+                    See all integrations →
+                </a>
             </div>
         </div>
     </section>
@@ -1098,23 +1759,191 @@
             </div>
 
             <button type="submit" class="demo-submit-btn" style="width: 100%; font-size: 1.1rem; padding: 1rem 2rem; background: linear-gradient(135deg, var(--gradient-1) 0%, var(--gradient-2) 100%); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); position: relative; overflow: hidden;">
-                Get Your AI Receptionist Today →
+                See AI Receptionist in Action →
             </button>
 
             <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
-                🔒 Your information is 100% secure • Start saving 20+ hours per week
+                🔒 No credit card required • 14-day free trial • Setup in 48 hours
             </p>
         </form>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 24/7 Receptionist by Perfect AIm Marketing. All rights reserved.</p>
-            <p>Transforming customer communication with intelligent AI</p>
+        <div class="footer-content" style="text-align: center; padding: 2rem;">
+            <img src="../logo.png" alt="Perfect AIm" style="height: 40px; width: auto; margin-bottom: 1rem; display: block; margin-left: auto; margin-right: auto;">
+            <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 2rem;">
+                AI Receptionist that never misses a call, never takes a day off.
+            </p>
+
+            <!-- Contact Links -->
+            <div style="display: flex; gap: 2rem; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 2rem;">
+                <a href="mailto:admin@perfectaimarketing.com" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-weight: 500; transition: color 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2;">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    admin@perfectaimarketing.com
+                </a>
+                <a href="tel:+13218503336" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-weight: 500; transition: color 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2;">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    321-850-3336
+                </a>
+            </div>
+
+            <!-- Social Media Links -->
+            <div style="display: flex; gap: 1.5rem; justify-content: center; align-items: center; margin-bottom: 2rem;">
+                <a href="https://www.facebook.com/PerfectAImApp" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style="color: rgba(255, 255, 255, 0.6); transition: color 0.3s;">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/PerfectAImMarketing" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="color: rgba(255, 255, 255, 0.6); transition: color 0.3s;">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/PerfectAImAI" target="_blank" rel="noopener noreferrer" aria-label="Twitter" style="color: rgba(255, 255, 255, 0.6); transition: color 0.3s;">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Legal Links -->
+            <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
+                <a href="https://perfectaimarketing.com/privacy-policy" target="_blank" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 0.875rem;">
+                    Privacy Policy
+                </a>
+                <a href="https://perfectaimarketing.com/terms-and-conditions" target="_blank" style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 0.875rem;">
+                    Terms & Conditions
+                </a>
+            </div>
+
+            <div style="padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.4); font-size: 0.875rem;">
+                © 2025 Perfect AIm Marketing LLC. All rights reserved.
+            </div>
         </div>
     </footer>
     <script>
+        // Particle Animation
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = window.innerWidth < 768 ? 30 : 80;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = Math.random() * 0.5 - 0.25;
+                this.vy = Math.random() * 0.5 - 0.25;
+                this.radius = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(99, 102, 241, 0.5)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach((particle, index) => {
+                particle.update();
+                particle.draw();
+
+                // Connect particles
+                particles.slice(index + 1).forEach(otherParticle => {
+                    const distance = Math.sqrt(
+                        Math.pow(particle.x - otherParticle.x, 2) +
+                        Math.pow(particle.y - otherParticle.y, 2)
+                    );
+
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(otherParticle.x, otherParticle.y);
+                        ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 * (1 - distance / 100)})`;
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Intersection Observer for scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation classes to elements
+            document.querySelectorAll('h2, h3').forEach(header => {
+                header.classList.add('animate-on-scroll', 'fade-up');
+            });
+
+            // Cards
+            document.querySelectorAll('.metric-card, .feature-card, .pain-card, .use-case-card').forEach(card => {
+                card.classList.add('animate-on-scroll', 'scale');
+            });
+
+            // Grids
+            document.querySelectorAll('.metrics-grid, .features-grid, .pain-points-grid, .use-cases-grid').forEach(grid => {
+                grid.classList.add('stagger-children');
+            });
+
+            // Create intersection observer
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animated elements
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Also observe grids for stagger effect
+            document.querySelectorAll('.stagger-children').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
         // Form submission handler
         document.getElementById('aireceptionist-demo-form').addEventListener('submit', function(e) {
             e.preventDefault();

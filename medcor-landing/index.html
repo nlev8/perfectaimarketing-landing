@@ -680,6 +680,24 @@
             text-align: center;
         }
 
+        .footer-graphic {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 200px;
+            width: auto;
+            opacity: 0.3;
+            filter: brightness(0.8);
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .footer-graphic {
+                display: none;
+            }
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav-links {
@@ -2624,6 +2642,17 @@ function showSystemInfo(system) {
 <!-- Footer -->
 <footer>
     <div class="container">
+        <!-- Centered Graphic -->
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <img src="footer-graphic.avif" alt="Medical Security" style="
+                height: 200px;
+                width: auto;
+                opacity: 0.5;
+                filter: brightness(0.8);
+                display: inline-block;
+            ">
+        </div>
+
         <p>© 2025 Perfect AIm LLC. All rights reserved.</p>
         <p style="margin-top: 1rem;">
             <a href="mailto:alex@medcor.app" style="color: var(--medical-teal); text-decoration: none; display: block;">alex@medcor.app</a>
