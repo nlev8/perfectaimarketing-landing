@@ -1203,6 +1203,107 @@
         .demo-submit-btn:hover::before {
             left: 100%;
         }
+
+        /* iPhone 16 Pro Max (430px) and iPhone 16 Pro (393px) specific fixes */
+        @media (max-width: 430px) {
+            .hero {
+                padding: 3rem 1rem 2rem;
+                min-height: auto;
+            }
+
+            .hero-content {
+                padding: 0 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 1.75rem;
+                line-height: 1.2;
+                margin-bottom: 1rem;
+                padding: 0 0.25rem;
+            }
+
+            .hero p:first-of-type {
+                font-size: 1rem;
+                padding: 0 0.5rem;
+                line-height: 1.4;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero img {
+                height: 120px !important;
+                margin-bottom: 1.25rem !important;
+            }
+
+            .hero .cta-button {
+                font-size: 1rem !important;
+                padding: 0.875rem 1.75rem !important;
+                display: inline-block;
+                max-width: 90%;
+                margin: 0 auto;
+            }
+
+            /* Fix the "No credit card required • 14-day free trial" text */
+            .hero p:last-child {
+                font-size: 0.8rem !important;
+                margin-top: 0.75rem !important;
+                padding: 0 1rem;
+                line-height: 1.3;
+                display: block;
+                width: 100%;
+            }
+
+            /* Ensure nav is properly sized */
+            .nav-container {
+                padding: 0.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* iPhone 16/16 Pro specific (390-393px) */
+        @media (max-width: 393px) {
+            .hero {
+                padding: 2rem 0.75rem;
+            }
+
+            .hero h1 {
+                font-size: 1.6rem;
+                padding: 0 0.5rem;
+            }
+
+            .hero p:first-of-type {
+                font-size: 0.95rem;
+                padding: 0 0.75rem;
+            }
+
+            /* Better formatting for the free trial text */
+            .hero p:last-child {
+                font-size: 0.75rem !important;
+                padding: 0 0.5rem;
+                /* Use flexbox to center if needed */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 0.25rem;
+            }
+
+            .hero .cta-button {
+                font-size: 0.95rem !important;
+                padding: 0.8rem 1.5rem !important;
+            }
+
+            /* Ensure metrics section works well too */
+            .metrics-container {
+                padding: 0 0.5rem;
+            }
+
+            .metric-card {
+                padding: 1.25rem 1rem;
+            }
+        }
     </style>
 </head>
 <body>
