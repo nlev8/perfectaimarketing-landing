@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24/7 Receptionist - AI-Powered Appointment Booking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --gradient-1: #6366f1;
+            --gradient-2: #a855f7;
+            --gradient-3: #ec4899;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--gradient-1), transparent);
+            top: -200px;
+            left: -200px;
+            animation-duration: 25s;
+        }
+
+        .orb2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--gradient-2), transparent);
+            top: 50%;
+            right: -150px;
+            animation-duration: 30s;
+            animation-delay: 5s;
+        }
+
+        .orb3 {
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, var(--gradient-3), transparent);
+            bottom: -350px;
+            left: 30%;
+            animation-duration: 35s;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1) rotate(0deg); 
+            }
+            25% { 
+                transform: translate(100px, -50px) scale(1.1) rotate(90deg); 
+            }
+            50% { 
+                transform: translate(-50px, 100px) scale(0.9) rotate(180deg); 
+            }
+            75% { 
+                transform: translate(50px, 50px) scale(1.05) rotate(270deg); 
+            }
+        }
+
+        /* Particle Animation */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particle-float 15s infinite linear;
+        }
+
+        @keyframes particle-float {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+        }
+
+        /* Grid Background Pattern */
+        .grid-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.5;
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            opacity: 1;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover::before {
+            transform: translateX(0);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-hover) 50%, var(--gradient-3) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out, gradient-shift 5s ease-in-out infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            opacity: 0.85;
+            animation: fadeInUp 0.8s ease-out 0.2s;
+            animation-fill-mode: both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .features-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-hover));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-card {
+            background: rgba(20, 20, 20, 0.8);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(99, 102, 241, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            animation: icon-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes icon-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-primary);
+            opacity: 0.8;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 5rem 2rem;
+            background: var(--bg-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(20, 20, 20, 0.9);
+            border: 2px solid var(--accent);
+            border-radius: 24px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            animation: float-pricing 6s ease-in-out infinite;
+        }
+
+        @keyframes float-pricing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, var(--accent), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--text-primary);
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .price-period {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            opacity: 0.8;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-features li {
+            padding: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .check-icon svg {
+            width: 14px;
+            height: 14px;
+            color: var(--text-primary);
+        }
+
+        .pricing-cta {
+            text-align: center;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .trial-badge {
+            display: inline-block;
+            background: var(--gradient-3);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            animation: badge-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badge-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Integration Section */
+        .integrations {
+            padding: 5rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .integration-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .integration-logo {
+            width: 140px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: all 0.3s;
+            animation: logo-float 4s ease-in-out infinite;
+        }
+
+        .integration-logo:nth-child(2) { animation-delay: 0.5s; }
+        .integration-logo:nth-child(3) { animation-delay: 1s; }
+        .integration-logo:nth-child(4) { animation-delay: 1.5s; }
+        .integration-logo:nth-child(5) { animation-delay: 2s; }
+
+        @keyframes logo-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .integration-logo:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+        }
+
+        .secondary-button {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .secondary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            opacity: 0.7;
+            padding: 3rem 2rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-content p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Mobile Responsive Improvements */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .nav-container {
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+                margin-bottom: 2rem;
+            }
+            
+            .features {
+                padding: 3rem 1rem;
+            }
+            
+            .feature-card {
+                padding: 1.5rem;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .feature-card p {
+                font-size: 0.875rem;
+            }
+            
+            .pricing-card {
+                padding: 2rem 1.5rem;
+                margin: 0 1rem;
+            }
+            
+            .price {
+                font-size: 3rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 1.75rem;
+            }
+            
+            .cta-section p {
+                font-size: 1rem;
+            }
+            
+            .secondary-button {
+                padding: 0.875rem 1.5rem;
+                font-size: 0.95rem;
+            }
+            
+            .integration-logos {
+                gap: 1.5rem;
+            }
+            
+            .integration-logo {
+                width: 120px;
+                height: 60px;
+                font-size: 0.875rem;
+            }
+        }
+        
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+        
+        /* Small screens */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+            
+            .cta-button {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.95rem;
+            }
+            
+            .features-grid {
+                gap: 1rem;
+            }
+            
+            .gradient-orb {
+                filter: blur(60px);
+            }
+            
+            .orb1 {
+                width: 400px;
+                height: 400px;
+            }
+            
+            .orb2 {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .orb3 {
+                width: 350px;
+                height: 350px;
+            }
+        }
+
+        /* Form Input Styles */
+        input::placeholder,
+        textarea::placeholder,
+        select option[value=""] {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Demo Submit Button Styles */
+        .demo-submit-btn {
+            position: relative;
+        }
+
+        .demo-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            background: linear-gradient(135deg, var(--gradient-2) 0%, var(--gradient-3) 100%);
+        }
+
+        .demo-submit-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Button Shine Effect */
+        .demo-submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .demo-submit-btn:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="gradient-orb orb1"></div>
+        <div class="gradient-orb orb2"></div>
+        <div class="gradient-orb orb3"></div>
+    </div>
+    <div class="grid-bg"></div>
+
+    <!-- Particles -->
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 6s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 7s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 8s;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="../logo.png" alt="Perfect AIm" style="height: 40px; width: auto;">
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#integrations">Integrations</a>
+                <a href="#cta-section" class="cta-button">Get Started</a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="../logo-name.png" alt="Perfect AIm" style="height: 200px; width: auto; margin-bottom: 2rem; display: block; margin-left: auto; margin-right: auto;">
+            <h1>Your AI Receptionist Never Sleeps</h1>
+            <p>24/7 appointment booking, perfect transcription, and seamless integration with your business</p>
+            <a href="#cta-section" class="cta-button" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Start Free Trial</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <h2 class="section-title">Everything Your Business Needs</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                    <h3>24/7 Appointment Booking</h3>
+                    <p>Never miss a booking opportunity. Your AI receptionist works around the clock, scheduling appointments even while you sleep.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="22" y1="11" x2="16" y2="11"></line></svg>
+                    </div>
+                    <h3>Perfect Name & Email Transcription</h3>
+                    <p>Advanced voice recognition ensures accurate capture of customer information, with NATO phonetic confirmation for 100% accuracy.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <h3>Customized for Your Business</h3>
+                    <p>Tailored design and training specific to your industry, brand voice, and unique business needs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <h3>Intelligent Q&A</h3>
+                    <p>Answers common customer questions about your services, hours, pricing, and more with natural conversation flow.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </div>
+                    <h3>Multilanguage Support</h3>
+                    <p>Serve customers in their preferred language with support for over 30 languages and automatic language detection.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                    </div>
+                    <h3>Keep Your Number</h3>
+                    <p>No need to change your business phone number. Seamlessly integrate with your existing phone system.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </div>
+                    <h3>SMS & Email Notifications</h3>
+                    <p>Instant confirmation texts and calendar invites to customers, plus automated reminders to reduce no-shows.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    </div>
+                    <h3>CRM & Calendar Integration</h3>
+                    <p>Works with your existing tools - Google Calendar, Outlook, Salesforce, HubSpot, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path><path d="M14.05 2a9 9 0 0 1 8 7.94"></path><path d="M14.05 6A5 5 0 0 1 18 10"></path></svg>
+                    </div>
+                    <h3>No More Voicemail</h3>
+                    <p>Your AI receptionist ensures no calls are ever missed. Every caller gets immediate attention, 24/7/365.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="features-container">
+            <h2 class="section-title">Simple, Transparent Pricing</h2>
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <div class="trial-badge">14-Day Free Trial</div>
+                    <div class="price">$297</div>
+                    <div class="price-period">per month</div>
+                </div>
+                <ul class="pricing-features">
+                    <li>
+                        <div class="check-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        Unlimited calls and appointments
+                    </li>
+                    <li>
+                        <div class="check-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        No setup fees
+                    </li>
+                    <li>
+                        <div class="check-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        No contracts - cancel anytime
+                    </li>
+                    <li>
+                        <div class="check-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        24/7 dedicated support
+                    </li>
+                    <li>
+                        <div class="check-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        All features included
+                    </li>
+                </ul>
+                <div class="pricing-cta">
+                    <a href="#" class="cta-button" style="width: 100%; text-align: center;">Start Your Free Trial</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integration Section -->
+    <section class="integrations" id="integrations">
+        <div class="features-container">
+            <h2 class="section-title">Seamless Integration With Your Tools</h2>
+            <div class="integration-logos">
+                <div class="integration-logo">Google Calendar</div>
+                <div class="integration-logo">Outlook</div>
+                <div class="integration-logo">Salesforce</div>
+                <div class="integration-logo">HubSpot</div>
+                <div class="integration-logo">Zoom</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section with Form -->
+    <section class="cta-section" id="cta-section">
+        <h2>Ready to Transform Your Customer Experience?</h2>
+        <p style="font-size: 1.25rem; color: var(--text-primary); margin-bottom: 2rem; opacity: 0.9;">
+            Join thousands of businesses saving 20+ hours per week with our AI Receptionist
+        </p>
+
+        <form id="aireceptionist-demo-form" name="aireceptionist-demo" method="POST" data-netlify="true" style="max-width: 500px; margin: 2rem auto; position: relative; z-index: 2;">
+            <input type="hidden" name="form-name" value="aireceptionist-demo">
+
+            <div style="display: grid; gap: 1rem; margin-bottom: 1rem;">
+                <input type="text" name="name" placeholder="Your Name" required style="padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); font-size: 16px; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); color: white;">
+
+                <input type="email" name="email" placeholder="Business Email" required style="padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); font-size: 16px; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); color: white;">
+
+                <input type="tel" name="phone" placeholder="Phone Number" required style="padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); font-size: 16px; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); color: white;">
+
+                <select name="business-type" required style="padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); font-size: 16px; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); color: white; cursor: pointer;">
+                    <option value="" style="background: #111;">Select Your Industry</option>
+                    <option value="Healthcare" style="background: #111;">Healthcare & Medical</option>
+                    <option value="Dental" style="background: #111;">Dental Practice</option>
+                    <option value="Professional" style="background: #111;">Professional Services</option>
+                    <option value="Home Services" style="background: #111;">Home Services</option>
+                    <option value="Beauty" style="background: #111;">Beauty & Wellness</option>
+                    <option value="Retail" style="background: #111;">Retail</option>
+                    <option value="Other" style="background: #111;">Other</option>
+                </select>
+
+                <select name="monthly-calls" required style="padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); font-size: 16px; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); color: white; cursor: pointer;">
+                    <option value="" style="background: #111;">Estimated Monthly Calls</option>
+                    <option value="0-100" style="background: #111;">0-100 calls</option>
+                    <option value="100-500" style="background: #111;">100-500 calls</option>
+                    <option value="500-1000" style="background: #111;">500-1,000 calls</option>
+                    <option value="1000+" style="background: #111;">1,000+ calls</option>
+                </select>
+
+                <textarea name="biggest-challenge" placeholder="What's your biggest challenge with phone answering right now?" rows="3" style="padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); font-size: 16px; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); color: white; resize: vertical; font-family: inherit;"></textarea>
+            </div>
+
+            <!-- Consent Section -->
+            <div class="consent-section" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 20px; margin: 25px 0;">
+
+                <p style="font-size: 16px; font-weight: bold; color: var(--text-primary); margin-bottom: 15px;">
+                    Communication Preferences
+                </p>
+
+                <label style="display: flex; align-items: flex-start; margin-bottom: 15px; cursor: pointer;">
+                    <input type="checkbox"
+                           id="consent-appointments"
+                           name="consent_appointments"
+                           checked
+                           required
+                           style="margin-right: 10px; margin-top: 3px; width: 20px; height: 20px; accent-color: var(--accent);">
+                    <span style="font-size: 14px; color: var(--text-secondary); line-height: 1.5;">
+                        <strong style="color: var(--text-primary);">(Required)</strong> I consent to receive appointment reminders and important updates about my AI Receptionist service via email, SMS, and phone.
+                    </span>
+                </label>
+
+                <label style="display: flex; align-items: flex-start; margin-bottom: 15px; cursor: pointer;">
+                    <input type="checkbox"
+                           id="consent-promotional"
+                           name="consent_promotional"
+                           style="margin-right: 10px; margin-top: 3px; width: 20px; height: 20px; accent-color: var(--accent);">
+                    <span style="font-size: 14px; color: var(--text-secondary); line-height: 1.5;">
+                        <strong style="color: var(--text-secondary);">(Optional)</strong> I'd like to receive promotional offers, AI receptionist tips, and product updates from 24/7 Receptionist. You can unsubscribe at any time.
+                    </span>
+                </label>
+
+                <p style="font-size: 12px; color: var(--text-secondary); margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); line-height: 1.6;">
+                    By providing your phone number, you agree to receive text messages at the number provided.
+                    Standard message and data rates may apply. Reply STOP to any SMS to unsubscribe.
+                    We respect your privacy and will never share your information with third parties.
+                    <br><br>
+                    <a href="https://perfectaimarketing.com/privacy-policy"
+                       target="_blank"
+                       style="color: var(--accent); text-decoration: underline;">
+                        Privacy Policy
+                    </a>
+                    |
+                    <a href="https://perfectaimarketing.com/terms-and-conditions"
+                       target="_blank"
+                       style="color: var(--accent); text-decoration: underline;">
+                        Terms & Conditions
+                    </a>
+                </p>
+            </div>
+
+            <button type="submit" class="demo-submit-btn" style="width: 100%; font-size: 1.1rem; padding: 1rem 2rem; background: linear-gradient(135deg, var(--gradient-1) 0%, var(--gradient-2) 100%); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); position: relative; overflow: hidden;">
+                Get Your AI Receptionist Today →
+            </button>
+
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
+                🔒 Your information is 100% secure • Start saving 20+ hours per week
+            </p>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 24/7 Receptionist by Perfect AIm Marketing. All rights reserved.</p>
+            <p>Transforming customer communication with intelligent AI</p>
+        </div>
+    </footer>
+    <script>
+        // Form submission handler
+        document.getElementById('aireceptionist-demo-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Submit the form data to Netlify
+            fetch('/', {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(new FormData(e.target)).toString()
+            })
+            .then(() => {
+                // Redirect to thank you page
+                window.location.href = 'thank-you.html';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting your form. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>
