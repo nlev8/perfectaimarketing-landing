@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>24/7 Receptionist - AI-Powered Appointment Booking</title>
     <style>
         * {
@@ -30,6 +30,14 @@
             color: var(--text-primary);
             background: var(--bg-primary);
             overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+            position: relative;
+        }
+
+        html {
+            overflow-x: hidden;
+            width: 100%;
         }
 
         /* Animated Background */
@@ -1204,6 +1212,96 @@
             left: 100%;
         }
 
+        /* Comparison Table Mobile Styles */
+        .comparison-table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            min-width: 600px;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-table-mobile {
+                display: block;
+            }
+
+            .comparison-table-desktop {
+                display: none;
+            }
+
+            .comparison-cards {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .comparison-card {
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 12px;
+                padding: 1.5rem;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .comparison-card h3 {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .comparison-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.75rem 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .comparison-item:last-child {
+                border-bottom: none;
+            }
+
+            .comparison-label {
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+            }
+
+            .comparison-value {
+                font-weight: 600;
+                text-align: right;
+            }
+
+            .ai-value {
+                color: #10b981;
+            }
+
+            .human-value {
+                color: var(--text-secondary);
+            }
+
+            .voicemail-value {
+                color: #ef4444;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .comparison-table-mobile {
+                display: none;
+            }
+
+            .comparison-table-desktop {
+                display: block;
+            }
+        }
+
         /* Mobile Menu Styles */
         .mobile-menu {
             position: fixed;
@@ -1759,7 +1857,101 @@
             <p style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem;">
                 See why businesses are switching to AI-powered reception
             </p>
-            <div style="overflow-x: auto;">
+
+            <!-- Mobile Version -->
+            <div class="comparison-table-mobile">
+                <div class="comparison-cards">
+                    <!-- AI Receptionist Card -->
+                    <div class="comparison-card" style="border: 2px solid #10b981;">
+                        <h3 style="color: #10b981;">✓ AI Receptionist</h3>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Availability</span>
+                            <span class="comparison-value ai-value">24/7/365</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Monthly Cost</span>
+                            <span class="comparison-value ai-value">From $297</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Call Capacity</span>
+                            <span class="comparison-value ai-value">Unlimited</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Appointment Booking</span>
+                            <span class="comparison-value ai-value">Instant</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Accuracy</span>
+                            <span class="comparison-value ai-value">99.9%</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Languages</span>
+                            <span class="comparison-value ai-value">30+</span>
+                        </div>
+                    </div>
+
+                    <!-- Human Receptionist Card -->
+                    <div class="comparison-card">
+                        <h3 style="color: var(--text-secondary);">Human Receptionist</h3>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Availability</span>
+                            <span class="comparison-value human-value">Business Hours</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Monthly Cost</span>
+                            <span class="comparison-value human-value">$3,000-$5,000</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Call Capacity</span>
+                            <span class="comparison-value human-value">1 at a time</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Appointment Booking</span>
+                            <span class="comparison-value human-value">Manual entry</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Accuracy</span>
+                            <span class="comparison-value human-value">Human error</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Languages</span>
+                            <span class="comparison-value human-value">Usually 1-2</span>
+                        </div>
+                    </div>
+
+                    <!-- Voicemail Card -->
+                    <div class="comparison-card">
+                        <h3 style="color: #ef4444;">✗ Voicemail</h3>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Availability</span>
+                            <span class="comparison-value voicemail-value">24/7 (No interaction)</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Monthly Cost</span>
+                            <span class="comparison-value human-value">$50-$200</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Call Capacity</span>
+                            <span class="comparison-value human-value">Records only</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Appointment Booking</span>
+                            <span class="comparison-value voicemail-value">✗ None</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Accuracy</span>
+                            <span class="comparison-value voicemail-value">✗ N/A</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Languages</span>
+                            <span class="comparison-value human-value">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop Version -->
+            <div class="comparison-table-desktop" style="overflow-x: auto;">
                 <table style="width: 100%; border-collapse: collapse; background: rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden;">
                     <thead>
                         <tr style="background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));">
