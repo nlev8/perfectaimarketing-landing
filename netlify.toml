@@ -31,6 +31,31 @@
   to = "/medcor-landing/index.html"
   status = 200
 
+# Legal pages for AIReceptionist subdomain
+[[redirects]]
+  from = "https://aireceptionist.perfectaimarketing.com/privacy-policy"
+  to = "/aireceptionist/privacy-policy.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://aireceptionist.perfectaimarketing.com/terms-and-conditions"
+  to = "/aireceptionist/terms-and-conditions.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://247receptionist.perfectaimarketing.com/privacy-policy"
+  to = "/aireceptionist/privacy-policy.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://247receptionist.perfectaimarketing.com/terms-and-conditions"
+  to = "/aireceptionist/terms-and-conditions.html"
+  status = 200
+  force = true
+
 # Legal pages for MedCor subdomain
 [[redirects]]
   from = "https://medcor.perfectaimarketing.com/privacy-policy"
