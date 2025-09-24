@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions - AI Receptionist</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --gradient-1: #6366f1;
+            --gradient-2: #a855f7;
+            --gradient-3: #ec4899;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--gradient-1), transparent);
+            top: -200px;
+            left: -200px;
+            animation-duration: 25s;
+        }
+
+        .orb2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--gradient-2), transparent);
+            top: 50%;
+            right: -150px;
+            animation-duration: 30s;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            25% {
+                transform: translate(100px, -50px) scale(1.1) rotate(90deg);
+            }
+            50% {
+                transform: translate(-50px, 100px) scale(0.9) rotate(180deg);
+            }
+            75% {
+                transform: translate(50px, 50px) scale(1.05) rotate(270deg);
+            }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--gradient-1) 0%, var(--gradient-2) 50%, var(--gradient-3) 100%);
+            padding: 80px 20px 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .last-updated {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .content {
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            margin: 2rem 0;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--accent-hover);
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .important-note {
+            background: rgba(236, 72, 153, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border-left: 3px solid var(--gradient-3);
+        }
+
+        .contact-info {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border-left: 3px solid var(--accent);
+        }
+
+        .contact-info a {
+            color: var(--accent-hover);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: var(--gradient-3);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 2rem 0;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--gradient-1) 0%, var(--gradient-2) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .content {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="gradient-orb orb1"></div>
+        <div class="gradient-orb orb2"></div>
+    </div>
+
+    <div class="header">
+        <div class="container">
+            <h1>Terms and Conditions</h1>
+            <p class="last-updated">Effective Date: January 2025</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <h2>1. Agreement to Terms</h2>
+            <p>By accessing or using AI Receptionist services ("Service"), you agree to be bound by these Terms and Conditions ("Terms"). If you disagree with any part of these terms, you may not access the Service.</p>
+
+            <h2>2. Service Description</h2>
+            <p>AI Receptionist is an automated phone answering and appointment scheduling service that uses artificial intelligence to:</p>
+            <ul>
+                <li>Answer business phone calls 24/7</li>
+                <li>Schedule and manage appointments</li>
+                <li>Send automated reminders and confirmations</li>
+                <li>Integrate with existing business systems</li>
+                <li>Provide call analytics and reporting</li>
+            </ul>
+
+            <h2>3. Account Registration</h2>
+            <h3>3.1 Eligibility</h3>
+            <ul>
+                <li>You must be at least 18 years old</li>
+                <li>You must provide accurate and complete registration information</li>
+                <li>You are responsible for maintaining account security</li>
+                <li>You must notify us immediately of any unauthorized access</li>
+            </ul>
+
+            <h3>3.2 Account Responsibilities</h3>
+            <ul>
+                <li>Keep your login credentials confidential</li>
+                <li>Monitor all activity under your account</li>
+                <li>Accept responsibility for all account usage</li>
+                <li>Comply with all applicable laws and regulations</li>
+            </ul>
+
+            <h2>4. Acceptable Use Policy</h2>
+            <p>You agree NOT to use the Service to:</p>
+            <ul>
+                <li>Violate any laws or regulations</li>
+                <li>Harass, abuse, or harm others</li>
+                <li>Send spam or unsolicited communications</li>
+                <li>Impersonate any person or entity</li>
+                <li>Interfere with service operations</li>
+                <li>Attempt to gain unauthorized access</li>
+                <li>Use for any illegal or fraudulent purpose</li>
+                <li>Collect personal information without consent</li>
+            </ul>
+
+            <h2>5. Subscription and Billing</h2>
+            <h3>5.1 Free Trial</h3>
+            <ul>
+                <li>14-day free trial available for new customers</li>
+                <li>No credit card required for trial activation</li>
+                <li>Full feature access during trial period</li>
+                <li>Automatic conversion to paid plan after trial (if payment method added)</li>
+            </ul>
+
+            <h3>5.2 Pricing and Payment</h3>
+            <ul>
+                <li>Subscription fees are billed monthly or annually</li>
+                <li>Prices are subject to change with 30 days notice</li>
+                <li>All fees are non-refundable except as required by law</li>
+                <li>Late payments may result in service suspension</li>
+            </ul>
+
+            <h3>5.3 Cancellation</h3>
+            <ul>
+                <li>Cancel anytime through your account dashboard</li>
+                <li>Service continues until end of billing period</li>
+                <li>No partial refunds for unused time</li>
+                <li>Data retained for 30 days after cancellation</li>
+            </ul>
+
+            <h2>6. Service Level Agreement</h2>
+            <h3>6.1 Uptime Commitment</h3>
+            <p>We strive for 99.9% uptime, excluding:</p>
+            <ul>
+                <li>Scheduled maintenance (with advance notice)</li>
+                <li>Force majeure events</li>
+                <li>Third-party service failures</li>
+                <li>Customer-caused issues</li>
+            </ul>
+
+            <h3>6.2 Support</h3>
+            <ul>
+                <li>Email support available 24/7</li>
+                <li>Phone support during business hours</li>
+                <li>Response time varies by plan level</li>
+                <li>Setup assistance within 48 hours</li>
+            </ul>
+
+            <h2>7. Intellectual Property</h2>
+            <h3>7.1 Our Property</h3>
+            <p>All Service components remain our exclusive property, including:</p>
+            <ul>
+                <li>Software and source code</li>
+                <li>AI models and algorithms</li>
+                <li>Trademarks and branding</li>
+                <li>Documentation and content</li>
+            </ul>
+
+            <h3>7.2 Your Content</h3>
+            <ul>
+                <li>You retain ownership of your business data</li>
+                <li>You grant us license to process data for service delivery</li>
+                <li>We may use anonymized data for improvement</li>
+                <li>You're responsible for content compliance</li>
+            </ul>
+
+            <h2>8. Privacy and Data Protection</h2>
+            <ul>
+                <li>We process data according to our Privacy Policy</li>
+                <li>We implement industry-standard security measures</li>
+                <li>You must obtain necessary consents for call recording</li>
+                <li>Compliance with GDPR, CCPA, and applicable laws</li>
+            </ul>
+
+            <h2>9. Disclaimers and Limitations</h2>
+
+            <div class="important-note">
+                <p><strong>IMPORTANT:</strong> THE SERVICE IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED. WE DO NOT GUARANTEE UNINTERRUPTED OR ERROR-FREE SERVICE.</p>
+            </div>
+
+            <h3>9.1 No Warranty</h3>
+            <p>We disclaim all warranties including:</p>
+            <ul>
+                <li>Merchantability and fitness for particular purpose</li>
+                <li>Accuracy or completeness of AI responses</li>
+                <li>Service meeting all your requirements</li>
+                <li>Compatibility with all systems</li>
+            </ul>
+
+            <h3>9.2 Limitation of Liability</h3>
+            <p>Our total liability shall not exceed the amount paid by you in the past 12 months. We are not liable for:</p>
+            <ul>
+                <li>Indirect, incidental, or consequential damages</li>
+                <li>Lost profits or business opportunities</li>
+                <li>Data loss or corruption</li>
+                <li>Third-party actions or failures</li>
+            </ul>
+
+            <h2>10. Indemnification</h2>
+            <p>You agree to indemnify and hold us harmless from any claims arising from:</p>
+            <ul>
+                <li>Your use of the Service</li>
+                <li>Violation of these Terms</li>
+                <li>Infringement of third-party rights</li>
+                <li>Your content or communications</li>
+            </ul>
+
+            <h2>11. Modifications</h2>
+            <h3>11.1 To Terms</h3>
+            <ul>
+                <li>We may modify these Terms at any time</li>
+                <li>Notice provided via email or service dashboard</li>
+                <li>Continued use constitutes acceptance</li>
+                <li>Material changes require 30 days notice</li>
+            </ul>
+
+            <h3>11.2 To Service</h3>
+            <ul>
+                <li>We may add, modify, or remove features</li>
+                <li>Major changes communicated in advance</li>
+                <li>No obligation to maintain specific features</li>
+            </ul>
+
+            <h2>12. Termination</h2>
+            <p>We may terminate or suspend access immediately for:</p>
+            <ul>
+                <li>Terms violation</li>
+                <li>Fraudulent or illegal activity</li>
+                <li>Non-payment</li>
+                <li>Risk to service or other users</li>
+            </ul>
+
+            <h2>13. Governing Law</h2>
+            <ul>
+                <li>These Terms are governed by Florida law</li>
+                <li>Disputes resolved in Florida courts</li>
+                <li>You waive jury trial rights</li>
+                <li>Class action waiver applies</li>
+            </ul>
+
+            <h2>14. Miscellaneous</h2>
+            <h3>14.1 Entire Agreement</h3>
+            <p>These Terms constitute the entire agreement between parties.</p>
+
+            <h3>14.2 Severability</h3>
+            <p>If any provision is unenforceable, remaining provisions continue.</p>
+
+            <h3>14.3 Assignment</h3>
+            <p>You may not assign rights without our written consent.</p>
+
+            <h3>14.4 Waiver</h3>
+            <p>No waiver is effective unless in writing.</p>
+
+            <h2>15. Contact Information</h2>
+            <div class="contact-info">
+                <p>For questions about these Terms, contact us at:</p>
+                <p><strong>Email:</strong> <a href="mailto:legal@perfectaimarketing.com">legal@perfectaimarketing.com</a></p>
+                <p><strong>Phone:</strong> <a href="tel:+13218503336">321-850-3336</a></p>
+                <p><strong>Address:</strong> Perfect AIm Marketing LLC<br>
+                123 Business Ave, Suite 100<br>
+                Orlando, FL 32801</p>
+            </div>
+
+            <a href="/aireceptionist/" class="back-link">← Back to AI Receptionist</a>
+        </div>
+    </div>
+</body>
+</html>
