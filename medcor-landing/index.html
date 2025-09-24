@@ -814,20 +814,26 @@
             h1 {
                 font-size: 1.75rem;
             }
-            
+
             .hero-description {
                 font-size: 0.9rem;
                 margin-bottom: 1rem;
             }
-            
+
             .btn-primary, .btn-secondary {
                 font-size: 0.9rem;
                 padding: 0.75rem 1.25rem;
             }
-            
+
             .trust-badge {
                 font-size: 0.65rem;
                 padding: 5px 8px;
+            }
+
+            .cta-content img,
+            .hipaa-logo {
+                height: 140px !important;
+                margin-top: 0 !important;
             }
         }
 
@@ -850,10 +856,12 @@
             .cta-section {
                 padding: 60px var(--side-padding);
             }
-            
-            .cta-content img {
-                height: 200px !important;
+
+            .cta-content img,
+            .hipaa-logo {
+                height: 180px !important;
                 margin-bottom: 1rem !important;
+                margin-top: -1rem !important;
             }
             
             .cta-title {
@@ -2549,7 +2557,7 @@ function showSystemInfo(system) {
 <!-- CTA Section -->
 <section class="cta-section" id="demo">
     <div class="cta-content">
-        <img src="mclogo.png" alt="MedCor AI" style="height: 300px; width: auto; margin-top: -2rem; margin-bottom: .5rem; display: block; margin-left: auto; margin-right: auto;">
+        <img src="mclogo.png" alt="MedCor AI" class="hipaa-logo" style="height: 300px; width: auto; margin-top: -2rem; margin-bottom: .5rem; display: block; margin-left: auto; margin-right: auto;">
         
         <h2 class="cta-title">See Your Practice Data Come Alive</h2>
         <p style="font-size: 1.25rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem;">
