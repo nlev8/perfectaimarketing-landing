@@ -694,7 +694,36 @@
 
         @media (max-width: 768px) {
             .footer-graphic {
-                display: none;
+                height: 120px;
+                opacity: 0.4;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-graphic {
+                height: 100px;
+                opacity: 0.3;
+            }
+        }
+
+        /* Centered footer graphic responsive sizes */
+        @media (max-width: 768px) {
+            .footer-graphic-centered {
+                height: 140px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-graphic-centered {
+                height: 110px !important;
+                opacity: 0.4 !important;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .footer-graphic-centered {
+                height: 90px !important;
+                opacity: 0.35 !important;
             }
         }
 
@@ -2659,7 +2688,7 @@ function showSystemInfo(system) {
     <div class="container">
         <!-- Centered Graphic -->
         <div style="text-align: center; margin-bottom: 2rem;">
-            <img src="footer-graphic.avif" alt="Medical Security" style="
+            <img src="footer-graphic.avif" alt="Medical Security" class="footer-graphic-centered" style="
                 height: 200px;
                 width: auto;
                 opacity: 0.5;
