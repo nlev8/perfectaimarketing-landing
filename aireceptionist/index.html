@@ -789,23 +789,34 @@
         .tab-button {
             padding: 0.75rem 1.5rem;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.3s;
             font-size: 1rem;
             font-weight: 500;
-            border: none;
+            position: relative;
+            z-index: 10;
+            outline: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .tab-button.active {
             background: var(--accent);
             color: white;
+            border-color: var(--accent);
         }
 
         .tab-button:hover:not(.active) {
             background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .tab-button:active {
+            transform: translateY(0);
         }
 
         .tab-content {
