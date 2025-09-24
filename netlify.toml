@@ -31,6 +31,19 @@
   to = "/medcor-landing/index.html"
   status = 200
 
+# Legal pages for MedCor subdomain
+[[redirects]]
+  from = "https://medcor.perfectaimarketing.com/privacy-policy"
+  to = "/medcor-landing/privacy-policy.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://medcor.perfectaimarketing.com/terms-and-conditions"
+  to = "/medcor-landing/terms-and-conditions.html"
+  status = 200
+  force = true
+
 # Form handling configuration
 [forms]
   honeypot = "_gotcha"
