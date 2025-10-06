@@ -45,6 +45,12 @@
   force = true
 
 [[redirects]]
+  from = "https://aireceptionist.perfectaimarketing.com/legal/AI_Generated_Evidence_in_Criminal_Defense.pdf"
+  to = "/aireceptionist/legal/AI_Generated_Evidence_in_Criminal_Defense.pdf"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "https://247receptionist.perfectaimarketing.com/privacy-policy"
   to = "/aireceptionist/privacy-policy.html"
   status = 200
@@ -127,3 +133,9 @@
   for = "/*.avif"
   [headers.values]
     Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/*.pdf"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+    Content-Type = "application/pdf"
