@@ -2298,6 +2298,13 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content" style="text-align: center; padding: 2rem;">
+
+            <!-- Chamber Membership Widget -->
+            <div style="text-align: center; margin-bottom: 3rem; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
+                <h4 style="margin-bottom: 1rem; color: rgba(255, 255, 255, 0.9);">Proud Member Of:</h4>
+                <div id="mni-membership-638960842466150076"></div>
+            </div>
+
             <img src="../logo.png" alt="Perfect AIm" style="height: 40px; width: auto; margin-bottom: 1rem; display: block; margin-left: auto; margin-right: auto;">
             <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 2rem;">
                 AI Receptionist that never misses a call, never takes a day off.
@@ -2490,6 +2497,15 @@
                 alert('There was an error submitting your form. Please try again.');
             });
         });
+    </script>
+
+    <!-- Chamber Membership Scripts -->
+    <script src="https://seminolebusiness.chambermaster.com/Content/Script/Member.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        new MNI.Widgets.Member("mni-membership-638960842466150076", {
+            member: 29596,
+            styleTemplate: "#@id{text-align:center;position:relative}#@id .mn-widget-member-name{font-weight:700}#@id .mn-widget-member-logo{max-width:100%}"
+        }).create();
     </script>
 </body>
 </html>

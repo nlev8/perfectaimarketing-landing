@@ -2686,6 +2686,13 @@ function showSystemInfo(system) {
 <!-- Footer -->
 <footer>
     <div class="container">
+
+        <!-- Chamber Membership Widget -->
+        <div style="text-align: center; margin-bottom: 3rem; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
+            <h4 style="margin-bottom: 1rem; color: rgba(255, 255, 255, 0.9);">Proud Member Of:</h4>
+            <div id="mni-membership-638960842466150076"></div>
+        </div>
+
         <!-- Centered Graphic -->
         <div style="text-align: center; margin-bottom: 2rem;">
             <img src="footer-graphic.avif" alt="Medical Security" class="footer-graphic-centered" style="
@@ -2947,12 +2954,39 @@ document.addEventListener('DOMContentLoaded', function() {
             // Redirect after successful submission
             window.location.href = '/thank-you.html';
         })
+
+<!-- Chamber Membership Scripts -->
+<script src="https://seminolebusiness.chambermaster.com/Content/Script/Member.js" type="text/javascript"></script>
+<script type="text/javascript">
+    new MNI.Widgets.Member("mni-membership-638960842466150076", {
+        member: 29596,
+        styleTemplate: "#@id{text-align:center;position:relative}#@id .mn-widget-member-name{font-weight:700}#@id .mn-widget-member-logo{max-width:100%}"
+    }).create();
+</script>
+
+<!-- Chamber Membership Scripts -->
+<script src="https://seminolebusiness.chambermaster.com/Content/Script/Member.js" type="text/javascript"></script>
+<script type="text/javascript">
+    new MNI.Widgets.Member("mni-membership-638960842466150076", {
+        member: 29596,
+        styleTemplate: "#@id{text-align:center;position:relative}#@id .mn-widget-member-name{font-weight:700}#@id .mn-widget-member-logo{max-width:100%}"
+    }).create();
+</script>
         .catch(error => {
             console.error('Error:', error);
             // Fallback redirect
             window.location.href = '/thank-you.html';
         });
     });
+</script>
+
+<!-- Chamber Membership Scripts -->
+<script src="https://seminolebusiness.chambermaster.com/Content/Script/Member.js" type="text/javascript"></script>
+<script type="text/javascript">
+    new MNI.Widgets.Member("mni-membership-638960842466150076", {
+        member: 29596,
+        styleTemplate: "#@id{text-align:center;position:relative}#@id .mn-widget-member-name{font-weight:700}#@id .mn-widget-member-logo{max-width:100%}"
+    }).create();
 </script>
 </body>
 </html>
